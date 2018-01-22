@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AtendimentoPorUsuario" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7d55de6-6a3e-4336-8a61-829e0d38f3da">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sics PostGres Dev"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="dt_inicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dt_fim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nomeOuLogin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nomeHospital" class="java.lang.String"/>
+	<parameter name="logo_cliente" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[select a.id_usuario, u.nome as nome_usuario, u.login as login_usuario,
+trim(a.senha) as senha_atendimento, a.dt_senha,
+coalesce(
+trim(to_char(date_part('hour', (a.hr_fim_atend - a.hr_inic_atend)), '09')) || ':' ||
+trim(to_char(date_part('minute', (a.hr_fim_atend - a.hr_inic_atend)), '09')) || ':' ||
+trim(to_char(date_part('seconds', (a.hr_fim_atend - a.hr_inic_atend)), '09')), '00:00:00') as duracao_atendimento,
+f.nome as nome_fila,
+case 
+	when a.tipo_senha = 'P' then 'Prioridade'
+	when a.tipo_senha = 'S' then 'Prior. Especial'
+	when a.tipo_senha = 'N' then 'Normal'
+end as tipo_prioridade
+from atendimento a
+inner join usuario u on u.id_usuario = a.id_usuario
+inner join fila f on f.id_fila = a.id_fila
+where a.status_senha in ('C', 'I')
+and ((a.dt_atendimento is null and a.dt_senha between $P{dt_inicio} and $P{dt_fim}) or
+(a.dt_atendimento is not null and a.dt_atendimento between $P{dt_inicio} and $P{dt_fim}))
+and (translate(trim(upper(u.nome)), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY') like
+			translate(trim(upper($P{nomeOuLogin})), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY')
+	   or translate(trim(upper(u.login)), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY') like
+			translate(trim(upper($P{nomeOuLogin})), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY'))
+order by u.nome asc, a.dt_senha, to_number(a.senha, '99999')]]>
+	</queryString>
+	<field name="id_usuario" class="java.lang.Integer"/>
+	<field name="nome_usuario" class="java.lang.String"/>
+	<field name="login_usuario" class="java.lang.String"/>
+	<field name="senha_atendimento" class="java.lang.String"/>
+	<field name="dt_senha" class="java.sql.Date"/>
+	<field name="duracao_atendimento" class="java.lang.String"/>
+	<field name="nome_fila" class="java.lang.String"/>
+	<field name="tipo_prioridade" class="java.lang.String"/>
+	<group name="grp_usuario" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{id_usuario}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="555" height="17" uuid="3535f541-0bb6-4dfd-b97c-927a405304f4"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_usuario}.trim() + " (" + $F{login_usuario}.trim() + ")"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15"/>
+		</groupFooter>
+	</group>
+	<group name="grp_dia" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{dt_senha}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="100" y="0" width="80" height="17" printWhenGroupChanges="grp_dia" uuid="b74843c8-b333-4e11-9f3f-814a6152640e"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{dt_senha})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="167" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="130" width="70" height="17" uuid="00a6b911-9af1-4fad-acea-2f64c5776468"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SENHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="130" width="100" height="17" uuid="ac987179-51ae-42e8-b5d4-34929c6f8d91"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="130" width="80" height="17" uuid="7cfc178d-926d-4293-bc34-3f18d2b9bcc0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DURAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="329" y="130" width="151" height="17" uuid="d8e106fe-b16e-493a-aadf-0e6bed4f6a5d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVIÇO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="75" width="554" height="25" uuid="919592fd-0820-42dc-a304-133637425239"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeHospital}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="100" width="554" height="25" backcolor="#00CC99" uuid="487ac7e1-6b6f-482c-882b-4a592de9aa66"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="16"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE ATENDIMENTOS DIÁRIOS DE USUÁRIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="30" width="100" height="20" uuid="2e2b0742-9301-4910-a3e5-0c4af9cbd3a6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emissão ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="405" y="30" width="150" height="20" uuid="20d9ffc2-f23c-4354-9aed-46e5e83db3fb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="305" y="50" width="100" height="20" uuid="0c66797c-9e07-480a-a158-1258a7f63b29"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período de ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="405" y="50" width="150" height="20" uuid="caa8dc31-99d7-42e8-9235-7503e2c25ddc"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{dt_inicio}) + " a " +
+new SimpleDateFormat("dd/MM/yyyy").format($P{dt_fim})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="130" width="80" height="17" uuid="94426727-ed66-482f-b67a-11336714d84e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" isUsingCache="true" isLazy="true">
+				<reportElement x="0" y="0" width="160" height="75" uuid="5851467a-d603-49a0-bb90-7b6db20a43f6"/>
+				<imageExpression><![CDATA[$P{logo_cliente}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="480" y="130" width="74" height="17" uuid="bc82b7a7-dbcf-4294-ab32-365be6cf32be"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="249" y="0" width="80" height="17" uuid="c01684a2-5c4d-48dc-b472-a50763b83a4d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{duracao_atendimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="0" width="151" height="17" uuid="ea7b98f7-3be0-4c0f-beb3-c08b221d9427"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_fila}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="f299ff53-c85a-474d-8c27-c052b4699dde"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="180" y="0" width="70" height="17" uuid="e7869b95-bd3a-47e2-8dfb-6975d6a3164d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{senha_atendimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="75" height="17" uuid="4de28b09-c902-4910-8198-c8b518a7f02d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_prioridade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="68876307-19a7-4a82-b4c2-761929386f9f"/>
+			</line>
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="0d695be6-76ed-4837-8554-ba7a1fca23f5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="758a680b-9372-4833-a507-bc7906c06d7f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="1" y="0" width="554" height="50" uuid="34251eee-b601-48a6-8b43-f5cfd4ebe62f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="20"/>
+				</textElement>
+				<text><![CDATA[Não existem informações a serem impressas]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

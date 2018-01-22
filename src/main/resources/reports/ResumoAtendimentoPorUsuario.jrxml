@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AtendimentoPorPerfil" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="507dd5a0-c76a-484d-a837-a9471dfdd0f1">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sics PostGres Dev"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="120"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="874"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="Crosstab_CH" mode="Opaque" backcolor="#F0FFFA">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CG" mode="Opaque" backcolor="#BFFFEA">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CT" mode="Opaque" backcolor="#00B377">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="dt_inicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dt_fim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nomeHospital" class="java.lang.String"/>
+	<parameter name="logo_cliente" class="java.io.InputStream"/>
+	<parameter name="nomeOuLogin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct u.nome as nome_usuario, a.tipo_senha,
+case a.tipo_senha
+   when 'N' then 'Normal'
+   when 'P' then 'Prioridade'
+   else 'Prior Especial'
+end as tipo_prioridade,
+case a.status_senha
+   when 'C' then 'Cancelada'
+   else 'Atendida'
+end as status_senha, a.id_atendimento
+from atendimento a
+inner join usuario u on u.id_usuario = a.id_usuario and u.exclusao = false
+where a.status_senha in ('C', 'I')
+and ((a.dt_atendimento is null and a.dt_senha between $P{dt_inicio} and $P{dt_fim}) or
+(a.dt_atendimento is not null and a.dt_atendimento between $P{dt_inicio} and $P{dt_fim}))
+and (translate(trim(upper(u.nome)), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY') like
+			translate(trim(upper($P{nomeOuLogin})), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY')
+	   or translate(trim(upper(u.login)), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY') like
+			translate(trim(upper($P{nomeOuLogin})), 'ÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÄËÏÖÜÇÑYÝ','AEIOUAEIOUAEIOUAOAEIOUCNYY'))
+order by u.nome asc, a.tipo_senha desc, status_senha asc]]>
+	</queryString>
+	<field name="nome_usuario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome_usuario"/>
+	</field>
+	<field name="tipo_senha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_senha"/>
+	</field>
+	<field name="tipo_prioridade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_prioridade"/>
+	</field>
+	<field name="status_senha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="status_senha"/>
+	</field>
+	<field name="id_atendimento" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id_atendimento"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="160" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="75" width="554" height="25" uuid="eb9ba542-13eb-4bd1-ba03-43e858f4e264"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeHospital}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="100" width="554" height="25" backcolor="#00CC99" uuid="60f587fb-66f6-4524-a660-e3fdafdb06a4"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="16"/>
+				</textElement>
+				<text><![CDATA[RESUMO DE ATENDIMENTOS X USUÁRIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="30" width="100" height="20" uuid="33e3d6cc-975f-4d5e-98c5-fec45203ea5b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emissão ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="404" y="30" width="150" height="20" uuid="59d8c4a8-a8f6-45c8-8f0b-5650a6585f50"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="50" width="100" height="20" uuid="146232a4-bf77-46a8-93a0-09029d03ca5f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período de ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="404" y="50" width="150" height="20" uuid="f43c79a2-f1c7-425a-b168-0b7d2e37d4d2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{dt_inicio}) + " a " +
+new SimpleDateFormat("dd/MM/yyyy").format($P{dt_fim})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="130" width="200" height="20" uuid="b168c660-92fd-4a13-95cc-45e81dcf4854">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERFIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="130" width="354" height="20" uuid="06059126-4620-442e-8eb1-e51f5a887432">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DE PRIORIDADE / SITUAÇÃO]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" isUsingCache="true" isLazy="true">
+				<reportElement x="0" y="0" width="160" height="75" uuid="3d43ca61-1983-4a14-8c5e-4aabd9581fcd"/>
+				<imageExpression><![CDATA[$P{logo_cliente}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="2e97d6d0-f967-4dae-97ed-c88a152a048c"/>
+			</line>
+			<textField>
+				<reportElement x="435" y="1" width="80" height="20" uuid="c73fab94-78d3-40c1-b5c0-bf8ca453c9c6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="1" width="40" height="20" uuid="5b465e05-3164-47c6-ba51-74c6aa2b8d84"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="150" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<crosstab>
+				<reportElement x="0" y="0" width="554" height="100" uuid="477040a4-c08d-48bb-a29e-30c031520b7e">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab_CH"/>
+					<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab_CG"/>
+					<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab_CT"/>
+					<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab_CD"/>
+				</reportElement>
+				<rowGroup name="nome_usuario" width="200" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{nome_usuario}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="200" height="40" uuid="6bd25eb6-6586-4036-9661-1d8589fa36c0"/>
+								<box leftPadding="5"/>
+								<textFieldExpression><![CDATA[$V{nome_usuario}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="300" height="20" forecolor="#FFFFFF" uuid="0e85d8dc-ae3e-4448-89f2-b445a01e1410"/>
+								<box leftPadding="5"/>
+								<text><![CDATA[Total Usuário]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="tipo_prioridade" width="100" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{tipo_prioridade}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="100" height="20" uuid="d8913795-782d-4732-b8a6-83242e995f06"/>
+								<box leftPadding="5"/>
+								<textFieldExpression><![CDATA[$V{tipo_prioridade}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CG">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="20" uuid="6f7af69d-77de-4034-90b0-ff927c27826e"/>
+								<box leftPadding="5"/>
+								<text><![CDATA[Total Tipo]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="status_senha" height="20" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{status_senha}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" uuid="d53f41ed-feaa-4a8b-9145-9cd0acfad70f"/>
+								<box leftPadding="5" rightPadding="5"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$V{status_senha}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<staticText>
+								<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="4f681758-a20f-423b-bf46-f68984b8147d"/>
+								<box leftPadding="5" rightPadding="5"/>
+								<textElement textAlignment="Right"/>
+								<text><![CDATA[Total status_senha]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="id_atendimento_MEASURE" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{id_atendimento}]]></measureExpression>
+				</measure>
+				<crosstabCell width="80" height="20">
+					<cellContents mode="Opaque" style="Crosstab_CD">
+						<textField pattern="#,##0.###">
+							<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" uuid="3fc7a9e5-a701-43a2-9784-fce91662c11c"/>
+							<box rightPadding="5"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{id_atendimento_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="80" height="20" columnTotalGroup="status_senha">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.###">
+							<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="882a264e-d7f3-4924-a7c1-e191315d65bb"/>
+							<box rightPadding="5"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{id_atendimento_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="80" height="20" rowTotalGroup="nome_usuario">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.###">
+							<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="c12d72c8-118d-4dd9-b064-93c0e4a2b03e"/>
+							<box rightPadding="5"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{id_atendimento_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="80" height="20" rowTotalGroup="nome_usuario" columnTotalGroup="status_senha">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.###">
+							<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="b96a1df7-8de5-48db-a58e-bdff2a1f8fce"/>
+							<box rightPadding="5"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{id_atendimento_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="80" height="20" rowTotalGroup="tipo_prioridade">
+					<cellContents mode="Opaque" style="Crosstab_CG">
+						<textField pattern="#,##0.###">
+							<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" uuid="35287b05-5ffe-495d-8b7f-e6a1ec7b2e34"/>
+							<box rightPadding="5"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{id_atendimento_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="80" height="20" rowTotalGroup="tipo_prioridade" columnTotalGroup="status_senha">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.###">
+							<reportElement stretchType="ContainerBottom" x="0" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="35f99fd2-4f55-47d1-8c7d-d9f3f6c2ad24"/>
+							<box rightPadding="5"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{id_atendimento_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="50" uuid="c6094ba7-e0f7-4305-8900-e4ebaf42c97d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="20"/>
+				</textElement>
+				<text><![CDATA[Não existem informações a serem impressas]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
