@@ -18,7 +18,7 @@ public interface EstoqueRepository extends CrudRepository<Estoque, EstoqueKey> {
 					"inner join produto p on p.id = e.produto_id and p.situacao = 'A' " +
 					"inner join fruta f on f.id = e.fruta_id and f.situacao = 'A' " +
 					"inner join local_estoque le on le.id = e.local_estoque_id and le.situacao = 'A' " +
-					"where (e.anomes = :anoMes or :anoMes = '000000' " + 
+					"where (e.ano_mes = :anoMes or :anoMes = '000000') " + 
 					"  and (e.produto_id = :produtoId or :produtoId = -1) " +
 					"  and (e.fruta_id = :frutaId or :frutaId = -1) " +
 					"  and (e.local_estoque_id = :localEstoqueId or :localEstoqueId = -1) " +

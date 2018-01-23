@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.fr.cupuama.rest.ClienteFornecedorFrutaREST;
 import br.com.fr.cupuama.rest.ClienteFornecedorREST;
+import br.com.fr.cupuama.rest.EstoqueREST;
 import br.com.fr.cupuama.rest.FrutaREST;
 import br.com.fr.cupuama.rest.LocalEstoqueREST;
 import br.com.fr.cupuama.rest.ProcessoMovimentacaoREST;
@@ -27,5 +28,6 @@ public class JerseyConfig extends ResourceConfig {
 		register(LocalEstoqueREST.class);
 		register(ProcessoMovimentacaoREST.class);
 		register(ClienteFornecedorREST.class);
+		register(EstoqueREST.class);
 	}
 }

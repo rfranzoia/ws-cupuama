@@ -27,11 +27,16 @@ public class LocalEstoqueService {
 	LocalEstoqueRepository repository;
 
 	public LocalEstoqueDTO get(Integer id) throws LocalEstoqueException {
-		LocalEstoque localEstoque = repository.findOne(id);
-		if (localEstoque == null) {
+		try {
+			LocalEstoque localEstoque = repository.findOne(id);
+			if (localEstoque == null) {
+				throw new NotFoundException();
+			}
+			return Util.buildDTO(localEstoque, LocalEstoqueDTO.class);
+		} catch (Exception ex) {
+			logger.error(ex);
 			throw new NotFoundException();
 		}
-		return Util.buildDTO(localEstoque, LocalEstoqueDTO.class);
 	}
 
 	public LocalEstoqueDTO save(LocalEstoqueDTO dto) throws LocalEstoqueException {

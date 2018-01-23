@@ -130,23 +130,20 @@ public class ProdutoFrutaService {
         }
 	}
     
+	public List<ProdutoFrutaDTO> listAllOrderByProdutoFruta() throws ProdutoFrutaException {
+		List<ProdutoFruta> list = repository.findOrderByProdutoAndFruta();
+    	return initializeList(list);		
+	}
+
     public List<ProdutoFrutaDTO> listByProduto(Integer produtoId) throws ProdutoFrutaException {
     	List<ProdutoFruta> list = repository.findByProduto(produtoId);
-    	list.stream().forEach(pf -> {
-    		Hibernate.initialize(pf.getKey().getProduto());
-    		Hibernate.initialize(pf.getKey().getFruta());
-    	});
-    	return Util.buildListDTO(list, ProdutoFrutaDTO.class);
+    	return initializeList(list);
     }
     
     
     public List<ProdutoFrutaDTO> listByFruta(Integer frutaId) throws ProdutoFrutaException {
     	List<ProdutoFruta> list = repository.findByFruta(frutaId);
-    	list.stream().forEach(pf -> {
-    		Hibernate.initialize(pf.getKey().getProduto());
-    		Hibernate.initialize(pf.getKey().getFruta());
-    	});
-    	return Util.buildListDTO(list, ProdutoFrutaDTO.class);
+    	return initializeList(list);
     }
 
 
@@ -178,5 +175,13 @@ public class ProdutoFrutaService {
     		save(pf);
     	}
     }
+    
+	private List<ProdutoFrutaDTO> initializeList(List<ProdutoFruta> list) {
+		list.stream().forEach(pf -> {
+    		Hibernate.initialize(pf.getKey().getProduto());
+    		Hibernate.initialize(pf.getKey().getFruta());
+    	});
+    	return Util.buildListDTO(list, ProdutoFrutaDTO.class);
+	}
 	
 }

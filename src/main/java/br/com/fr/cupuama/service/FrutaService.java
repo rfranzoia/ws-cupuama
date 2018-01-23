@@ -28,13 +28,18 @@ public class FrutaService {
 	FrutaRepository repository;
 
 	public FrutaDTO get(Integer id) throws FrutaException {
-		Fruta fruta = repository.findOne(id);
-		
-		if (fruta == null) {
-			throw new NotFoundException("nenhum registro encontrado com o ID espcificado: " + id);
+		try {
+			Fruta fruta = repository.findOne(id);
+			
+			if (fruta == null) {
+				throw new NotFoundException("nenhum registro encontrado com o ID espcificado: " + id);
+			}
+			
+			return Util.buildDTO(fruta, FrutaDTO.class);
+		} catch (Exception ex) {
+			logger.error(ex);
+			throw new NotFoundException();
 		}
-		
-		return Util.buildDTO(fruta, FrutaDTO.class);
 	}
 
 	public FrutaDTO save(FrutaDTO dto) throws FrutaException {

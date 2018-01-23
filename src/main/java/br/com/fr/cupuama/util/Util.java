@@ -25,7 +25,9 @@ public class Util {
     public static final SimpleDateFormat DATE_FORMAT_BR = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat DATE_FORMAT_COMPACT = new SimpleDateFormat("yyyyMMdd");
     public static final SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
-
+    
+    public static final SimpleDateFormat DATE_FORMAT_ANOMES = new SimpleDateFormat("yyyyMM");
+    
     public static final String PROTOCOLO_FORMAT = "([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{4})";
 
     public static final String NUM_DEDO_REGEX = "([\\D]{0,5})([0-9]{0,2})";
