@@ -90,7 +90,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", pfex)).build();
 			
 		} catch (ClienteFornecedorFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}        
 	}
 	
@@ -125,10 +125,10 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", nfex)).build();
 			
 		} catch (ClienteFornecedorFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 			
 		} catch (ClienteFornecedorException | FrutaException ex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", ex)).build();
+			return badRequest(ex);
 		}        
 	}
 	
@@ -165,7 +165,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
 			
 		} catch (ClienteFornecedorException | FrutaException ex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", ex)).build();
+			return badRequest(ex);
 		}
 	}
 	
@@ -204,7 +204,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", pfex)).build();
 			
         } catch (ClienteFornecedorFrutaException fex) {
-        	return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+        	return badRequest(fex);
 		}
     }
     
@@ -238,7 +238,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
 			
 		} catch (ClienteFornecedorException ex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", ex)).build();
+			return badRequest(ex);
 		}
     }
 	
@@ -270,7 +270,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", nfex)).build();
 			
 		} catch (ClienteFornecedorFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 			
 		} catch (FrutaException ex) {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ClienteFornecedor e/ou Fruta não encontrado(s)!", ex)).build();

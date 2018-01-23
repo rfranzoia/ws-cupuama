@@ -63,7 +63,7 @@ public class ClienteFornecedorREST extends BasicREST {
 			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), dto)).build();
 			
 		} catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}        
 	}
 	
@@ -99,7 +99,7 @@ public class ClienteFornecedorREST extends BasicREST {
 			return notFound("Nenhuma clienteFornecedor foi encontrada com o ID especificado: " + clienteFornecedorId);
 			
 		} catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}
     }
 	
@@ -134,7 +134,7 @@ public class ClienteFornecedorREST extends BasicREST {
 			return notFound("Nenhuma clienteFornecedor foi encontrada com o ID especificado: " + clienteFornecedorId);
 			
 		} catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}
     }
 	
@@ -166,7 +166,7 @@ public class ClienteFornecedorREST extends BasicREST {
         	return notFound("Nenhuma clienteFornecedor foi encontrada com o ID especificado: " + clienteFornecedorId);
         	
         } catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 
@@ -191,7 +191,7 @@ public class ClienteFornecedorREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listAll())).build();
         } catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	
@@ -217,7 +217,7 @@ public class ClienteFornecedorREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listAllOrderByNome())).build();
         } catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	
@@ -243,7 +243,7 @@ public class ClienteFornecedorREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listByTipoOrderByNome(tipo))).build();
         } catch (ClienteFornecedorException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	

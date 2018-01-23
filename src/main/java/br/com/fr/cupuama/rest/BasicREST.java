@@ -23,15 +23,23 @@ public class BasicREST implements Serializable {
 	}
 
 	public Response badRequest(String mensagem) {
-
 		return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), mensagem)).build();
-		
+	}
+	
+	public Response badRequest(Exception e) {
+		return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com o serviço!", e)).build();
+	}
+	
+	public Response badRequest(String mensagem, Exception e) {
+		return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), mensagem, e)).build();
 	}
 
 	public Response notFound(String mensagem) {
-		
 		return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), mensagem)).build();
-		
+	}
+	
+	public Response notFound(String mensagem, Object entity) {
+		return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), mensagem, entity)).build();
 	}
 
 	public Response ok() {

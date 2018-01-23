@@ -63,7 +63,7 @@ public class FrutaREST extends BasicREST {
 			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), dto)).build();
 			
 		} catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}        
 	}
 	
@@ -99,7 +99,7 @@ public class FrutaREST extends BasicREST {
 			return notFound("Nenhuma fruta foi encontrada com o ID especificado: " + frutaId);
 			
 		} catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}
     }
 	
@@ -134,7 +134,7 @@ public class FrutaREST extends BasicREST {
 			return notFound("Nenhuma fruta foi encontrada com o ID especificado: " + frutaId);
 			
 		} catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}
     }
 	
@@ -166,7 +166,7 @@ public class FrutaREST extends BasicREST {
         	return notFound("Nenhuma fruta foi encontrada com o ID especificado: " + frutaId);
         	
         } catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 
@@ -191,7 +191,7 @@ public class FrutaREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listAll())).build();
         } catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	
@@ -217,7 +217,7 @@ public class FrutaREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listAllOrderByNome())).build();
         } catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	
@@ -243,7 +243,7 @@ public class FrutaREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listBySafraOrderByNome(safra))).build();
         } catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	
@@ -273,7 +273,7 @@ public class FrutaREST extends BasicREST {
         	return notFound("Nenhuma SAFRA foi cadastrada ainda!");
         	
         } catch (FrutaException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
     

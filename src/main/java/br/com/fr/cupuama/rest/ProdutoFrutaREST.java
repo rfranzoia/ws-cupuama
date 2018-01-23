@@ -90,7 +90,7 @@ public class ProdutoFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", pfex)).build();
 			
 		} catch (ProdutoFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}        
 	}
 	
@@ -127,7 +127,7 @@ public class ProdutoFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", pfex)).build();
 			
 		} catch (ProdutoFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}        
 	}
 	
@@ -163,7 +163,7 @@ public class ProdutoFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", pfex)).build();
 			
 		} catch (ProdutoFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}        
 	}
 	
@@ -202,7 +202,7 @@ public class ProdutoFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", pfex)).build();
 			
         } catch (ProdutoFrutaException fex) {
-        	return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+        	return badRequest(fex);
 		}
     }
     
@@ -233,7 +233,7 @@ public class ProdutoFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", nfex)).build();
 			
 		} catch (ProdutoFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}
     }
 	
@@ -264,7 +264,7 @@ public class ProdutoFrutaREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", nfex)).build();
 			
 		} catch (ProdutoFrutaException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}
     }
     

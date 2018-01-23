@@ -63,7 +63,7 @@ public class TipoMovimentacaoREST extends BasicREST {
 			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), dto)).build();
 			
 		} catch (TipoMovimentacaoException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}        
 	}
 	
@@ -99,7 +99,7 @@ public class TipoMovimentacaoREST extends BasicREST {
 			return notFound("Nenhuma tipoMovimentacao foi encontrada com o ID especificado: " + tipoMovimentacaoId);
 			
 		} catch (TipoMovimentacaoException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}
     }
 	
@@ -134,7 +134,7 @@ public class TipoMovimentacaoREST extends BasicREST {
 			return notFound("Nenhuma tipoMovimentacao foi encontrada com o ID especificado: " + tipoMovimentacaoId);
 			
 		} catch (TipoMovimentacaoException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), e.getMessage(), e)).build();
+			return badRequest(e);
 		}
     }
 	
@@ -166,7 +166,7 @@ public class TipoMovimentacaoREST extends BasicREST {
         	return notFound("Nenhuma tipoMovimentacao foi encontrada com o ID especificado: " + tipoMovimentacaoId);
         	
         } catch (TipoMovimentacaoException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 
@@ -191,7 +191,7 @@ public class TipoMovimentacaoREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listAll())).build();
         } catch (TipoMovimentacaoException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	
@@ -217,7 +217,7 @@ public class TipoMovimentacaoREST extends BasicREST {
         try {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listAllOrderByNome())).build();
         } catch (TipoMovimentacaoException e) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), "Ocorreu um problema com a busca!", e)).build();
+        	return badRequest(e);
 		}
     }
 	

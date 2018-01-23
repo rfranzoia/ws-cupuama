@@ -95,7 +95,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao e/ou LocalEstoque não encontrado(s)!", lptmex)).build();
 			
 		} catch (ProcessoMovimentacaoException pmex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), pmex.getMessage(), pmex)).build();
+			return badRequest(pmex);
 		}        
 	}
 	
@@ -129,7 +129,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao e/ou LocalEstoque não encontrado(s)!", lptmex)).build();
 			
 		} catch (ProcessoMovimentacaoException pmex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), pmex.getMessage(), pmex)).build();
+			return badRequest(pmex);
 		}
 	}
 	
@@ -176,7 +176,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "ProcessoMovimentacao não encontrado(s)!", nfex)).build();
 			
 		} catch (ProcessoMovimentacaoException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}        
 	}
 	/**
@@ -216,7 +216,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao não encontrado(s)!", pfex)).build();
 			
         } catch (ProcessoMovimentacaoException fex) {
-        	return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+        	return badRequest(fex);
 		}
     }
     
@@ -244,7 +244,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao não encontrado(s)!", nfex)).build();
 			
 		} catch (ProcessoMovimentacaoException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}
     }
 	
@@ -275,7 +275,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao não encontrado(s)!", nfex)).build();
 			
 		} catch (ProcessoMovimentacaoException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}
     }
 	
@@ -306,7 +306,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao não encontrado(s)!", nfex)).build();
 			
 		} catch (ProcessoMovimentacaoException fex) {
-			return Response.status(Status.BAD_REQUEST).entity(new ResponseDTO(Status.BAD_REQUEST.getStatusCode(), fex.getMessage(), fex)).build();
+			return badRequest(fex);
 		}
     }
     
