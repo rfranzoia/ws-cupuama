@@ -25,14 +25,19 @@ public class ClienteFornecedorService {
 	@Autowired
 	ClienteFornecedorRepository repository;
 
-	public ClienteFornecedorDTO get(Integer id) throws ClienteFornecedorException {
-		ClienteFornecedor clienteFornecedor = repository.findOne(id);
-		
-		if (clienteFornecedor == null) {
-			throw new NotFoundException("nenhum registro encontrado com o ID espcificado: " + id);
+	public ClienteFornecedorDTO get(Integer id) throws ClienteFornecedorException, NotFoundException {
+		try {
+			ClienteFornecedor clienteFornecedor = repository.findOne(id);
+			
+			if (clienteFornecedor == null) {
+				throw new NotFoundException("nenhum registro encontrado com o ID espcificado: " + id);
+			}
+			
+			return Util.buildDTO(clienteFornecedor, ClienteFornecedorDTO.class);
+		} catch (Exception ex) {
+			logger.error(ex);
+			throw new NotFoundException();
 		}
-		
-		return Util.buildDTO(clienteFornecedor, ClienteFornecedorDTO.class);
 	}
 
 	public ClienteFornecedorDTO save(ClienteFornecedorDTO dto) throws ClienteFornecedorException {

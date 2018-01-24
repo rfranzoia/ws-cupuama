@@ -19,10 +19,8 @@ public interface ItensMovimentoRepository extends CrudRepository<ItensMovimento,
 					"inner join fruta f on f.id = im.fruta_id and f.situacao = 'A' " +
 					"inner join local_estoque le on le.id = im.local_estoque_id and le.situacao = 'A' " +
 					"where im.movimento_id = :movimentoId " +
-					"  and (im.tipo_entrada_saida = :tipoEntradaSaida or :tipoEntradaSaida = '%') " +
 					"order by im.id")
-	public List<ItensMovimento> findByMovimentoAndTipoEntradaSaida(@Param("movimentoId") Integer movimentoId, 
-									@Param("tipoEntradaSaida") Character tipoEntradaSaida) throws ItensMovimentoException;
+	public List<ItensMovimento> findByMovimento(@Param("movimentoId") Integer movimentoId) throws ItensMovimentoException;
 
 	@Query(nativeQuery = true, 
 			value = "select im.* " + 

@@ -8,7 +8,7 @@ public class ItensMovimentoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	
+
 	private Integer movimentodId;
 	private Date movimentodDtMovimento;
 
@@ -16,7 +16,7 @@ public class ItensMovimentoDTO implements Serializable {
 	private String movimentodTipoMovimentacaoNome;
 	private Character movimentodTipoMovimentacaoSituacao;
 
-	private String documento;
+	private String movimentoDocumento;
 
 	private Integer movimentoClienteFornecedorId;
 	private String movimentodClienteFornecedorNome;
@@ -27,23 +27,23 @@ public class ItensMovimentoDTO implements Serializable {
 	private String movimentodObservacao;
 
 	private Character tipoEntradaSaida;
-	
+
 	private Integer produtoIid;
 	private String produtoNome;
 	private String produtoUnidade;
-    private Character produtoSituacao;
-	
+	private Character produtoSituacao;
+
 	private Integer frutaId;
 	private String frutaNome;
 	private String frutaSigla;
 	private String frutaSafra;
-    private Character frutaSituacao;
-	
+	private Character frutaSituacao;
+
 	private Integer localEstoqueId;
 	private String localEstoqueNome;
 	private Character localEstoqueGuardaEstoque;
-    private Character localEstoqueSituacao;
-	
+	private Character localEstoqueSituacao;
+
 	private Float qtMovimento;
 	private Double vlMovimento;
 	private Double vlDesconto;
@@ -88,7 +88,6 @@ public class ItensMovimentoDTO implements Serializable {
 		this.vlDesconto = vlDesconto;
 	}
 
-	
 	public Integer getMovimentodId() {
 		return movimentodId;
 	}
@@ -129,12 +128,12 @@ public class ItensMovimentoDTO implements Serializable {
 		this.movimentodTipoMovimentacaoSituacao = movimentodTipoMovimentacaoSituacao;
 	}
 
-	public String getDocumento() {
-		return documento;
+	public String getMovimentoDocumento() {
+		return movimentoDocumento;
 	}
 
-	public void setDocumento(String documento) {
-		this.documento = documento;
+	public void setMovimentoDocumento(String movimentoDocumento) {
+		this.movimentoDocumento = movimentoDocumento;
 	}
 
 	public Integer getMovimentoClienteFornecedorId() {
@@ -319,8 +318,8 @@ public class ItensMovimentoDTO implements Serializable {
 		return "ItensMovimentoDTO [id=" + id + ", movimentodId=" + movimentodId + ", movimentodDtMovimento="
 				+ movimentodDtMovimento + ", movimentodTipoMovimentacaoId=" + movimentodTipoMovimentacaoId
 				+ ", movimentodTipoMovimentacaoNome=" + movimentodTipoMovimentacaoNome
-				+ ", movimentodTipoMovimentacaoSituacao=" + movimentodTipoMovimentacaoSituacao + ", documento="
-				+ documento + ", movimentoClienteFornecedorId=" + movimentoClienteFornecedorId
+				+ ", movimentodTipoMovimentacaoSituacao=" + movimentodTipoMovimentacaoSituacao + ", movimentoDocumento="
+				+ movimentoDocumento + ", movimentoClienteFornecedorId=" + movimentoClienteFornecedorId
 				+ ", movimentodClienteFornecedorNome=" + movimentodClienteFornecedorNome
 				+ ", movimentodClienteFornecedorTipo=" + movimentodClienteFornecedorTipo
 				+ ", movimentodclienteFornecedorCpfCnpj=" + movimentodclienteFornecedorCpfCnpj
@@ -334,6 +333,5 @@ public class ItensMovimentoDTO implements Serializable {
 				+ localEstoqueSituacao + ", qtMovimento=" + qtMovimento + ", vlMovimento=" + vlMovimento
 				+ ", vlDesconto=" + vlDesconto + "]";
 	}
-
 
 }

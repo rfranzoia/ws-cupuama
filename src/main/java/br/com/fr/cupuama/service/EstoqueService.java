@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.RollbackException;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 
 import org.apache.log4j.Logger;
@@ -173,6 +174,7 @@ public class EstoqueService {
 	}
 	
 	// processa um registro de estoque adicionando uma quantidade para o tipo E/S informado
+	@Transactional
 	public EstoqueDTO processSaldo(EstoqueKey key, Character tipoEntradaSaida, Float quantidade) throws EstoqueException {
 
 		if (key.getLocalEstoque().getGuardaEstoque().equals(Constantes.NAO)) {
