@@ -1,5 +1,5 @@
-# Cupuama
-Web Services para Controle de Processos de produção
+# WS - Cupuama
+Web Services para Controle de Processos de produção</br>
 de produtos à base de frutas com atualizacao de estoque.
 
 Baseado no modelo de produção da Cupuama (www.cupuama.com.br)
