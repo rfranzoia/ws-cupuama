@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class MovimentoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
 	private Date dtMovimento;
 
 	private Integer tipoMovimentacaoId;

@@ -3,6 +3,8 @@ package br.com.fr.cupuama.entity.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ItensMovimentoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -10,6 +12,8 @@ public class ItensMovimentoDTO implements Serializable {
 	private Integer id;
 
 	private Integer movimentodId;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
 	private Date movimentodDtMovimento;
 
 	private Integer movimentodTipoMovimentacaoId;

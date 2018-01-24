@@ -49,7 +49,7 @@ public class MovimentoService {
 	EstoqueService estoqueService;
 	
 	@Transactional
-	public void addMovimentoAndItensAndUpdateEstoque(MovimentoDTO movimentoDTO) throws MovimentoException {
+	public MovimentoDTO addMovimentoAndItensAndUpdateEstoque(MovimentoDTO movimentoDTO) throws MovimentoException {
 		
 		try {
 			// salva o movimento
@@ -58,6 +58,7 @@ public class MovimentoService {
 			// salva os itens
 			addItensMovimento(movimentoDTO);
 			
+			return movimentoDTO;
 		} catch (Exception ex) {
 			logger.error("", ex);
 			throw new MovimentoException(ex);
@@ -66,7 +67,7 @@ public class MovimentoService {
 	}
 
 	@Transactional
-	public void updateMovimentoItensAndEstoque(Integer movimentoId, MovimentoDTO movimentoDTO) throws MovimentoException {
+	public MovimentoDTO updateMovimentoItensAndEstoque(Integer movimentoId, MovimentoDTO movimentoDTO) throws MovimentoException {
 		
 		try {
 			// recupera o movimento original
@@ -81,6 +82,7 @@ public class MovimentoService {
 			// salva os novos itens
 			addItensMovimento(movimentoDTO);
 			
+			return movimento;
 		} catch (Exception ex) {
 			logger.error("", ex);
 			throw new MovimentoException(ex);
@@ -145,6 +147,19 @@ public class MovimentoService {
 			
 			// a quantidade é negativa pois estamos removendo um registro anterior
 			estoqueService.processSaldo(estoqueKey, itensDTO.getTipoEntradaSaida(), (itensDTO.getQtMovimento() * -1f));
+		}
+	}
+	
+	public MovimentoDTO getWithItensMovimento(Integer movimentoId) throws MovimentoException {
+		logger.warn("getWithItensMovimento()");
+		try {
+			MovimentoDTO dto = get(movimentoId);
+			List<ItensMovimentoDTO> itens = itensMovimentoService.listByMovimento(movimentoId);
+			dto.setItensMovimento(itens);
+			return dto;
+		} catch (Exception ex) {
+			logger.error("update()", ex);
+			throw new MovimentoException(ex);
 		}
 	}
 	
@@ -242,19 +257,6 @@ public class MovimentoService {
 		}
 	}
 	
-	public MovimentoDTO getWithItensMovimento(Integer movimentoId) throws MovimentoException {
-		logger.warn("getAllWithItensMovimento()");
-		try {
-			MovimentoDTO dto = get(movimentoId);
-			List<ItensMovimentoDTO> itens = itensMovimentoService.listByMovimento(movimentoId);
-			dto.setItensMovimento(itens);
-			return dto;
-		} catch (Exception ex) {
-			logger.error("update()", ex);
-			throw new MovimentoException(ex);
-		}
-	}
-	
 	public List<MovimentoDTO> listAllWithItensMovimento() throws MovimentoException {
 		logger.warn("listAllWithItensMovimento()");
 		List<MovimentoDTO> list = listAllOrderByDtMovimento();
@@ -269,7 +271,7 @@ public class MovimentoService {
 		return list;
 	}
 	
-	
+	// lista de todos os movimentos (não traz os itens)
 	public List<MovimentoDTO> listAllOrderByDtMovimento() throws MovimentoException {
 		logger.warn("listAllOrderByDtMovimento()");
 		List<Movimento> list = repository.findAllOrderByDtMovimento();
