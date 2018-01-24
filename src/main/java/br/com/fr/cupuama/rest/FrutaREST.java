@@ -231,6 +231,8 @@ public class FrutaREST extends BasicREST {
 	 * @apiName listBySafra
 	 * 
 	 * @apiGroup Fruta
+	 * 
+	 * @apiParam {String} safra Safra para pesquisar
 	 *
 	 * @apiSuccess {ResponseDTO} responseDTO	
 	 *    Mensagem de sucesso e lista de FrutaDTO (use responseDTO.getEntity() para recuperar este objeto)

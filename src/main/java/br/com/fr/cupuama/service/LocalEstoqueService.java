@@ -45,6 +45,8 @@ public class LocalEstoqueService {
 			LocalEstoque localEstoque = new LocalEstoque();
 
 			buildLocalEstoque(dto, localEstoque);
+			localEstoque.setSituacao(Constantes.SITUACAO_ATIVO);
+			
 			repository.save(localEstoque);
 
 			return Util.buildDTO(localEstoque, LocalEstoqueDTO.class);
@@ -104,7 +106,7 @@ public class LocalEstoqueService {
 			buildLocalEstoque(dto, localEstoque);
 			repository.save(localEstoque);
 
-			return dto;
+			return Util.buildDTO(localEstoque, LocalEstoqueDTO.class);
 
 		} catch (RollbackException rex) {
 			logger.error("update()", rex);

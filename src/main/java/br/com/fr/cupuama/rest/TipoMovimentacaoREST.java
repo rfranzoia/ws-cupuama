@@ -91,7 +91,7 @@ public class TipoMovimentacaoREST extends BasicREST {
 	public Response update(@PathParam("tipoMovimentacaoId") Integer tipoMovimentacaoId, TipoMovimentacaoDTO dto) throws TipoMovimentacaoException {
         try {
         	
-        	service.update(tipoMovimentacaoId, dto);
+        	dto = service.update(tipoMovimentacaoId, dto);
         	
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
             

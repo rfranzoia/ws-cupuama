@@ -91,7 +91,7 @@ public class LocalEstoqueREST extends BasicREST {
 	public Response update(@PathParam("localEstoqueId") Integer localEstoqueId, LocalEstoqueDTO dto) throws LocalEstoqueException {
         try {
         	
-        	service.update(localEstoqueId, dto);
+        	dto = service.update(localEstoqueId, dto);
         	
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
             

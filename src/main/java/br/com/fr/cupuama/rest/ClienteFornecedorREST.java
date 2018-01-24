@@ -68,7 +68,7 @@ public class ClienteFornecedorREST extends BasicREST {
 	}
 	
 	/**
-	 * @api {put} /clienteFornecedor/{clienteFornecedorId
+	 * @api {put} /clienteFornecedor/{clienteFornecedorId}
 	 *    Update
 	 *    
 	 * @apiDescription
@@ -91,7 +91,7 @@ public class ClienteFornecedorREST extends BasicREST {
 	public Response update(@PathParam("clienteFornecedorId") Integer clienteFornecedorId, ClienteFornecedorDTO dto) throws ClienteFornecedorException {
         try {
         	
-        	service.update(clienteFornecedorId, dto);
+        	dto = service.update(clienteFornecedorId, dto);
         	
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
             
@@ -104,7 +104,7 @@ public class ClienteFornecedorREST extends BasicREST {
     }
 	
 	/**
-	 * @api {delete} /clienteFornecedor/{clienteFornecedorId
+	 * @api {delete} /clienteFornecedor/{clienteFornecedorId}
 	 *    Delete
 	 *    
 	 * @apiDescription
@@ -222,7 +222,7 @@ public class ClienteFornecedorREST extends BasicREST {
     }
 	
 	/**
-	 * @api {get} /clienteFornecedor/safra/{safra}
+	 * @api {get} /clienteFornecedor/tipo/{tipo}
 	 *    List By Tipo
 	 *    
 	 * @apiDescription
@@ -231,6 +231,8 @@ public class ClienteFornecedorREST extends BasicREST {
 	 * @apiName listByTipo
 	 * 
 	 * @apiGroup ClienteFornecedor
+	 * 
+	 * @apiParam {Charactger} tipo Tipo C para cliente ou F para fornecedor
 	 *
 	 * @apiSuccess {ResponseDTO} responseDTO	
 	 *    Mensagem de sucesso e lista de ClienteFornecedorDTO (use responseDTO.getEntity() para recuperar este objeto)

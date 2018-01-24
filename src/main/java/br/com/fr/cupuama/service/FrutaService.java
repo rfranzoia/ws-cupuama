@@ -48,6 +48,8 @@ public class FrutaService {
 			Fruta fruta = new Fruta();
 
 			buildFruta(dto, fruta);
+			fruta.setSituacao(Constantes.SITUACAO_ATIVO);
+			
 			repository.save(fruta);
 
 			return Util.buildDTO(fruta, FrutaDTO.class);

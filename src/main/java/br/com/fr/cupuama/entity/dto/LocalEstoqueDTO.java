@@ -72,7 +72,7 @@ public class LocalEstoqueDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LocalEstoqueDTO {\"id\":\"" + id + "\", \"nome\":\"" + nome + "\", \"guardaEstoque\":\"" + guardaEstoque + "\"}";
+		return "LocalEstoqueDTO {\"id\":\"" + id + "\", \"nome\":\"" + nome + "\", \"guardaEstoque\":\"" + guardaEstoque + "\", \"situacao\":\"" + situacao + "\"}";
 	}
 	
 	

@@ -45,6 +45,8 @@ public class ProdutoService {
 			Produto produto = new Produto();
 
 			buildProduto(dto, produto);
+			produto.setSituacao(Constantes.SITUACAO_ATIVO);
+			
 			repository.save(produto);
 
 			return Util.buildDTO(produto, ProdutoDTO.class);

@@ -10,6 +10,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fr.cupuama.Constantes;
 import br.com.fr.cupuama.entity.ClienteFornecedor;
 import br.com.fr.cupuama.entity.dto.ClienteFornecedorDTO;
 import br.com.fr.cupuama.exception.ClienteFornecedorException;
@@ -46,6 +47,7 @@ public class ClienteFornecedorService {
 			ClienteFornecedor clienteFornecedor = new ClienteFornecedor();
 
 			buildClienteFornecedor(dto, clienteFornecedor);
+			clienteFornecedor.setSituacao(Constantes.SITUACAO_ATIVO);
 			repository.save(clienteFornecedor);
 
 			return Util.buildDTO(clienteFornecedor, ClienteFornecedorDTO.class);
@@ -105,7 +107,7 @@ public class ClienteFornecedorService {
 			buildClienteFornecedor(dto, clienteFornecedor);
 			repository.save(clienteFornecedor);
 
-			return dto;
+			return Util.buildDTO(clienteFornecedor, ClienteFornecedorDTO.class);
 
 		} catch (RollbackException rex) {
 			logger.error("update()", rex);

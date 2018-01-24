@@ -45,6 +45,7 @@ public class TipoMovimentacaoService {
 			TipoMovimentacao tipoMovimentacao = new TipoMovimentacao();
 
 			buildTipoMovimentacao(dto, tipoMovimentacao);
+			tipoMovimentacao.setSituacao(Constantes.SITUACAO_ATIVO);
 			repository.save(tipoMovimentacao);
 
 			return Util.buildDTO(tipoMovimentacao, TipoMovimentacaoDTO.class);
@@ -104,7 +105,7 @@ public class TipoMovimentacaoService {
 			buildTipoMovimentacao(dto, tipoMovimentacao);
 			repository.save(tipoMovimentacao);
 
-			return dto;
+			return Util.buildDTO(tipoMovimentacao, TipoMovimentacaoDTO.class);
 
 		} catch (RollbackException rex) {
 			logger.error("update()", rex);

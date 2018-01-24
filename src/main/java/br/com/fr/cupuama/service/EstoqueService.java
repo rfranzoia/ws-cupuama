@@ -205,6 +205,9 @@ public class EstoqueService {
 			case 'S':
 				saidas += quantidade;
 				break;
+			case 'Z':
+				saidas += quantidade;
+				entradas += quantidade;
 		}
 		
 		dto.setQtEntradas(entradas);
