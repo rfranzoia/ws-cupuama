@@ -81,7 +81,7 @@ public class Produto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Fruta [id=" + id + ", nome=" + nome + ", unidade=" + unidade + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", unidade=" + unidade + "]";
 	}
 	
 	

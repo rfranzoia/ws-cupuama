@@ -70,7 +70,7 @@ public class ProdutoDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FrutaDTO {\"id\":\"" + id + "\", \"nome\":\"" + nome + "\", \"unidade\":\"" + unidade + "\"}";
+		return "ProdutoDTO {\"id\":\"" + id + "\", \"nome\":\"" + nome + "\", \"unidade\":\"" + unidade + "\"}";
 	}
 	
 	

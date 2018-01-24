@@ -7,6 +7,7 @@ package br.com.fr.cupuama.service;
 import java.util.List;
 
 import javax.persistence.RollbackException;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 
 import org.apache.log4j.Logger;
@@ -84,6 +85,7 @@ public class ProdutoFrutaService {
         }
     }
     
+    @Transactional
 	public void deleteByProduto(Integer produtoId) throws ProdutoFrutaException {
         try {
             List<ProdutoFruta> list = repository.findByProduto(produtoId);
@@ -96,6 +98,7 @@ public class ProdutoFrutaService {
         }
 	}
 
+	@Transactional
 	public void deleteByFruta(Integer frutaId) throws ProdutoFrutaException {
         try {
             List<ProdutoFruta> list = repository.findByFruta(frutaId);
@@ -162,6 +165,7 @@ public class ProdutoFrutaService {
     }
     
 
+    @Transactional
     public void syncronizeProdutoFrutaByFruta(Integer frutaId, List<ProdutoFrutaDTO> produtoFrutaList) throws ProdutoFrutaException, ProdutoException, FrutaException {
     	FrutaDTO f = frutaService.get(frutaId);
     	
