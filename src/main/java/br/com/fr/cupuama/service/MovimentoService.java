@@ -88,6 +88,7 @@ public class MovimentoService {
 		
 	}
 
+	@Transactional
 	public void deleteMovimentoAndUpdateEstoque(Integer movimentoId) throws MovimentoException {
 		try {
 			// recupera o movimento 
@@ -95,6 +96,9 @@ public class MovimentoService {
 			
 			// remove os itens atualizando o estoque
 			deleteItensMovimento(movimento);
+			
+			// apaga o movimento
+			delete(movimentoId);
 			
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -123,6 +127,7 @@ public class MovimentoService {
 		}
 	}
 
+	@Transactional
 	private void deleteItensMovimento(MovimentoDTO movimento) throws ItensMovimentoException, EstoqueException {
 		
 		// não faz nada se não houver itens para processar
@@ -158,6 +163,7 @@ public class MovimentoService {
 		}
 	}
 	
+	@Transactional
 	public MovimentoDTO save(MovimentoDTO dto) throws MovimentoException {
 		try {
 			Movimento movimento = new Movimento();
@@ -175,6 +181,7 @@ public class MovimentoService {
 		}
 	}
 	
+	@Transactional
 	public void delete(Integer movimentoId) throws MovimentoException {
 		Movimento movimento = repository.findOne(movimentoId);
 
@@ -210,6 +217,7 @@ public class MovimentoService {
 		}
 	}
 
+	@Transactional
 	public MovimentoDTO update(Integer movimentoId, MovimentoDTO dto) throws MovimentoException {
 		try {
 
