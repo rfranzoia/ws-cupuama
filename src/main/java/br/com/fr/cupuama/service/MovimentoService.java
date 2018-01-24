@@ -76,18 +76,7 @@ public class MovimentoService {
 			update(movimentoId, movimentoDTO);
 			
 			// remove todos os itens atualizando o estoque
-			if (movimento.getItensMovimento() != null && !movimento.getItensMovimento().isEmpty()) {
-				for (ItensMovimentoDTO itensDTO : movimento.getItensMovimento()) {
-					itensMovimentoService.delete(itensDTO.getId());
-					
-					// atualiza o estoque
-					EstoqueKey estoqueKey = estoqueService.getEstoqueKey(itensDTO.getProdutoIid(), itensDTO.getFrutaId(), itensDTO.getLocalEstoqueId());
-					estoqueKey.setAnoMes(Util.DATE_FORMAT_ANOMES.format(movimento.getDtMovimento()));
-					
-					// a quantidade é negativa pois estamos removendo um registro anterior
-					estoqueService.processSaldo(estoqueKey, itensDTO.getTipoEntradaSaida(), (itensDTO.getQtMovimento() * -1f));
-				}
-			}
+			deleteItensMovimento(movimento);
 			
 			// salva os novos itens
 			addItensMovimento(movimentoDTO);
@@ -97,6 +86,20 @@ public class MovimentoService {
 			throw new MovimentoException(ex);
 		}
 		
+	}
+
+	public void deleteMovimentoAndUpdateEstoque(Integer movimentoId) throws MovimentoException {
+		try {
+			// recupera o movimento 
+			MovimentoDTO movimento = getWithItensMovimento(movimentoId);
+			
+			// remove os itens atualizando o estoque
+			deleteItensMovimento(movimento);
+			
+		} catch (Exception ex) {
+			logger.error("", ex);
+			throw new MovimentoException(ex);
+		}
 	}
 	
 	@Transactional
@@ -120,6 +123,26 @@ public class MovimentoService {
 		}
 	}
 
+	private void deleteItensMovimento(MovimentoDTO movimento) throws ItensMovimentoException, EstoqueException {
+		
+		// não faz nada se não houver itens para processar
+		if (movimento.getItensMovimento() == null || movimento.getItensMovimento().isEmpty()) {
+			return;
+		}
+		
+		// remove o item e atualiza o estoque de acordo
+		for (ItensMovimentoDTO itensDTO : movimento.getItensMovimento()) {
+			itensMovimentoService.delete(itensDTO.getId());
+			
+			// atualiza o estoque
+			EstoqueKey estoqueKey = estoqueService.getEstoqueKey(itensDTO.getProdutoIid(), itensDTO.getFrutaId(), itensDTO.getLocalEstoqueId());
+			estoqueKey.setAnoMes(Util.DATE_FORMAT_ANOMES.format(movimento.getDtMovimento()));
+			
+			// a quantidade é negativa pois estamos removendo um registro anterior
+			estoqueService.processSaldo(estoqueKey, itensDTO.getTipoEntradaSaida(), (itensDTO.getQtMovimento() * -1f));
+		}
+	}
+	
 	public MovimentoDTO get(Integer movimentoId) throws MovimentoException {
 		try {
 			Movimento m = repository.findOne(movimentoId);
