@@ -1,6 +1,8 @@
 # Cupuama
-Web Services para Controle de Processos com atualizacao de Estoque
-Baseado no modelo da Cupuama (www.cupuama.com.br)
+Web Services para Controle de Processos de produção
+de produtos à base de frutas com atualizacao de estoque.
+
+Baseado no modelo de produção da Cupuama (www.cupuama.com.br)
 
 Tecnologias
    + Java 8
