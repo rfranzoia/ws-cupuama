@@ -66,7 +66,7 @@ public class EstoqueService {
 	// recupera um registro de estoque atravez de uma chave informada
 	public EstoqueDTO get(EstoqueKey key) throws EstoqueException {
 		Estoque estoque = repository.findOne(key);
-		
+
 		if (estoque == null) {
 			throw new NotFoundException();
 		}
@@ -210,12 +210,21 @@ public class EstoqueService {
 		dto.setQtEntradas(entradas);
 		dto.setQtSaidas(saidas);
 		
-		update(key, dto);
+		dto = update(key, dto);
+		
+		// identifica o ano/mes informado é menor que o atual
+		String anoMesAtual = Util.DATE_FORMAT_ANOMES.format(new Date());
+		
+		// não processa nada se o ano/mes informado é posterior ao atual
+		if (Integer.valueOf(key.getAnoMes()) < Integer.valueOf(anoMesAtual)) {
+			updateFromAnoMesToToday(key.getAnoMes(), key.getProduto().getId(), key.getFruta().getId(), key.getLocalEstoque().getId());
+		}
 		
 		return dto;
 	}
 	
 	// atualiza os saldos dos registros de estoque que iniciam em AnoMes até o AnoMes da data corrente
+	@Transactional
 	public void updateFromAnoMesToToday(String anoMes, Integer produtoId, Integer frutaId, Integer localEstoqueId) throws EstoqueException {
 
 		// identifica o ano/mes atual
@@ -271,7 +280,7 @@ public class EstoqueService {
 				}
 				
 				anoMes = String.format("%04d", anoInicio) + String.format("%02d", mesInicio);
-				key.setAnoMes(dto.getKeyAnoMes());
+				key.setAnoMes(anoMes);
 				
 				// recupera ou cria o registro de estoque para o AnoMes calculado
 				try {
@@ -280,8 +289,10 @@ public class EstoqueService {
 					dto = save(key);
 				}
 				
+				dto.setQtSaldoAnterior(saldoAnterior);
+				
 				// atualiza o saldo
-				updateSaldoAtual(key, dto, saldoAnterior);
+				dto = update(key, dto);
 	
 				saldoAnterior = dto.getQtSaldoAtual();
 	
@@ -360,12 +371,14 @@ public class EstoqueService {
 	// atualiza o saldo de um registro especificado
 	private void updateSaldoAtual(EstoqueKey key, EstoqueDTO dto, Float saldoAnterior) throws EstoqueException {
 		Float saldoAtual = saldoAnterior + dto.getQtEntradas() - dto.getQtSaidas();
+		
 		dto.setQtSaldoAtual(saldoAtual);
 		update(key, dto);
 	}
 
 	// recupera uma chava de registro de estoque pelo Produto, Fruta e Local de Estoque informados
 	public EstoqueKey getEstoqueKey(Integer produtoId, Integer frutaId, Integer localEstoqueId) throws NotFoundException {
+		logger.warn("getEstoqueKey()");
 		try {
 			ProdutoDTO p = produtoService.get(produtoId);
 			FrutaDTO f = frutaService.get(frutaId);

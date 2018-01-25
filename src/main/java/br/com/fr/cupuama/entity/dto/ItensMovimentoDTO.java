@@ -11,28 +11,27 @@ public class ItensMovimentoDTO implements Serializable {
 
 	private Integer id;
 
-	private Integer movimentodId;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
-	private Date movimentodDtMovimento;
+	private Integer movimentoId;
 
-	private Integer movimentodTipoMovimentacaoId;
-	private String movimentodTipoMovimentacaoNome;
-	private Character movimentodTipoMovimentacaoSituacao;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+	private Date movimentoDtMovimento;
+
+	private Integer movimentoTipoMovimentacaoId;
+	private String movimentoTipoMovimentacaoNome;
+	private Character movimentoTipoMovimentacaoSituacao;
 
 	private String movimentoDocumento;
 
 	private Integer movimentoClienteFornecedorId;
-	private String movimentodClienteFornecedorNome;
-	private Character movimentodClienteFornecedorTipo;
-	private String movimentodclienteFornecedorCpfCnpj;
-	private Character movimentodClienteFornecedorSituacao;
+	private String movimentoClienteFornecedorNome;
+	private String movimentoClienteFornecedorCpfCnpj;
+	private Character movimentoClienteFornecedorSituacao;
 
-	private String movimentodObservacao;
+	private String movimentoObservacao;
 
 	private Character tipoEntradaSaida;
 
-	private Integer produtoIid;
+	private Integer produtoId;
 	private String produtoNome;
 	private String produtoUnidade;
 	private Character produtoSituacao;
@@ -92,46 +91,6 @@ public class ItensMovimentoDTO implements Serializable {
 		this.vlDesconto = vlDesconto;
 	}
 
-	public Integer getMovimentodId() {
-		return movimentodId;
-	}
-
-	public void setMovimentodId(Integer movimentodId) {
-		this.movimentodId = movimentodId;
-	}
-
-	public Date getMovimentodDtMovimento() {
-		return movimentodDtMovimento;
-	}
-
-	public void setMovimentodDtMovimento(Date movimentodDtMovimento) {
-		this.movimentodDtMovimento = movimentodDtMovimento;
-	}
-
-	public Integer getMovimentodTipoMovimentacaoId() {
-		return movimentodTipoMovimentacaoId;
-	}
-
-	public void setMovimentodTipoMovimentacaoId(Integer movimentodTipoMovimentacaoId) {
-		this.movimentodTipoMovimentacaoId = movimentodTipoMovimentacaoId;
-	}
-
-	public String getMovimentodTipoMovimentacaoNome() {
-		return movimentodTipoMovimentacaoNome;
-	}
-
-	public void setMovimentodTipoMovimentacaoNome(String movimentodTipoMovimentacaoNome) {
-		this.movimentodTipoMovimentacaoNome = movimentodTipoMovimentacaoNome;
-	}
-
-	public Character getMovimentodTipoMovimentacaoSituacao() {
-		return movimentodTipoMovimentacaoSituacao;
-	}
-
-	public void setMovimentodTipoMovimentacaoSituacao(Character movimentodTipoMovimentacaoSituacao) {
-		this.movimentodTipoMovimentacaoSituacao = movimentodTipoMovimentacaoSituacao;
-	}
-
 	public String getMovimentoDocumento() {
 		return movimentoDocumento;
 	}
@@ -148,52 +107,12 @@ public class ItensMovimentoDTO implements Serializable {
 		this.movimentoClienteFornecedorId = movimentoClienteFornecedorId;
 	}
 
-	public String getMovimentodClienteFornecedorNome() {
-		return movimentodClienteFornecedorNome;
+	public Integer getProdutoId() {
+		return produtoId;
 	}
 
-	public void setMovimentodClienteFornecedorNome(String movimentodClienteFornecedorNome) {
-		this.movimentodClienteFornecedorNome = movimentodClienteFornecedorNome;
-	}
-
-	public Character getMovimentodClienteFornecedorTipo() {
-		return movimentodClienteFornecedorTipo;
-	}
-
-	public void setMovimentodClienteFornecedorTipo(Character movimentodClienteFornecedorTipo) {
-		this.movimentodClienteFornecedorTipo = movimentodClienteFornecedorTipo;
-	}
-
-	public String getMovimentodclienteFornecedorCpfCnpj() {
-		return movimentodclienteFornecedorCpfCnpj;
-	}
-
-	public void setMovimentodclienteFornecedorCpfCnpj(String movimentodclienteFornecedorCpfCnpj) {
-		this.movimentodclienteFornecedorCpfCnpj = movimentodclienteFornecedorCpfCnpj;
-	}
-
-	public Character getMovimentodClienteFornecedorSituacao() {
-		return movimentodClienteFornecedorSituacao;
-	}
-
-	public void setMovimentodClienteFornecedorSituacao(Character movimentodClienteFornecedorSituacao) {
-		this.movimentodClienteFornecedorSituacao = movimentodClienteFornecedorSituacao;
-	}
-
-	public String getMovimentodObservacao() {
-		return movimentodObservacao;
-	}
-
-	public void setMovimentodObservacao(String movimentodObservacao) {
-		this.movimentodObservacao = movimentodObservacao;
-	}
-
-	public Integer getProdutoIid() {
-		return produtoIid;
-	}
-
-	public void setProdutoIid(Integer produtoIid) {
-		this.produtoIid = produtoIid;
+	public void setProdutoId(Integer produtoId) {
+		this.produtoId = produtoId;
 	}
 
 	public String getProdutoNome() {
@@ -292,6 +211,78 @@ public class ItensMovimentoDTO implements Serializable {
 		this.localEstoqueSituacao = localEstoqueSituacao;
 	}
 
+	public Integer getMovimentoId() {
+		return movimentoId;
+	}
+
+	public void setMovimentoId(Integer movimentoId) {
+		this.movimentoId = movimentoId;
+	}
+
+	public Date getMovimentoDtMovimento() {
+		return movimentoDtMovimento;
+	}
+
+	public void setMovimentoDtMovimento(Date movimentoDtMovimento) {
+		this.movimentoDtMovimento = movimentoDtMovimento;
+	}
+
+	public Integer getMovimentoTipoMovimentacaoId() {
+		return movimentoTipoMovimentacaoId;
+	}
+
+	public void setMovimentoTipoMovimentacaoId(Integer movimentoTipoMovimentacaoId) {
+		this.movimentoTipoMovimentacaoId = movimentoTipoMovimentacaoId;
+	}
+
+	public String getMovimentoTipoMovimentacaoNome() {
+		return movimentoTipoMovimentacaoNome;
+	}
+
+	public void setMovimentoTipoMovimentacaoNome(String movimentoTipoMovimentacaoNome) {
+		this.movimentoTipoMovimentacaoNome = movimentoTipoMovimentacaoNome;
+	}
+
+	public Character getMovimentoTipoMovimentacaoSituacao() {
+		return movimentoTipoMovimentacaoSituacao;
+	}
+
+	public void setMovimentoTipoMovimentacaoSituacao(Character movimentoTipoMovimentacaoSituacao) {
+		this.movimentoTipoMovimentacaoSituacao = movimentoTipoMovimentacaoSituacao;
+	}
+
+	public String getMovimentoClienteFornecedorNome() {
+		return movimentoClienteFornecedorNome;
+	}
+
+	public void setMovimentoClienteFornecedorNome(String movimentoClienteFornecedorNome) {
+		this.movimentoClienteFornecedorNome = movimentoClienteFornecedorNome;
+	}
+
+	public String getMovimentoClienteFornecedorCpfCnpj() {
+		return movimentoClienteFornecedorCpfCnpj;
+	}
+
+	public void setMovimentoClienteFornecedorCpfCnpj(String movimentoClienteFornecedorCpfCnpj) {
+		this.movimentoClienteFornecedorCpfCnpj = movimentoClienteFornecedorCpfCnpj;
+	}
+
+	public Character getMovimentoClienteFornecedorSituacao() {
+		return movimentoClienteFornecedorSituacao;
+	}
+
+	public void setMovimentoClienteFornecedorSituacao(Character movimentoClienteFornecedorSituacao) {
+		this.movimentoClienteFornecedorSituacao = movimentoClienteFornecedorSituacao;
+	}
+
+	public String getMovimentoObservacao() {
+		return movimentoObservacao;
+	}
+
+	public void setMovimentoObservacao(String movimentoObservacao) {
+		this.movimentoObservacao = movimentoObservacao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -319,17 +310,16 @@ public class ItensMovimentoDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ItensMovimentoDTO [id=" + id + ", movimentodId=" + movimentodId + ", movimentodDtMovimento="
-				+ movimentodDtMovimento + ", movimentodTipoMovimentacaoId=" + movimentodTipoMovimentacaoId
-				+ ", movimentodTipoMovimentacaoNome=" + movimentodTipoMovimentacaoNome
-				+ ", movimentodTipoMovimentacaoSituacao=" + movimentodTipoMovimentacaoSituacao + ", movimentoDocumento="
+		return "ItensMovimentoDTO [id=" + id + ", movimentoId=" + movimentoId + ", movimentoDtMovimento="
+				+ movimentoDtMovimento + ", movimentoTipoMovimentacaoId=" + movimentoTipoMovimentacaoId
+				+ ", movimentoTipoMovimentacaoNome=" + movimentoTipoMovimentacaoNome
+				+ ", movimentoTipoMovimentacaoSituacao=" + movimentoTipoMovimentacaoSituacao + ", movimentoDocumento="
 				+ movimentoDocumento + ", movimentoClienteFornecedorId=" + movimentoClienteFornecedorId
-				+ ", movimentodClienteFornecedorNome=" + movimentodClienteFornecedorNome
-				+ ", movimentodClienteFornecedorTipo=" + movimentodClienteFornecedorTipo
-				+ ", movimentodclienteFornecedorCpfCnpj=" + movimentodclienteFornecedorCpfCnpj
-				+ ", movimentodClienteFornecedorSituacao=" + movimentodClienteFornecedorSituacao
-				+ ", movimentodObservacao=" + movimentodObservacao + ", tipoEntradaSaida=" + tipoEntradaSaida
-				+ ", produtoIid=" + produtoIid + ", produtoNome=" + produtoNome + ", produtoUnidade=" + produtoUnidade
+				+ ", movimentoClienteFornecedorNome=" + movimentoClienteFornecedorNome
+				+ ", movimentoClienteFornecedorCpfCnpj=" + movimentoClienteFornecedorCpfCnpj
+				+ ", movimentoClienteFornecedorSituacao=" + movimentoClienteFornecedorSituacao
+				+ ", movimentoObservacao=" + movimentoObservacao + ", tipoEntradaSaida=" + tipoEntradaSaida
+				+ ", produtoId=" + produtoId + ", produtoNome=" + produtoNome + ", produtoUnidade=" + produtoUnidade
 				+ ", produtoSituacao=" + produtoSituacao + ", frutaId=" + frutaId + ", frutaNome=" + frutaNome
 				+ ", frutaSigla=" + frutaSigla + ", frutaSafra=" + frutaSafra + ", frutaSituacao=" + frutaSituacao
 				+ ", localEstoqueId=" + localEstoqueId + ", localEstoqueNome=" + localEstoqueNome

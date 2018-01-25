@@ -51,28 +51,37 @@ public class MovimentoService {
 	@Transactional
 	public MovimentoDTO addMovimentoAndItensAndUpdateEstoque(MovimentoDTO movimentoDTO) throws MovimentoException {
 		
+		if (movimentoDTO == null) {
+			throw new NotFoundException("Nenhum informação de movimento foi encontrada!");
+		}
+
+		// guarda a lista de itens para salvar posteriormente
+		List<ItensMovimentoDTO> itens = movimentoDTO.getItensMovimento();
+		
+		// salva o movimento
+		movimentoDTO = save(movimentoDTO);
+		
+		movimentoDTO.setItensMovimento(itens);
+
 		try {
-			// salva o movimento
-			movimentoDTO = save(movimentoDTO);
-			
 			// salva os itens
-			addItensMovimento(movimentoDTO);
-			
-			return movimentoDTO;
-		} catch (Exception ex) {
-			logger.error("", ex);
+			addItensMovimento(movimentoDTO);	
+		} catch (ItensMovimentoException | EstoqueException ex) {
+			logger.error(ex);
 			throw new MovimentoException(ex);
 		}
+		
+		return movimentoDTO;
 		
 	}
 
 	@Transactional
 	public MovimentoDTO updateMovimentoItensAndEstoque(Integer movimentoId, MovimentoDTO movimentoDTO) throws MovimentoException {
 		
+		// recupera o movimento original
+		MovimentoDTO movimento = getWithItensMovimento(movimentoId);
+
 		try {
-			// recupera o movimento original
-			MovimentoDTO movimento = getWithItensMovimento(movimentoId);
-			
 			// atualiza o movimento primeiro
 			update(movimentoId, movimentoDTO);
 			
@@ -81,31 +90,32 @@ public class MovimentoService {
 			
 			// salva os novos itens
 			addItensMovimento(movimentoDTO);
-			
-			return movimento;
-		} catch (Exception ex) {
-			logger.error("", ex);
+		} catch (ItensMovimentoException | EstoqueException ex) {
+			logger.error(ex);
 			throw new MovimentoException(ex);
 		}
 		
+		return movimento;
 	}
 
 	@Transactional
 	public void deleteMovimentoAndUpdateEstoque(Integer movimentoId) throws MovimentoException {
+		
+		// recupera o movimento 
+		MovimentoDTO movimento = getWithItensMovimento(movimentoId);
+		
 		try {
-			// recupera o movimento 
-			MovimentoDTO movimento = getWithItensMovimento(movimentoId);
-			
 			// remove os itens atualizando o estoque
 			deleteItensMovimento(movimento);
 			
-			// apaga o movimento
-			delete(movimentoId);
-			
-		} catch (Exception ex) {
-			logger.error("", ex);
+		} catch (ItensMovimentoException | EstoqueException ex) {
+			logger.error(ex);
 			throw new MovimentoException(ex);
 		}
+		
+		// apaga o movimento
+		delete(movimentoId);
+			
 	}
 	
 	@Transactional
@@ -118,11 +128,11 @@ public class MovimentoService {
 		
 		// adiciona o item e atualiza o estoque de acordo
 		for (ItensMovimentoDTO itensDTO : movimentoDTO.getItensMovimento()) {
-			itensDTO.setMovimentodId(movimentoDTO.getId());
+			itensDTO.setMovimentoId(movimentoDTO.getId());
 			itensDTO = itensMovimentoService.save(itensDTO);
 			
 			// atualiza o estoque
-			EstoqueKey estoqueKey = estoqueService.getEstoqueKey(itensDTO.getProdutoIid(), itensDTO.getFrutaId(), itensDTO.getLocalEstoqueId());
+			EstoqueKey estoqueKey = estoqueService.getEstoqueKey(itensDTO.getProdutoId(), itensDTO.getFrutaId(), itensDTO.getLocalEstoqueId());
 			estoqueKey.setAnoMes(Util.DATE_FORMAT_ANOMES.format(movimentoDTO.getDtMovimento()));
 			
 			estoqueService.processSaldo(estoqueKey, itensDTO.getTipoEntradaSaida(), itensDTO.getQtMovimento());
@@ -142,7 +152,7 @@ public class MovimentoService {
 			itensMovimentoService.delete(itensDTO.getId());
 			
 			// atualiza o estoque
-			EstoqueKey estoqueKey = estoqueService.getEstoqueKey(itensDTO.getProdutoIid(), itensDTO.getFrutaId(), itensDTO.getLocalEstoqueId());
+			EstoqueKey estoqueKey = estoqueService.getEstoqueKey(itensDTO.getProdutoId(), itensDTO.getFrutaId(), itensDTO.getLocalEstoqueId());
 			estoqueKey.setAnoMes(Util.DATE_FORMAT_ANOMES.format(movimento.getDtMovimento()));
 			
 			// a quantidade é negativa pois estamos removendo um registro anterior
@@ -152,30 +162,27 @@ public class MovimentoService {
 	
 	public MovimentoDTO getWithItensMovimento(Integer movimentoId) throws MovimentoException {
 		logger.warn("getWithItensMovimento()");
+		
+		MovimentoDTO dto = get(movimentoId);
+		
 		try {
-			MovimentoDTO dto = get(movimentoId);
 			List<ItensMovimentoDTO> itens = itensMovimentoService.listByMovimento(movimentoId);
-			dto.setItensMovimento(itens);
-			return dto;
-		} catch (Exception ex) {
-			logger.error("update()", ex);
-			throw new MovimentoException(ex);
+			dto.setItensMovimento(itens);	
+		} catch (ItensMovimentoException imex) {
+			logger.error(imex);
 		}
+		
+		return dto;
 	}
 	
 	public MovimentoDTO get(Integer movimentoId) throws MovimentoException {
-		try {
-			Movimento m = repository.findOne(movimentoId);
-			
-			if (m == null) {
-				throw new NotFoundException("nenhum registro foi encontrado com o ID especificado!");
-			}
-			 
-			return Util.buildDTO(m, MovimentoDTO.class);
-		} catch (Exception ex) {
-			logger.error("", ex);
-			throw new NotFoundException(ex);
+		Movimento m = repository.findOne(movimentoId);
+		
+		if (m == null) {
+			throw new NotFoundException("Nenhum movimento foi encontrado!");
 		}
+		 
+		return Util.buildDTO(m, MovimentoDTO.class);
 	}
 	
 	@Transactional
@@ -187,12 +194,13 @@ public class MovimentoService {
 			repository.save(movimento);
 
 			return Util.buildDTO(movimento, MovimentoDTO.class);
+		} catch (TipoMovimentacaoException | ClienteFornecedorException ex) {
+			logger.error("save()", ex);
+			throw new MovimentoException((Exception) ex.getCause());
+			
 		} catch (RollbackException rex) {
 			logger.error("save()", rex);
 			throw new MovimentoException((Exception) rex.getCause());
-		} catch (Exception ex) {
-			logger.error("save()", ex);
-			throw new MovimentoException(ex);
 		}
 	}
 	
@@ -253,7 +261,7 @@ public class MovimentoService {
 
 		} catch (Exception ex) {
 			logger.error("update()", ex);
-			throw ex;
+			throw new MovimentoException(ex);
 		}
 	}
 	
@@ -287,7 +295,7 @@ public class MovimentoService {
 		return Util.buildListDTO(list, MovimentoDTO.class);
 	}
 	
-	private void buildMovimento(MovimentoDTO dto, Movimento movimento) throws MovimentoException {
+	private void buildMovimento(MovimentoDTO dto, Movimento movimento) throws MovimentoException, ClienteFornecedorException, TipoMovimentacaoException {
 		try {
 			ClienteFornecedorDTO cf = clienteFornecedorService.get(dto.getClienteFornecedorId());
 			TipoMovimentacaoDTO tm = tipoMovimentacaoService.get(dto.getTipoMovimentacaoId());
@@ -297,9 +305,13 @@ public class MovimentoService {
 			movimento.setDtMovimento(dto.getDtMovimento());
 			movimento.setObservacao(dto.getObservacao());
 			movimento.setTipoMovimentacao(Util.buildDTO(tm, TipoMovimentacao.class));
+		} catch (NotFoundException nfe) {
+			logger.error("", nfe);
+			throw nfe;
+			
 		} catch (ClienteFornecedorException | TipoMovimentacaoException ex) {
 			logger.error("", ex);
-			throw new MovimentoException(ex);
+			throw ex;
 		}
 		
 	}

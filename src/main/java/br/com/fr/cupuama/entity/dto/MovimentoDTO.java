@@ -12,7 +12,7 @@ public class MovimentoDTO implements Serializable {
 
 	private Integer id;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date dtMovimento;
 
 	private Integer tipoMovimentacaoId;

@@ -85,7 +85,7 @@ public class LocalEstoque implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Fruta [id=" + id + ", nome=" + nome + ", guardaEstoque=" + guardaEstoque + "]";
+		return "LocalEstoque [id=" + id + ", nome=" + nome + ", guardaEstoque=" + guardaEstoque + "]";
 	}
 	
 	

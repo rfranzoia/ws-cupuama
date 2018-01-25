@@ -15,6 +15,7 @@ public interface ItensMovimentoRepository extends CrudRepository<ItensMovimento,
 	@Query(nativeQuery = true, 
 			value = "select im.* " +  
 					"from itens_movimento im " +
+					"inner join movimento m on m.id = im.movimento_id " +
 					"inner join produto p on p.id = im.produto_id and p.situacao = 'A' " +
 					"inner join fruta f on f.id = im.fruta_id and f.situacao = 'A' " +
 					"inner join local_estoque le on le.id = im.local_estoque_id and le.situacao = 'A' " +

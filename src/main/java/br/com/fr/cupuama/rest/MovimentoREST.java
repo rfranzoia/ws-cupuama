@@ -60,7 +60,10 @@ public class MovimentoREST extends BasicREST {
 			
 			URI location = uriInfo.getRequestUriBuilder().path(dto.getId().toString()).build();
 			
-			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), dto)).build();
+			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), service.getWithItensMovimento(dto.getId()))).build();
+			
+		} catch (NotFoundException nfe) {
+			return notFound(nfe.getMessage());
 			
 		} catch (MovimentoException e) {
 			return badRequest(e);
@@ -94,10 +97,10 @@ public class MovimentoREST extends BasicREST {
         	
         	dto = service.updateMovimentoItensAndEstoque(movimentoId, dto);
         	
-            return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
+            return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.getWithItensMovimento(dto.getId()))).build();
             
 		} catch (NotFoundException nfe) {
-			return notFound("Nenhuma movimento foi encontrada com o ID especificado: " + movimentoId);
+			return notFound(nfe.getMessage());
 			
 		} catch (MovimentoException e) {
 			return badRequest(e);
@@ -132,7 +135,7 @@ public class MovimentoREST extends BasicREST {
         	return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode())).build();
             
 		} catch (NotFoundException nfe) {
-			return notFound("Nenhuma movimento foi encontrada com o ID especificado: " + movimentoId);
+			return notFound(nfe.getMessage());
 			
 		} catch (MovimentoException e) {
 			return badRequest(e);
@@ -164,7 +167,7 @@ public class MovimentoREST extends BasicREST {
         	MovimentoDTO dto = service.getWithItensMovimento(movimentoId);
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
         } catch (NotFoundException nfe) {
-        	return notFound("Nenhuma movimento foi encontrada com o ID especificado: " + movimentoId);
+        	return notFound(nfe.getMessage());
         	
         } catch (MovimentoException e) {
         	return badRequest(e);
@@ -212,7 +215,7 @@ public class MovimentoREST extends BasicREST {
 	 *
 	 */
 	@GET
-	@Path("/includeItems")
+	@Path("/includeItens")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
     public Response listAllWithItensMovimento() throws Exception {
         try {

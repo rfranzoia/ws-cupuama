@@ -26,7 +26,7 @@ public class TipoMovimentacaoService {
 	@Autowired
 	TipoMovimentacaoRepository repository;
 
-	public TipoMovimentacaoDTO get(Integer id) throws TipoMovimentacaoException, NotFoundException {
+	public TipoMovimentacaoDTO get(Integer id) throws TipoMovimentacaoException {
 		TipoMovimentacao tipoMovimentacao = repository.findOne(id);
 		
 		if (tipoMovimentacao == null) {

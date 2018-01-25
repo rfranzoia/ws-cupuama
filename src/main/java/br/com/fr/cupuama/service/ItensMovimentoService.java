@@ -120,6 +120,7 @@ public class ItensMovimentoService {
 	// inicializa uma lista de registros e gera a lista de DTO correspondente
 	private List<ItensMovimentoDTO> initializeList(List<ItensMovimento> list) {
 		for (ItensMovimento im : list) {
+			Hibernate.initialize(im.getMovimento());
 			Hibernate.initialize(im.getFruta());
 			Hibernate.initialize(im.getProduto());
 			Hibernate.initialize(im.getLocalEstoque());
@@ -129,9 +130,9 @@ public class ItensMovimentoService {
 	
 	private void buildItensMovimento(ItensMovimentoDTO dto, ItensMovimento itensMovimento) throws ItensMovimentoException {
 		try {
-			MovimentoDTO movimento = movimentoService.get(dto.getMovimentodId());
+			MovimentoDTO movimento = movimentoService.get(dto.getMovimentoId());
 			FrutaDTO fruta = frutaService.get(dto.getFrutaId());
-			ProdutoDTO produto = produtoService.get(dto.getProdutoIid());
+			ProdutoDTO produto = produtoService.get(dto.getProdutoId());
 			LocalEstoqueDTO localEstoque = localEstoqueService.get(dto.getLocalEstoqueId());
 			
 			itensMovimento.setFruta(Util.buildDTO(fruta, Fruta.class));
