@@ -141,9 +141,6 @@ public class EstoqueService {
 			logger.error("delete():rollback", rex);
 			throw new EstoqueException((Exception) rex.getCause());
 			
-		} catch (Exception ex) {
-			logger.error("delete()", ex);
-			throw new EstoqueException(ex);
 		}
 	}
 
@@ -155,7 +152,7 @@ public class EstoqueService {
 			Estoque estoque = repository.findOne(key);
 
 			if (estoque == null) {
-				throw new NotFoundException();
+				throw new NotFoundException("Registro de Estoque não foi encontrado!");
 			}
 
 			buildEstoque(dto, estoque);

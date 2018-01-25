@@ -5,12 +5,25 @@ import java.io.Serializable;
 public class EstoqueDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String keyAnoMes;
+
 	private Integer keyProdutoId;
+	private String keyProdutoNome;
+	private String keyProdutoUnidade;
+	private String keyProdutoSituacao;
+
 	private Integer keyFrutaId;
+	private String keyFrutaNome;
+	private String keyFrutaSigla;
+	private String keyFrutaSafra;
+	private String keyFrutaSituacao;
+
 	private Integer keyLocalEstoqueId;
-	
+	private String keyLocalEstoqueNome;
+	private String keyLocalEstoqueGuardaEstoque;
+	private String keyLocalEstoqueSituacao;
+
 	private Float qtSaldoAnterior;
 	private Float qtEntradas;
 	private Float qtSaidas;
@@ -80,6 +93,85 @@ public class EstoqueDTO implements Serializable {
 		this.qtSaldoAtual = qtSaldoAtual;
 	}
 
+	public String getKeyProdutoNome() {
+		return keyProdutoNome;
+	}
+
+	public void setKeyProdutoNome(String keyProdutoNome) {
+		this.keyProdutoNome = keyProdutoNome;
+	}
+
+	public String getKeyProdutoUnidade() {
+		return keyProdutoUnidade;
+	}
+
+	public void setKeyProdutoUnidade(String keyProdutoUnidade) {
+		this.keyProdutoUnidade = keyProdutoUnidade;
+	}
+
+	public String getKeyProdutoSituacao() {
+		return keyProdutoSituacao;
+	}
+
+	public void setKeyProdutoSituacao(String keyProdutoSituacao) {
+		this.keyProdutoSituacao = keyProdutoSituacao;
+	}
+
+	public String getKeyFrutaNome() {
+		return keyFrutaNome;
+	}
+
+	public void setKeyFrutaNome(String keyFrutaNome) {
+		this.keyFrutaNome = keyFrutaNome;
+	}
+
+	public String getKeyFrutaSigla() {
+		return keyFrutaSigla;
+	}
+
+	public void setKeyFrutaSigla(String keyFrutaSigla) {
+		this.keyFrutaSigla = keyFrutaSigla;
+	}
+
+	public String getKeyFrutaSafra() {
+		return keyFrutaSafra;
+	}
+
+	public void setKeyFrutaSafra(String keyFrutaSafra) {
+		this.keyFrutaSafra = keyFrutaSafra;
+	}
+
+	public String getKeyFrutaSituacao() {
+		return keyFrutaSituacao;
+	}
+
+	public void setKeyFrutaSituacao(String keyFrutaSituacao) {
+		this.keyFrutaSituacao = keyFrutaSituacao;
+	}
+
+	public String getKeyLocalEstoqueNome() {
+		return keyLocalEstoqueNome;
+	}
+
+	public void setKeyLocalEstoqueNome(String keyLocalEstoqueNome) {
+		this.keyLocalEstoqueNome = keyLocalEstoqueNome;
+	}
+
+	public String getKeyLocalEstoqueGuardaEstoque() {
+		return keyLocalEstoqueGuardaEstoque;
+	}
+
+	public void setKeyLocalEstoqueGuardaEstoque(String keyLocalEstoqueGuardaEstoque) {
+		this.keyLocalEstoqueGuardaEstoque = keyLocalEstoqueGuardaEstoque;
+	}
+
+	public String getKeyLocalEstoqueSituacao() {
+		return keyLocalEstoqueSituacao;
+	}
+
+	public void setKeyLocalEstoqueSituacao(String keyLocalEstoqueSituacao) {
+		this.keyLocalEstoqueSituacao = keyLocalEstoqueSituacao;
+	}
 
 	@Override
 	public int hashCode() {
@@ -126,17 +218,10 @@ public class EstoqueDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "EstoqueDTO {"
-				+ "\"keyAnoMes\":\"" + keyAnoMes + "\", "
-				+ "\"keyProdutoId\":" + keyProdutoId + ", "
-				+ "\"keyFrutaId\":" + keyFrutaId + ", "
-				+ "\"keyLocalEstoqueId\":" + keyLocalEstoqueId  + ", "
-				+ "\"qtSaldoAnterior\":" + qtSaldoAnterior + ", "
-				+ "\"qtEntradas\":" + qtEntradas + ", "
-				+ "\"qtSaidas\":" + qtSaidas + ", "
-				+ "\"qtSaldoAtual\":" + qtSaldoAtual 
-				+ "}";
+		return "EstoqueDTO {" + "\"keyAnoMes\":\"" + keyAnoMes + "\", " + "\"keyProdutoId\":" + keyProdutoId + ", "
+				+ "\"keyFrutaId\":" + keyFrutaId + ", " + "\"keyLocalEstoqueId\":" + keyLocalEstoqueId + ", "
+				+ "\"qtSaldoAnterior\":" + qtSaldoAnterior + ", " + "\"qtEntradas\":" + qtEntradas + ", "
+				+ "\"qtSaidas\":" + qtSaidas + ", " + "\"qtSaldoAtual\":" + qtSaldoAtual + "}";
 	}
 
-	
 }
