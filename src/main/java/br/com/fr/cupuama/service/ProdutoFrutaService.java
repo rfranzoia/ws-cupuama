@@ -32,6 +32,7 @@ import br.com.fr.cupuama.util.Util;
  *
  * @author p001269
  */
+@SuppressWarnings("unused")
 @Service
 public class ProdutoFrutaService {
 
@@ -47,26 +48,25 @@ public class ProdutoFrutaService {
 	FrutaService frutaService;
 
     public ProdutoFrutaDTO get(ProdutoFrutaKey key) throws ProdutoFrutaException {
-        try {
-        	ProdutoFruta pf = repository.findOne(key);
-        	
-    		Hibernate.initialize(pf.getKey().getProduto());
-    		Hibernate.initialize(pf.getKey().getFruta());
-    		
-            return Util.buildDTO(pf, ProdutoFrutaDTO.class);
-        } catch (Exception ex) {
-            logger.error("get()", ex);
-            throw ex;
-        }
+		ProdutoFruta pf = repository.findOne(key);
+		
+		if (pf == null) {
+			throw new NotFoundException("Produto x Fruta não encontrado!");
+		}
+		
+		Hibernate.initialize(pf.getKey().getProduto());
+		Hibernate.initialize(pf.getKey().getFruta());
+		
+	    return Util.buildDTO(pf, ProdutoFrutaDTO.class);
     }
     
-    public void save(ProdutoFrutaDTO dto) throws ProdutoFrutaException, ProdutoException, FrutaException {
+    public ProdutoFrutaDTO save(ProdutoFrutaDTO dto) throws ProdutoFrutaException, ProdutoException, FrutaException {
         try {
     		ProdutoDTO p = produtoService.get(dto.getKeyProdutoId());
     		FrutaDTO f = frutaService.get(dto.getKeyFrutaId());
     		
     		if (p == null || f == null) {
-    			throw new NotFoundException();
+    			throw new NotFoundException("Produto e/ou Fruta não encontrado(s)!");
     		}
     		
     		ProdutoFrutaKey key = new ProdutoFrutaKey();
@@ -77,6 +77,8 @@ public class ProdutoFrutaService {
         	produtoFruta.setKey(key);
         	
             repository.save(produtoFruta);
+            
+            return Util.buildDTO(produtoFruta, ProdutoFrutaDTO.class);
             
         } catch (RollbackException rex) {
             logger.error("save()", rex);
@@ -154,13 +156,20 @@ public class ProdutoFrutaService {
     	ProdutoDTO p = produtoService.get(produtoId);
     	
     	if (p == null) {
-    		throw new NotFoundException();
+    		throw new NotFoundException("Produto não encontrado!");
     	}
     	
     	deleteByProduto(produtoId);
     	
     	for (ProdutoFrutaDTO pf : produtoFrutaList) {
-    		save(pf);
+    		if (pf.getKeyProdutoId().equals(produtoId)) {
+    			try {
+					FrutaDTO f = frutaService.get(pf.getKeyFrutaId());
+    				save(pf);	
+				} catch (NotFoundException nfe) {
+					logger.error(nfe);
+				}
+    		}
     	}
     }
     
@@ -170,13 +179,20 @@ public class ProdutoFrutaService {
     	FrutaDTO f = frutaService.get(frutaId);
     	
     	if (f == null) {
-    		throw new NotFoundException();
+    		throw new NotFoundException("Fruta não encontrada!");
     	}
     	
     	deleteByFruta(frutaId);
     	
     	for (ProdutoFrutaDTO pf : produtoFrutaList) {
-    		save(pf);
+    		if (pf.getKeyFrutaId().equals(frutaId)) {
+    			try {
+					ProdutoDTO p = produtoService.get(pf.getKeyProdutoId());
+    				save(pf);	
+				} catch (NotFoundException nfe) {
+					logger.error(nfe);
+				}	
+    		}
     	}
     }
     

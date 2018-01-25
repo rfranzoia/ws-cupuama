@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
+import br.com.fr.cupuama.entity.ProcessoMovimentacao;
 import br.com.fr.cupuama.entity.Produto;
 import br.com.fr.cupuama.entity.TipoMovimentacao;
 import br.com.fr.cupuama.entity.dto.ProcessoMovimentacaoDTO;
@@ -28,7 +29,6 @@ import br.com.fr.cupuama.entity.dto.ProdutoDTO;
 import br.com.fr.cupuama.entity.dto.ResponseDTO;
 import br.com.fr.cupuama.entity.dto.TipoMovimentacaoDTO;
 import br.com.fr.cupuama.entity.key.ProcessoMovimentacaoKey;
-import br.com.fr.cupuama.exception.LocalEstoqueException;
 import br.com.fr.cupuama.exception.ProcessoMovimentacaoException;
 import br.com.fr.cupuama.exception.ProdutoException;
 import br.com.fr.cupuama.exception.TipoMovimentacaoException;
@@ -74,25 +74,14 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	public Response save(ProcessoMovimentacaoDTO dto, @Context UriInfo uriInfo) throws ProcessoMovimentacaoException {
 		try {
-			service.save(dto);
+			dto = service.save(dto);
 			
-			ProdutoDTO produto = produtoService.get(dto.getKeyProdutoId());
-			TipoMovimentacaoDTO tipoMovimentacao = tipoMovimentacaoService.get(dto.getKeyTipoMovimentacaoId());
-			
-			ProcessoMovimentacaoKey key = new ProcessoMovimentacaoKey();
-			key.setProduto(Util.buildDTO(produto, Produto.class));
-			key.setTipoMovimentacao(Util.buildDTO(tipoMovimentacao, TipoMovimentacao.class));
-			key.setTipoEntradaSaida(dto.getKeyTipoEntradaSaida());
-			
-			URI location = uriInfo.getRequestUriBuilder().path(key.toString()).build();
+			URI location = uriInfo.getRequestUriBuilder().path(Util.buildDTO(dto, ProcessoMovimentacao.class).getKey().toString()).build();
 			
 			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), dto)).build();
 			
 		} catch (NotFoundException nfex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao e/ou LocalEstoque não encontrado(s)!", nfex)).build();
-			
-		} catch (ProdutoException | TipoMovimentacaoException | LocalEstoqueException lptmex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao e/ou LocalEstoque não encontrado(s)!", lptmex)).build();
+			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), nfex.getMessage(), nfex)).build();
 			
 		} catch (ProcessoMovimentacaoException pmex) {
 			return badRequest(pmex);
@@ -125,8 +114,8 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 			
 			return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
 			
-		} catch (ProdutoException | TipoMovimentacaoException | LocalEstoqueException lptmex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou TipoMovimentacao e/ou LocalEstoque não encontrado(s)!", lptmex)).build();
+		} catch (NotFoundException nfex) {
+			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), nfex.getMessage(), nfex)).build();
 			
 		} catch (ProcessoMovimentacaoException pmex) {
 			return badRequest(pmex);
@@ -153,6 +142,7 @@ public class ProcessoMovimentacaoREST extends BasicREST {
 	 *
 	 */
 	@DELETE
+	@Path("/produto/tipoMovimentacao/tipoEntadaSaida")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	public Response delete(@QueryParam("produto") Integer produtoId, @QueryParam("tipoMovimentacao") Integer tipoMovimentacaoId, @QueryParam("tipoEntradaSaida") Character tipoEntradaSaida) throws ProcessoMovimentacaoException {

@@ -1,21 +1,17 @@
 package br.com.fr.cupuama.rest;
 
-import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -50,50 +46,6 @@ public class ProdutoFrutaREST extends BasicREST {
 	
 	@Autowired
 	private FrutaService frutaService;
-	
-	/**
-	 * @api {post} /produtoFruta
-	 *    Save
-	 *    
-	 * @apiDescription
-	 *    Inclui um conjunto de registros de ProdutosxFruta
-	 *    
-	 * @apiName save
-	 * 
-	 * @apiGroup ProdutoFruta
-	 *
-	 * @apiParam {ProdutoFrutaDTO} dto DTO com os dados do(s) registro(s)
-	 *
-	 * @apiSuccess {ResponseDTO} responseDTO	
-	 *    Mensagem de sucesso e instancia do ProdutoFrutaDTO inserido (use responseDTO.getEntity() para recuperar este objeto)
-	 *
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	@Consumes(MediaType.APPLICATION_JSON_VALUE)
-	public Response save(ProdutoFrutaDTO dto, @Context UriInfo uriInfo) throws ProdutoFrutaException {
-		try {
-			service.save(dto);
-			
-			ProdutoDTO produto = produtoService.get(dto.getKeyProdutoId());
-			FrutaDTO fruta = frutaService.get(dto.getKeyFrutaId());
-			
-			ProdutoFrutaKey key = new ProdutoFrutaKey();
-			key.setProduto(Util.buildDTO(produto, Produto.class));
-			key.setFruta(Util.buildDTO(fruta, Fruta.class));
-			
-			URI location = uriInfo.getRequestUriBuilder().path(key.toString()).build();
-			
-			return Response.created(location).entity(new ResponseDTO(Status.CREATED.getStatusCode(), dto)).build();
-			
-		} catch (ProdutoException | FrutaException pfex) {
-			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", pfex)).build();
-			
-		} catch (ProdutoFrutaException fex) {
-			return badRequest(fex);
-		}        
-	}
-	
 	
 	/**
 	 * @api {put} /produtoFruta/sync/produto/{produto}
@@ -198,6 +150,9 @@ public class ProdutoFrutaREST extends BasicREST {
 			key.setFruta(Util.buildDTO(fruta, Fruta.class));
 			
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.get(key))).build();
+        } catch (NotFoundException nfex) {
+        	return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), nfex.getMessage(), nfex)).build();
+        	
 		} catch (ProdutoException | FrutaException pfex) {
 			return Response.status(Status.NOT_FOUND).entity(new ResponseDTO(Status.NOT_FOUND.getStatusCode(), "Produto e/ou Fruta não encontrado(s)!", pfex)).build();
 			

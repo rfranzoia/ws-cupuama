@@ -96,7 +96,7 @@ public class FrutaREST extends BasicREST {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
             
 		} catch (NotFoundException nfe) {
-			return notFound("Nenhuma fruta foi encontrada com o ID especificado: " + frutaId);
+			return notFound(nfe.getMessage());
 			
 		} catch (FrutaException e) {
 			return badRequest(e);
@@ -131,7 +131,7 @@ public class FrutaREST extends BasicREST {
         	return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode())).build();
             
 		} catch (NotFoundException nfe) {
-			return notFound("Nenhuma fruta foi encontrada com o ID especificado: " + frutaId);
+			return notFound(nfe.getMessage());
 			
 		} catch (FrutaException e) {
 			return badRequest(e);
@@ -163,7 +163,7 @@ public class FrutaREST extends BasicREST {
         	FrutaDTO dto = service.get(frutaId);
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), dto)).build();
         } catch (NotFoundException nfe) {
-        	return notFound("Nenhuma fruta foi encontrada com o ID especificado: " + frutaId);
+        	return notFound(nfe.getMessage());
         	
         } catch (FrutaException e) {
         	return badRequest(e);
@@ -272,7 +272,7 @@ public class FrutaREST extends BasicREST {
             return Response.ok().entity(new ResponseDTO(Status.OK.getStatusCode(), service.listSafras())).build();
             
         } catch (NotFoundException nfe) {
-        	return notFound("Nenhuma SAFRA foi cadastrada ainda!");
+        	return notFound(nfe.getMessage());
         	
         } catch (FrutaException e) {
         	return badRequest(e);

@@ -27,16 +27,13 @@ public class TipoMovimentacaoService {
 	TipoMovimentacaoRepository repository;
 
 	public TipoMovimentacaoDTO get(Integer id) throws TipoMovimentacaoException, NotFoundException {
-		try {
-			TipoMovimentacao tipoMovimentacao = repository.findOne(id);
-			if (tipoMovimentacao == null) {
-				throw new NotFoundException();
-			}
-			return Util.buildDTO(tipoMovimentacao, TipoMovimentacaoDTO.class);
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new NotFoundException();
+		TipoMovimentacao tipoMovimentacao = repository.findOne(id);
+		
+		if (tipoMovimentacao == null) {
+			throw new NotFoundException("TipoMovimentacao não encontrado!");
 		}
+		
+		return Util.buildDTO(tipoMovimentacao, TipoMovimentacaoDTO.class);
 	}
 
 	public TipoMovimentacaoDTO save(TipoMovimentacaoDTO dto) throws TipoMovimentacaoException {

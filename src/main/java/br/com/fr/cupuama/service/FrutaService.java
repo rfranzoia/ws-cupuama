@@ -28,18 +28,13 @@ public class FrutaService {
 	FrutaRepository repository;
 
 	public FrutaDTO get(Integer id) throws FrutaException {
-		try {
-			Fruta fruta = repository.findOne(id);
-			
-			if (fruta == null) {
-				throw new NotFoundException("nenhum registro encontrado com o ID espcificado: " + id);
-			}
-			
-			return Util.buildDTO(fruta, FrutaDTO.class);
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new NotFoundException();
+		Fruta fruta = repository.findOne(id);
+		
+		if (fruta == null) {
+			throw new NotFoundException("Fruta não encontrada!");
 		}
+		
+		return Util.buildDTO(fruta, FrutaDTO.class);
 	}
 
 	public FrutaDTO save(FrutaDTO dto) throws FrutaException {
@@ -139,7 +134,7 @@ public class FrutaService {
 		List<FrutaDTO> list = listAll();
 		
 		if (list == null || list.isEmpty()) {
-			throw new NotFoundException();
+			throw new NotFoundException("Nenhuma fruta está cadastrada!");
 		}
 		
 		List<String> safras = new ArrayList<>();
@@ -148,10 +143,6 @@ public class FrutaService {
 				safras.add(f.getSafra());
 			}
 		});
-		
-		if (safras.isEmpty()) {
-			throw new NotFoundException();
-		}
 		
 		return safras;
 	}

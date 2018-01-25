@@ -52,87 +52,84 @@ public class ProcessoMovimentacaoService {
 	LocalEstoqueService localEstoqueService;
 
     public ProcessoMovimentacaoDTO get(ProcessoMovimentacaoKey key) throws ProcessoMovimentacaoException {
-        try {
-        	ProcessoMovimentacao pm = repository.findOne(key);
-        	
-    		Hibernate.initialize(pm.getKey().getProduto());
-    		Hibernate.initialize(pm.getKey().getTipoMovimentacao());
-    		
-            return Util.buildDTO(pm, ProcessoMovimentacaoDTO.class);
-        } catch (Exception ex) {
-            logger.error("get()", ex);
-            throw ex;
-        }
+		ProcessoMovimentacao pm = repository.findOne(key);
+		
+		if (pm == null) {
+			throw new NotFoundException("ProcessoMovimentacao não encontrado!");
+		}
+		
+		Hibernate.initialize(pm.getKey().getProduto());
+		Hibernate.initialize(pm.getKey().getTipoMovimentacao());
+		
+	    return Util.buildDTO(pm, ProcessoMovimentacaoDTO.class);
     }
     
-    public void save(ProcessoMovimentacaoDTO dto) throws ProcessoMovimentacaoException, LocalEstoqueException, TipoMovimentacaoException, ProdutoException {
+    public ProcessoMovimentacaoDTO save(ProcessoMovimentacaoDTO dto) throws ProcessoMovimentacaoException {
         try {
-    		Produto p = Util.buildDTO(produtoService.get(dto.getKeyProdutoId()), Produto.class);
-    		TipoMovimentacao tm = Util.buildDTO(tipoMovimentacaoService.get(dto.getKeyTipoMovimentacaoId()), TipoMovimentacao.class);
-    		LocalEstoque le = Util.buildDTO(localEstoqueService.get(dto.getLocalEstoqueId()), LocalEstoque.class);
+    		ProdutoDTO p = produtoService.get(dto.getKeyProdutoId());
+    		TipoMovimentacaoDTO tm = tipoMovimentacaoService.get(dto.getKeyTipoMovimentacaoId());
+    		LocalEstoqueDTO le = localEstoqueService.get(dto.getLocalEstoqueId());
     		
     		ProcessoMovimentacaoKey key = new ProcessoMovimentacaoKey();
-    		key.setProduto(p);
-    		key.setTipoMovimentacao(tm);
+    		key.setProduto(Util.buildDTO(p, Produto.class));
+    		key.setTipoMovimentacao(Util.buildDTO(tm, TipoMovimentacao.class));
     		key.setTipoEntradaSaida(dto.getKeyTipoEntradaSaida());
         	
         	ProcessoMovimentacao processoMovimentacao = new ProcessoMovimentacao();
         	processoMovimentacao.setKey(key);
-        	processoMovimentacao.setLocalEstoque(le);
+        	processoMovimentacao.setLocalEstoque(Util.buildDTO(le, LocalEstoque.class));
         	
             repository.save(processoMovimentacao);
             
+            return Util.buildDTO(processoMovimentacao, ProcessoMovimentacaoDTO.class);
+
+        } catch (NotFoundException nfex) {
+        	logger.error("save()", nfex);
+            throw nfex;
+            
         } catch (ProdutoException | TipoMovimentacaoException | LocalEstoqueException ptex) {
         	logger.error("save()", ptex);
-            throw ptex;
+        	throw new ProcessoMovimentacaoException(ptex);
             
         } catch (RollbackException rex) {
             logger.error("save()", rex);
-            throw rex;
+            throw new ProcessoMovimentacaoException(rex);
             
         } catch (Exception ex) {
             logger.error("save()", ex);
-            throw ex;
+            throw new ProcessoMovimentacaoException(ex);
         }
     }
     
-    public void update(ProcessoMovimentacaoDTO dto) throws ProcessoMovimentacaoException, LocalEstoqueException, TipoMovimentacaoException, ProdutoException {
+    public void update(ProcessoMovimentacaoDTO dto) throws ProcessoMovimentacaoException {
         try {
-        	
-        	Produto p = Util.buildDTO(produtoService.get(dto.getKeyProdutoId()), Produto.class);
-    		TipoMovimentacao tm = Util.buildDTO(tipoMovimentacaoService.get(dto.getKeyTipoMovimentacaoId()), TipoMovimentacao.class);
-    		LocalEstoque le = Util.buildDTO(localEstoqueService.get(dto.getLocalEstoqueId()), LocalEstoque.class);
+        	ProdutoDTO p = produtoService.get(dto.getKeyProdutoId());
+    		TipoMovimentacaoDTO tm = tipoMovimentacaoService.get(dto.getKeyTipoMovimentacaoId());
     		
     		ProcessoMovimentacaoKey key = new ProcessoMovimentacaoKey();
-    		key.setProduto(p);
-    		key.setTipoMovimentacao(tm);
+    		key.setProduto(Util.buildDTO(p, Produto.class));
+    		key.setTipoMovimentacao(Util.buildDTO(tm, TipoMovimentacao.class));
     		key.setTipoEntradaSaida(dto.getKeyTipoEntradaSaida());
         	
         	ProcessoMovimentacao processoMovimentacao = repository.findOne(key);
         	
         	if (processoMovimentacao == null) {
-        		throw new NotFoundException();
+        		throw new NotFoundException("ProcessoMovimentacao não encontrado!");
         	}
         	
-        	processoMovimentacao.setLocalEstoque(le);
+        	LocalEstoqueDTO le = localEstoqueService.get(dto.getLocalEstoqueId());
+        	processoMovimentacao.setLocalEstoque(Util.buildDTO(le, LocalEstoque.class));
         	
             repository.save(processoMovimentacao);
             
         } catch (ProdutoException | TipoMovimentacaoException | LocalEstoqueException ptex) {
-        	logger.error("save()", ptex);
-            throw ptex;
-            
-        } catch (NotFoundException nfex) {
-        	logger.error("save()", nfex);
-            throw nfex;
+        	logger.error("update()", ptex);
+        	throw new ProcessoMovimentacaoException(ptex);
             
         } catch (RollbackException rex) {
-            logger.error("save()", rex);
-            throw rex;
+            logger.error("update()", rex);
+            throw new ProcessoMovimentacaoException(rex);
             
-        } catch (Exception ex) {
-            logger.error("save()", ex);
-            throw ex;
         }
     }
     
@@ -147,7 +144,7 @@ public class ProcessoMovimentacaoService {
             repository.delete(pm);
         } catch (Exception ex) {
             logger.error("deleteByKey()", ex);
-            throw ex;
+            throw new ProcessoMovimentacaoException(ex);
         }
 	}
 	
@@ -160,13 +157,13 @@ public class ProcessoMovimentacaoService {
             
         } catch (Exception ex) {
             logger.error("delete()", ex);
-            throw ex;
+            throw new ProcessoMovimentacaoException(ex);
         }
 	}
     
 	public List<ProcessoMovimentacaoDTO> listAllOrderByTipoMovimentacaoProdutoTipoEntradaSaida()  throws ProcessoMovimentacaoException {
 		List<ProcessoMovimentacao> list = repository.findAllOrderByTipoMovimentacaoProdutoTipoEntradaSaida();
-				return initializeList(list);
+		return initializeList(list);
 	}
 	
 	public List<ProcessoMovimentacaoDTO> listByTipoEntradaSaidaOrderByTipoMovimentacaoProduto(Character tipoEntradaSaida) throws ProcessoMovimentacaoException {
@@ -174,32 +171,17 @@ public class ProcessoMovimentacaoService {
 		return initializeList(list);
 	}
 
-	public List<ProcessoMovimentacaoDTO> listByProdutoOrderByTipoMovimentacao(Integer produtoId) throws ProcessoMovimentacaoException, ProdutoException {
-		ProdutoDTO p = produtoService.get(produtoId);
-		
-		if (p == null) {
-			throw new NotFoundException();
-		}
-		
+	public List<ProcessoMovimentacaoDTO> listByProdutoOrderByTipoMovimentacao(Integer produtoId) throws ProcessoMovimentacaoException {
 		List<ProcessoMovimentacao> list = repository.findByProdutoOrderByTipoMovimentacao(produtoId);
-		
 		return initializeList(list);
 	}
 	
-	public List<ProcessoMovimentacaoDTO> listByTipoMovimentacaoOrderByProduto(Integer tipoMovimentacaoId) throws ProcessoMovimentacaoException, TipoMovimentacaoException {
-		TipoMovimentacaoDTO tm = tipoMovimentacaoService.get(tipoMovimentacaoId);
-		if (tm == null) {
-			throw new NotFoundException();
-		}
+	public List<ProcessoMovimentacaoDTO> listByTipoMovimentacaoOrderByProduto(Integer tipoMovimentacaoId) throws ProcessoMovimentacaoException {
 		List<ProcessoMovimentacao> list = repository.findByTipoMovimentacaoOrderByProduto(tipoMovimentacaoId);
 		return initializeList(list);
 	}
 	
-	public List<ProcessoMovimentacaoDTO> listByLocalEstoqueOrderByTipoMovimentacaoProdutoTipoEntradaSaida(Integer localEstoqueId) throws ProcessoMovimentacaoException, LocalEstoqueException {
-		LocalEstoqueDTO le = localEstoqueService.get(localEstoqueId);
-		if (le == null) {
-			throw new NotFoundException();
-		}
+	public List<ProcessoMovimentacaoDTO> listByLocalEstoqueOrderByTipoMovimentacaoProdutoTipoEntradaSaida(Integer localEstoqueId) throws ProcessoMovimentacaoException {
 		List<ProcessoMovimentacao> list = repository.findByLocalEstoqueOrderByTipoMovimentacaoProdutoTipoEntradaSaida(localEstoqueId);
 		return initializeList(list);
 	}

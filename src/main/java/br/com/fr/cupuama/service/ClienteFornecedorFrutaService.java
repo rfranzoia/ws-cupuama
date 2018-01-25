@@ -31,6 +31,7 @@ import br.com.fr.cupuama.util.Util;
  *
  * @author p001269
  */
+@SuppressWarnings("unused")
 @Service
 public class ClienteFornecedorFrutaService {
 
@@ -49,6 +50,10 @@ public class ClienteFornecedorFrutaService {
         try {
         	ClienteFornecedorFruta cff = repository.findOne(key);
         	
+        	if (cff == null) {
+        		throw new NotFoundException("ClienteFornecedor x Fruta não encontrado!");
+        	}
+        	
     		Hibernate.initialize(cff.getKey().getClienteFornecedor());
     		Hibernate.initialize(cff.getKey().getFruta());
     		
@@ -65,7 +70,7 @@ public class ClienteFornecedorFrutaService {
     		FrutaDTO f = frutaService.get(dto.getKeyFrutaId());
     		
     		if (cf == null || f == null) {
-    			throw new NotFoundException();
+    			throw new NotFoundException("CllienteFornecedor e/ou Fruta não encontrado(s)!");
     		}
     		
     		ClienteFornecedorFrutaKey key = new ClienteFornecedorFrutaKey();
@@ -135,21 +140,11 @@ public class ClienteFornecedorFrutaService {
 	}
     
     public List<ClienteFornecedorFrutaDTO> listByClienteFornecedor(Integer clienteFornecedorId) throws ClienteFornecedorFrutaException, ClienteFornecedorException {
-    	ClienteFornecedorDTO clienteFornecedor = clienteFornecedorService.get(clienteFornecedorId);
-    	if (clienteFornecedor == null) {
-    		throw new NotFoundException();
-    	}
-    	
     	List<ClienteFornecedorFruta> list = repository.findByClienteFornecedor(clienteFornecedorId);
     	return initializeList(list);
     }
 
     public List<ClienteFornecedorFrutaDTO> listByFruta(Integer frutaId) throws ClienteFornecedorFrutaException, FrutaException {
-    	FrutaDTO fruta = frutaService.get(frutaId);
-    	if (fruta == null) {
-    		throw new NotFoundException();
-    	}
-    	
     	List<ClienteFornecedorFruta> list = repository.findByFruta(frutaId);
     	return initializeList(list);
     }
@@ -159,13 +154,20 @@ public class ClienteFornecedorFrutaService {
     	ClienteFornecedorDTO cf = clienteFornecedorService.get(clienteFornecedorId);
     	
     	if (cf == null) {
-    		throw new NotFoundException();
+    		throw new NotFoundException("ClienteFornecedor não encontrado(s)!");
     	}
     	
     	deleteByClienteFornecedor(clienteFornecedorId);
     	
     	for (ClienteFornecedorFrutaDTO cff : clienteFornecedorFrutaList) {
-    		save(cff);
+    		if (cff.getKeyClienteFornecedorId().equals(clienteFornecedorId)) {
+    			try {
+    				FrutaDTO f = frutaService.get(cff.getKeyFrutaId());
+        			save(cff);
+				} catch (NotFoundException nfe) {
+					logger.error(nfe);
+				}
+    		}
     	}
     }
     
@@ -174,13 +176,20 @@ public class ClienteFornecedorFrutaService {
     	FrutaDTO f = frutaService.get(frutaId);
     	
     	if (f == null) {
-    		throw new NotFoundException();
+    		throw new NotFoundException("Fruta não encontrada!");
     	}
     	
     	deleteByFruta(frutaId);
     	
     	for (ClienteFornecedorFrutaDTO cff : clienteFornecedorFrutaList) {
-    		save(cff);
+    		if (cff.getKeyFrutaId().equals(frutaId)) {
+    			try {
+					ClienteFornecedorDTO cf = clienteFornecedorService.get(cff.getKeyClienteFornecedorId());
+    				save(cff);
+				} catch (NotFoundException nfe) {
+					logger.error(nfe);
+				}
+    		}
     	}
     }
     

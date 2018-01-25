@@ -27,16 +27,13 @@ public class ProdutoService {
 	ProdutoRepository repository;
 
 	public ProdutoDTO get(Integer id) throws ProdutoException {
-		try {
-			Produto produto = repository.findOne(id);
-			if (produto == null) {
-				throw new NotFoundException();
-			}
-			return Util.buildDTO(produto, ProdutoDTO.class);
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new NotFoundException();
+		Produto produto = repository.findOne(id);
+		
+		if (produto == null) {
+			throw new NotFoundException("Produto não encontrado!");
 		}
+		
+		return Util.buildDTO(produto, ProdutoDTO.class);
 	}
 
 	public ProdutoDTO save(ProdutoDTO dto) throws ProdutoException {
