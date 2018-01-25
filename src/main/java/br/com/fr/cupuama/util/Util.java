@@ -24,9 +24,11 @@ public class Util {
     public static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat DATE_FORMAT_BR = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat DATE_FORMAT_COMPACT = new SimpleDateFormat("yyyyMMdd");
+    
     public static final SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH:mm:ss");
     
     public static final SimpleDateFormat DATE_FORMAT_ANOMES = new SimpleDateFormat("yyyyMM");
+    public static final SimpleDateFormat DATE_FORMAT_TIMESTAMP_COMPACT = new SimpleDateFormat("yyyyMMddHHmmss");
     
     public static final String PROTOCOLO_FORMAT = "([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{4})";
 

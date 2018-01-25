@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -48,7 +48,7 @@ public class ProdutoFrutaREST extends BasicREST {
 	private FrutaService frutaService;
 	
 	/**
-	 * @api {put} /produtoFruta/sync/produto/{produto}
+	 * @api {post} /produtoFruta/sync/produto/{produto}
 	 *    Sincronizar Por Produto
 	 *    
 	 * @apiDescription
@@ -64,7 +64,7 @@ public class ProdutoFrutaREST extends BasicREST {
 	 *    Mensagem de sucesso e instancia do ProdutoDTO atualizado (use responseDTO.getEntity() para recuperar este objeto)
 	 *
 	 */
-	@PUT
+	@POST
 	@Path("/sync/produto/{produtoId}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
@@ -84,7 +84,7 @@ public class ProdutoFrutaREST extends BasicREST {
 	}
 	
 	/**
-	 * @api {put} /produtoFruta/sync/fruta/{fruta}
+	 * @api {post} /produtoFruta/sync/fruta/{fruta}
 	 *    Sincronizar Por Fruta
 	 *    
 	 * @apiDescription
@@ -100,7 +100,7 @@ public class ProdutoFrutaREST extends BasicREST {
 	 *    Mensagem de sucesso e instancia do FrutaDTO atualizado (use responseDTO.getEntity() para recuperar este objeto)
 	 *
 	 */
-	@PUT
+	@POST
 	@Path("/sync/fruta/{frutaId}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)

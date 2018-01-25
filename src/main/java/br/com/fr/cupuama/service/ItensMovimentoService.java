@@ -1,5 +1,6 @@
 package br.com.fr.cupuama.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.RollbackException;
@@ -113,6 +114,25 @@ public class ItensMovimentoService {
 	public List<ItensMovimentoDTO> listByMovimento(Integer movimentoId) throws ItensMovimentoException {
 		logger.warn("listByMovimento()");
 		List<ItensMovimento> list = repository.findByMovimento(movimentoId);
+		return initializeList(list);
+	}
+	
+	public List<ItensMovimentoDTO> listByEstoque(Date inicio, Date fim, Integer produtoId, Integer frutaId, Integer localEstoqueId) throws ItensMovimentoException {
+		logger.warn("listByEstoque()");
+		
+		if (produtoId == null) {
+			produtoId = -1;
+		}
+		
+		if (frutaId == null) {
+			frutaId = -1;
+		}
+		
+		if (localEstoqueId == null) {
+			localEstoqueId = -1;
+		}
+		
+		List<ItensMovimento> list = repository.findByEstoque(inicio, fim, produtoId, frutaId, localEstoqueId);
 		return initializeList(list);
 	}
 	

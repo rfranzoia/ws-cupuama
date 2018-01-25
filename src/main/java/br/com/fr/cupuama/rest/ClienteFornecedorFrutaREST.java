@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -64,7 +64,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 	 *    Mensagem de sucesso e instancia do ClienteFornecedorDTO atualizado (use responseDTO.getEntity() para recuperar este objeto)
 	 *
 	 */
-	@PUT
+	@POST
 	@Path("/sync/clienteFornecedor/{clienteFornecedorId}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
@@ -101,7 +101,7 @@ public class ClienteFornecedorFrutaREST extends BasicREST {
 	 *    Mensagem de sucesso e instancia do FrutaDTO atualizado (use responseDTO.getEntity() para recuperar este objeto)
 	 *
 	 */
-	@PUT
+	@POST
 	@Path("/sync/fruta/{frutaId}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
