@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 import br.com.fr.cupuama.entity.MovimentoCaixa;
 import br.com.fr.cupuama.entity.dto.MovimentoCaixaDTO;
 import br.com.fr.cupuama.exception.CaixaException;
+import br.com.fr.cupuama.exception.ItensMovimentoException;
 import br.com.fr.cupuama.exception.MovimentoCaixaException;
 import br.com.fr.cupuama.repository.MovimentoCaixaRepository;
 import br.com.fr.cupuama.util.Util;
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Service
 public class MovimentoCaixaService {
@@ -145,7 +147,7 @@ public class MovimentoCaixaService {
 	}
 	
 	@Transactional
-	public void removeMovimentoCaixaAndUpdateCaixa(Integer movimentoCaixaId, MovimentoCaixaDTO dto) throws MovimentoCaixaException, CaixaException {
+	public void removeMovimentoCaixaAndUpdateCaixa(Integer movimentoCaixaId) throws MovimentoCaixaException, CaixaException {
 		logger.warn("removeMovimentoCaixaAndUpdateCaixa()");
 		
 		MovimentoCaixaDTO movimentoCaixaDTO = get(movimentoCaixaId);
@@ -158,6 +160,11 @@ public class MovimentoCaixaService {
 		
 		delete(movimentoCaixaId);
 		
+	}
+	
+	public List<MovimentoCaixaDTO> listAll() throws ItensMovimentoException {
+		List<MovimentoCaixa> list = Lists.newArrayList(repository.findAll());
+		return Util.buildListDTO(list, MovimentoCaixaDTO.class);
 	}
 	
 	public List<MovimentoCaixaDTO> listByPeriodo(Date inicio, Date fim) throws MovimentoCaixaException {
