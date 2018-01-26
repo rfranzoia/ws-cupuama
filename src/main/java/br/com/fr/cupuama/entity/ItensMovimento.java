@@ -39,13 +39,13 @@ public class ItensMovimento implements Serializable {
 	@JoinColumn(name = "local_estoque_id")
 	private LocalEstoque localEstoque;
 
-	@Column(name = "qt_movimento")
+	@Column(name = "qt_movimento", precision = 9, scale = 3)
 	private Float qtMovimento;
 
-	@Column(name = "vl_movimento")
+	@Column(name = "vl_movimento", precision = 12, scale = 2)
 	private Double vlMovimento;
 
-	@Column(name = "vl_desconto")
+	@Column(name = "vl_desconto", precision = 12, scale = 2)
 	private Double vlDesconto;
 
 	public Integer getId() {
