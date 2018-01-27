@@ -3,12 +3,17 @@ package br.com.fr.cupuama.entity.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class MovimentoCaixaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date dtMovimento;
+	
 	private String historico;
 	private Character tipo;
 	private Double vlMovimento;

@@ -29,7 +29,7 @@ import br.com.fr.cupuama.service.MovimentoCaixaService;
 import br.com.fr.cupuama.util.Util;
 
 @Component
-@Path("v1/movimentoCaixaCaixa")
+@Path("v1/movimentoCaixa")
 public class MovimentoCaixaREST extends BasicREST {
 
 	private static final long serialVersionUID = 1L;
@@ -224,15 +224,28 @@ public class MovimentoCaixaREST extends BasicREST {
     public Response listAllOrderByDtMovimentoCaixa(@PathParam("inicio") String inicio, @PathParam("fim") String fim) throws Exception {
         try {
         	if (inicio == null) {
-        		inicio = Util.DATE_FORMAT_COMPACT.format(new Date());
+        		inicio = Util.DATE_FORMAT_ANOMES.format(new Date());
         	}
         	
         	if (fim == null) {
-        		fim = Util.DATE_FORMAT_COMPACT.format(new Date());
+        		fim = Util.DATE_FORMAT_ANOMES.format(new Date());
         	}
         	
-        	Date dtInicio = Util.DATE_FORMAT_TIMESTAMP_COMPACT.parse(inicio + "000000");
-        	Date dtFim = Util.DATE_FORMAT_TIMESTAMP_COMPACT.parse(fim + "235959");
+        	Date dtInicio = Util.DATE_FORMAT_TIMESTAMP_COMPACT.parse(inicio + "01000000");
+        	
+        	if (fim.endsWith("02")) {
+        		fim += "28235959";
+        		
+        		
+        	} else if (fim.endsWith("01") || fim.endsWith("03") || fim.endsWith("05") || 
+        				fim.endsWith("07") || fim.endsWith("08") || fim.endsWith("10") || fim.endsWith("12")) {
+        		fim += "31235959";
+        		
+        	} else {
+        		fim += "30235959";
+        	}
+        	
+        	Date dtFim = Util.DATE_FORMAT_TIMESTAMP_COMPACT.parse(fim);
 
         	if (dtInicio.after(dtFim)) {
         		return badRequest("Data inicial não pode ser posterior à final!");

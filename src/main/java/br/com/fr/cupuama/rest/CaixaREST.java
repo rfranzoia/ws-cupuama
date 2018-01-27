@@ -62,7 +62,7 @@ public class CaixaREST extends BasicREST {
     }
 
 	/**
-	 * @api {get} /caixa/list
+	 * @api {get} /caixa
 	 *    List All Order By Id
 	 *    
 	 * @apiDescription

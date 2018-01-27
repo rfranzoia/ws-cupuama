@@ -5,12 +5,14 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
+import br.com.fr.cupuama.rest.CaixaREST;
 import br.com.fr.cupuama.rest.ClienteFornecedorFrutaREST;
 import br.com.fr.cupuama.rest.ClienteFornecedorREST;
 import br.com.fr.cupuama.rest.EstoqueREST;
 import br.com.fr.cupuama.rest.FrutaREST;
 import br.com.fr.cupuama.rest.ItensMovimentoREST;
 import br.com.fr.cupuama.rest.LocalEstoqueREST;
+import br.com.fr.cupuama.rest.MovimentoCaixaREST;
 import br.com.fr.cupuama.rest.MovimentoREST;
 import br.com.fr.cupuama.rest.ProcessoMovimentacaoREST;
 import br.com.fr.cupuama.rest.ProdutoFrutaREST;
@@ -33,5 +35,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(EstoqueREST.class);
 		register(MovimentoREST.class);
 		register(ItensMovimentoREST.class);
+		register(CaixaREST.class);
+		register(MovimentoCaixaREST.class);
 	}
 }
