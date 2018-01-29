@@ -14,16 +14,19 @@ import org.springframework.stereotype.Service;
 
 import br.com.fr.cupuama.entity.ClienteFornecedor;
 import br.com.fr.cupuama.entity.Movimento;
+import br.com.fr.cupuama.entity.TipoDocumento;
 import br.com.fr.cupuama.entity.TipoMovimentacao;
 import br.com.fr.cupuama.entity.dto.ClienteFornecedorDTO;
 import br.com.fr.cupuama.entity.dto.ItensMovimentoDTO;
 import br.com.fr.cupuama.entity.dto.MovimentoDTO;
+import br.com.fr.cupuama.entity.dto.TipoDocumentoDTO;
 import br.com.fr.cupuama.entity.dto.TipoMovimentacaoDTO;
 import br.com.fr.cupuama.entity.key.EstoqueKey;
 import br.com.fr.cupuama.exception.ClienteFornecedorException;
 import br.com.fr.cupuama.exception.EstoqueException;
 import br.com.fr.cupuama.exception.ItensMovimentoException;
 import br.com.fr.cupuama.exception.MovimentoException;
+import br.com.fr.cupuama.exception.TipoDocumentoException;
 import br.com.fr.cupuama.exception.TipoMovimentacaoException;
 import br.com.fr.cupuama.repository.MovimentoRepository;
 import br.com.fr.cupuama.util.Util;
@@ -44,6 +47,9 @@ public class MovimentoService {
 	
 	@Autowired
 	TipoMovimentacaoService tipoMovimentacaoService;
+	
+	@Autowired
+	TipoDocumentoService tipoDocumentoService;
 	
 	@Autowired
 	EstoqueService estoqueService;
@@ -194,7 +200,7 @@ public class MovimentoService {
 			repository.save(movimento);
 
 			return Util.buildDTO(movimento, MovimentoDTO.class);
-		} catch (TipoMovimentacaoException | ClienteFornecedorException ex) {
+		} catch (TipoMovimentacaoException | ClienteFornecedorException | TipoDocumentoException ex) {
 			logger.error("save()", ex);
 			throw new MovimentoException((Exception) ex.getCause());
 			
@@ -259,9 +265,9 @@ public class MovimentoService {
 			logger.error("update()", rex);
 			throw rex;
 
-		} catch (Exception ex) {
-			logger.error("update()", ex);
-			throw new MovimentoException(ex);
+		} catch (TipoMovimentacaoException | ClienteFornecedorException | TipoDocumentoException ex) {
+			logger.error("save()", ex);
+			throw new MovimentoException((Exception) ex.getCause());
 		}
 	}
 	
@@ -291,17 +297,20 @@ public class MovimentoService {
 		for (Movimento m : list) {
 			Hibernate.initialize(m.getTipoMovimentacao());
 			Hibernate.initialize(m.getClienteFornecedor());
+			Hibernate.initialize(m.getTipoDocumento());
 		}
 		return Util.buildListDTO(list, MovimentoDTO.class);
 	}
 	
-	private void buildMovimento(MovimentoDTO dto, Movimento movimento) throws MovimentoException, ClienteFornecedorException, TipoMovimentacaoException {
+	private void buildMovimento(MovimentoDTO dto, Movimento movimento) throws MovimentoException, ClienteFornecedorException, TipoMovimentacaoException, TipoDocumentoException {
 		try {
 			ClienteFornecedorDTO cf = clienteFornecedorService.get(dto.getClienteFornecedorId());
 			TipoMovimentacaoDTO tm = tipoMovimentacaoService.get(dto.getTipoMovimentacaoId());
+			TipoDocumentoDTO td = tipoDocumentoService.get(dto.getTipoDocumentoId());
 			
 			movimento.setClienteFornecedor(Util.buildDTO(cf, ClienteFornecedor.class));
 			movimento.setDocumento(dto.getDocumento());
+			movimento.setTipoDocumento(Util.buildDTO(td, TipoDocumento.class));
 			movimento.setDtMovimento(dto.getDtMovimento());
 			movimento.setObservacao(dto.getObservacao());
 			movimento.setTipoMovimentacao(Util.buildDTO(tm, TipoMovimentacao.class));
@@ -309,7 +318,7 @@ public class MovimentoService {
 			logger.error("", nfe);
 			throw nfe;
 			
-		} catch (ClienteFornecedorException | TipoMovimentacaoException ex) {
+		} catch (ClienteFornecedorException | TipoDocumentoException | TipoMovimentacaoException ex) {
 			logger.error("", ex);
 			throw ex;
 		}

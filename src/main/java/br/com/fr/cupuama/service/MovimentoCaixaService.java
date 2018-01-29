@@ -8,15 +8,19 @@ import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fr.cupuama.entity.MovimentoCaixa;
+import br.com.fr.cupuama.entity.TipoDocumento;
 import br.com.fr.cupuama.entity.dto.MovimentoCaixaDTO;
+import br.com.fr.cupuama.entity.dto.TipoDocumentoDTO;
 import br.com.fr.cupuama.exception.CaixaException;
 import br.com.fr.cupuama.exception.ItensMovimentoException;
 import br.com.fr.cupuama.exception.MovimentoCaixaException;
+import br.com.fr.cupuama.exception.TipoDocumentoException;
 import br.com.fr.cupuama.repository.MovimentoCaixaRepository;
 import br.com.fr.cupuama.util.Util;
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -28,6 +32,9 @@ public class MovimentoCaixaService {
 	
 	@Autowired
 	MovimentoCaixaRepository repository;
+	
+	@Autowired
+	TipoDocumentoService tipoDocumentoService;
 	
 	@Autowired
 	CaixaService caixaService;
@@ -55,6 +62,10 @@ public class MovimentoCaixaService {
 		} catch (RollbackException rex) {
 			logger.error("save()", rex);
 			throw new MovimentoCaixaException((Exception) rex.getCause());
+			
+		} catch (TipoDocumentoException ex) {
+			logger.error("save()", ex);
+			throw new MovimentoCaixaException((Exception) ex.getCause());
 		}
 	}
 	
@@ -77,9 +88,9 @@ public class MovimentoCaixaService {
 			logger.error("update()", rex);
 			throw rex;
 
-		} catch (Exception ex) {
+		} catch (TipoDocumentoException ex) {
 			logger.error("update()", ex);
-			throw new MovimentoCaixaException(ex);
+			throw new MovimentoCaixaException((Exception) ex.getCause());
 		}
 	}
 	
@@ -164,19 +175,40 @@ public class MovimentoCaixaService {
 	
 	public List<MovimentoCaixaDTO> listAll() throws ItensMovimentoException {
 		List<MovimentoCaixa> list = Lists.newArrayList(repository.findAll());
-		return Util.buildListDTO(list, MovimentoCaixaDTO.class);
+		return initializeList(list);
 	}
 	
 	public List<MovimentoCaixaDTO> listByPeriodo(Date inicio, Date fim) throws MovimentoCaixaException {
 		logger.warn("listByPeriodo()");
 		List<MovimentoCaixa> list = repository.findByPeriodo(inicio, fim);
-		return Util.buildListDTO(list, MovimentoCaixaDTO.class);
+		return initializeList(list);
 	}
 	
-	private void buildMovimentoCaixa(MovimentoCaixaDTO dto, MovimentoCaixa movimentoCaixa) throws MovimentoCaixaException {
-		movimentoCaixa.setDtMovimento(dto.getDtMovimento());
-		movimentoCaixa.setHistorico(dto.getHistorico());
-		movimentoCaixa.setTipo(dto.getTipo());
-		movimentoCaixa.setVlMovimento(dto.getVlMovimento());
+	// inicializa uma lista de registros e gera a lista de DTO correspondente
+	private List<MovimentoCaixaDTO> initializeList(List<MovimentoCaixa> list) {
+		for (MovimentoCaixa mc : list) {
+			Hibernate.initialize(mc.getTipoDocumento());
+		}
+		return Util.buildListDTO(list, MovimentoCaixaDTO.class);
+	}
+		
+	private void buildMovimentoCaixa(MovimentoCaixaDTO dto, MovimentoCaixa movimentoCaixa) throws MovimentoCaixaException, TipoDocumentoException {
+		try {
+			TipoDocumentoDTO td = tipoDocumentoService.get(dto.getTipoDocumentoId());
+			
+			movimentoCaixa.setDtMovimento(dto.getDtMovimento());
+			movimentoCaixa.setDocumento(dto.getDocumento());
+			movimentoCaixa.setTipoDocumento(Util.buildDTO(td, TipoDocumento.class));
+			movimentoCaixa.setHistorico(dto.getHistorico());
+			movimentoCaixa.setTipo(dto.getTipo());
+			movimentoCaixa.setVlMovimento(dto.getVlMovimento());
+		} catch (NotFoundException nfe) {
+			logger.error("", nfe);
+			throw nfe;
+			
+		}catch (TipoDocumentoException ex) {
+			logger.error("", ex);
+			throw ex;
+		}
 	}
 }

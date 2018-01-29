@@ -14,6 +14,12 @@ public class MovimentoCaixaDTO implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date dtMovimento;
 	
+	private String documento;
+	
+	private Integer tipoDocumentoId;
+	private String tipoDocumentoNome;
+	private Character tipoDocumentoSituacao;
+	
 	private String historico;
 	private Character tipo;
 	private Double vlMovimento;
@@ -34,6 +40,38 @@ public class MovimentoCaixaDTO implements Serializable {
 		this.dtMovimento = dtMovimento;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public Integer getTipoDocumentoId() {
+		return tipoDocumentoId;
+	}
+
+	public void setTipoDocumentoId(Integer tipoDocumentoId) {
+		this.tipoDocumentoId = tipoDocumentoId;
+	}
+
+	public String getTipoDocumentoNome() {
+		return tipoDocumentoNome;
+	}
+
+	public void setTipoDocumentoNome(String tipoDocumentoNome) {
+		this.tipoDocumentoNome = tipoDocumentoNome;
+	}
+
+	public Character getTipoDocumentoSituacao() {
+		return tipoDocumentoSituacao;
+	}
+
+	public void setTipoDocumentoSituacao(Character tipoDocumentoSituacao) {
+		this.tipoDocumentoSituacao = tipoDocumentoSituacao;
+	}
+	
 	public String getHistorico() {
 		return historico;
 	}
@@ -85,8 +123,10 @@ public class MovimentoCaixaDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MovimentoCaixa [id=" + id + ", dtMovimento=" + dtMovimento + ", historico=" + historico + ", tipo="
-				+ tipo + ", vlMovimento=" + vlMovimento + "]";
+		return "MovimentoCaixaDTO [id=" + id + ", dtMovimento=" + dtMovimento + ", documento=" + documento
+				+ ", tipoDocumentoId=" + tipoDocumentoId + ", tipoDocumentoNome=" + tipoDocumentoNome
+				+ ", tipoDocumentoSituacao=" + tipoDocumentoSituacao + ", historico=" + historico + ", tipo=" + tipo
+				+ ", vlMovimento=" + vlMovimento + "]";
 	}
 
 }

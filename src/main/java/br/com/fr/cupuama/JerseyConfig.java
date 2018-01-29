@@ -17,6 +17,7 @@ import br.com.fr.cupuama.rest.MovimentoREST;
 import br.com.fr.cupuama.rest.ProcessoMovimentacaoREST;
 import br.com.fr.cupuama.rest.ProdutoFrutaREST;
 import br.com.fr.cupuama.rest.ProdutoREST;
+import br.com.fr.cupuama.rest.TipoDocumentoREST;
 import br.com.fr.cupuama.rest.TipoMovimentacaoREST;
 
 @Component
@@ -28,6 +29,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(ProdutoREST.class);
 		register(ProdutoFrutaREST.class);
 		register(ClienteFornecedorFrutaREST.class);
+		register(TipoDocumentoREST.class);
 		register(TipoMovimentacaoREST.class);
 		register(LocalEstoqueREST.class);
 		register(ProcessoMovimentacaoREST.class);

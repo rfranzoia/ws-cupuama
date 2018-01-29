@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +29,12 @@ public class MovimentoCaixa implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtMovimento;
 
+	private String documento;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "tipo_documento_id")
+	private TipoDocumento tipoDocumento;
+	
 	private String historico;
 
 	private Character tipo;
@@ -49,6 +58,22 @@ public class MovimentoCaixa implements Serializable {
 		this.dtMovimento = dtMovimento;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+	
 	public String getHistorico() {
 		return historico;
 	}
@@ -100,8 +125,10 @@ public class MovimentoCaixa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MovimentoCaixa [id=" + id + ", dtMovimento=" + dtMovimento + ", historico=" + historico + ", tipo="
-				+ tipo + ", vlMovimento=" + vlMovimento + "]";
+		return "MovimentoCaixa [id=" + id + ", dtMovimento=" + dtMovimento + ", documento=" + documento
+				+ ", tipoDocumento=" + tipoDocumento + ", historico=" + historico + ", tipo=" + tipo + ", vlMovimento="
+				+ vlMovimento + "]";
 	}
+
 
 }

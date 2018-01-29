@@ -20,6 +20,10 @@ public class MovimentoDTO implements Serializable {
 	private Character tipoMovimentacaoSituacao;
 
 	private String documento;
+	
+	private Integer tipoDocumentoId;
+	private String tipoDocumentoNome;
+	private Character tipoDocumentoSituacao;
 
 	private Integer clienteFornecedorId;
 	private String clienteFornecedorNome;
@@ -53,6 +57,30 @@ public class MovimentoDTO implements Serializable {
 
 	public void setDocumento(String documento) {
 		this.documento = documento;
+	}
+
+	public Integer getTipoDocumentoId() {
+		return tipoDocumentoId;
+	}
+
+	public void setTipoDocumentoId(Integer tipoDocumentoId) {
+		this.tipoDocumentoId = tipoDocumentoId;
+	}
+
+	public String getTipoDocumentoNome() {
+		return tipoDocumentoNome;
+	}
+
+	public void setTipoDocumentoNome(String tipoDocumentoNome) {
+		this.tipoDocumentoNome = tipoDocumentoNome;
+	}
+
+	public Character getTipoDocumentoSituacao() {
+		return tipoDocumentoSituacao;
+	}
+
+	public void setTipoDocumentoSituacao(Character tipoDocumentoSituacao) {
+		this.tipoDocumentoSituacao = tipoDocumentoSituacao;
 	}
 
 	public String getObservacao() {
@@ -164,10 +192,12 @@ public class MovimentoDTO implements Serializable {
 	public String toString() {
 		return "MovimentoDTO [id=" + id + ", dtMovimento=" + dtMovimento + ", tipoMovimentacaoId=" + tipoMovimentacaoId
 				+ ", tipoMovimentacaoNome=" + tipoMovimentacaoNome + ", tipoMovimentacaoSituacao="
-				+ tipoMovimentacaoSituacao + ", documento=" + documento + ", clienteFornecedorId=" + clienteFornecedorId
-				+ ", clienteFornecedorNome=" + clienteFornecedorNome + ", clienteFornecedorTipo="
-				+ clienteFornecedorTipo + ", clienteFornecedorCpfCnpj=" + clienteFornecedorCpfCnpj
-				+ ", clienteFornecedorSituacao=" + clienteFornecedorSituacao + ", observacao=" + observacao + "]";
+				+ tipoMovimentacaoSituacao + ", documento=" + documento + ", tipoDocumentoId=" + tipoDocumentoId
+				+ ", tipoDocumentoNome=" + tipoDocumentoNome + ", tipoDocumentoSituacao=" + tipoDocumentoSituacao
+				+ ", clienteFornecedorId=" + clienteFornecedorId + ", clienteFornecedorNome=" + clienteFornecedorNome
+				+ ", clienteFornecedorTipo=" + clienteFornecedorTipo + ", clienteFornecedorCpfCnpj="
+				+ clienteFornecedorCpfCnpj + ", clienteFornecedorSituacao=" + clienteFornecedorSituacao
+				+ ", observacao=" + observacao + ", itensMovimento=" + itensMovimento + "]";
 	}
 
 }

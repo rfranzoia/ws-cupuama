@@ -34,6 +34,10 @@ public class Movimento implements Serializable {
 	private String documento;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "tipo_documento_id")
+	private TipoDocumento tipoDocumento;
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_fornecedor_id")
 	private ClienteFornecedor clienteFornecedor;
 
@@ -69,6 +73,14 @@ public class Movimento implements Serializable {
 
 	public void setDocumento(String documento) {
 		this.documento = documento;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public ClienteFornecedor getClienteFornecedor() {
@@ -115,8 +127,9 @@ public class Movimento implements Serializable {
 	@Override
 	public String toString() {
 		return "Movimento [id=" + id + ", dtMovimento=" + dtMovimento + ", tipoMovimentacao=" + tipoMovimentacao
-				+ ", documento=" + documento + ", clienteFornecedor=" + clienteFornecedor + ", observacao=" + observacao
-				+ "]";
+				+ ", documento=" + documento + ", tipoDocumento=" + tipoDocumento + ", clienteFornecedor="
+				+ clienteFornecedor + ", observacao=" + observacao + "]";
 	}
-	
+
+
 }
