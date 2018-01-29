@@ -3,7 +3,7 @@ package br.com.fr.cupuama.entity.dto;
 import java.io.Serializable;
 
 /**
- * @author p001269
+ * @author Romeu Franzoia Jr
  *
  */
 public class ResponseDTO implements Serializable {

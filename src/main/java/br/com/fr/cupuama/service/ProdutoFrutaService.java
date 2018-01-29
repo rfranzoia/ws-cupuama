@@ -30,7 +30,7 @@ import br.com.fr.cupuama.util.Util;
 
 /**
  *
- * @author p001269
+ * @author Romeu Franzoia Jr
  */
 @SuppressWarnings("unused")
 @Service

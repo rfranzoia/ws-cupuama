@@ -17,7 +17,7 @@ import br.com.fr.cupuama.exception.ProdutoFrutaException;
 
 /**
  *
- * @author p001269
+ * @author Romeu Franzoia Jr
  */
 public interface ProdutoFrutaRepository extends CrudRepository<ProdutoFruta, ProdutoFrutaKey> {
 
