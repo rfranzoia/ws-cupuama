@@ -7,9 +7,9 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 
-	"../model"
-	"../util"
 	"github.com/labstack/echo"
+	"github.com/rfranzoia/ws-cupuama/model"
+	"github.com/rfranzoia/ws-cupuama/util"
 )
 
 // Login efetua o login do usuario e gera um Cookie

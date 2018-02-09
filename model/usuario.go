@@ -1,6 +1,6 @@
 package model
 
-import "../util"
+import "github.com/rfranzoia/ws-cupuama/util"
 
 // Usuario modelo para tabela de usuario
 type Usuario struct {

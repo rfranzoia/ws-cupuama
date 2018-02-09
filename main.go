@@ -9,8 +9,8 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 
-	"./api"
-	"./util"
+	"github.com/rfranzoia/ws-cupuama/api"
+	"github.com/rfranzoia/ws-cupuama/util"
 )
 
 func validateSession(cookie *http.Cookie) bool {

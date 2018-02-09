@@ -1,5 +1,5 @@
 package model
 
-import "../database"
+import "github.com/rfranzoia/ws-cupuama/database"
 
 var db = database.GetConnection()
