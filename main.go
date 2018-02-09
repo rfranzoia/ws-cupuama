@@ -10,6 +10,7 @@ import (
 	"github.com/labstack/echo/middleware"
 
 	"github.com/rfranzoia/ws-cupuama/api"
+	"github.com/rfranzoia/ws-cupuama/model"
 	"github.com/rfranzoia/ws-cupuama/util"
 )
 
@@ -45,6 +46,8 @@ func chekCookie(next echo.HandlerFunc) echo.HandlerFunc {
 
 func main() {
 
+	defer model.GetDB().Close()
+
 	fmt.Println("Welcome to Server")
 
 	e := echo.New()
@@ -60,11 +63,10 @@ func main() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
-	//g.Use(middleware.BasicAuth(validateUser))
 	g.GET("/login", api.Login)
 
 	gfruta := g.Group("/v1/fruta")
-	//gfruta.Use(chekCookie)
+
 	gfruta.Use(middleware.JWTWithConfig(middleware.JWTConfig{
 		SigningMethod: "HS512",
 		SigningKey:    []byte(util.SECRET_PASS),
