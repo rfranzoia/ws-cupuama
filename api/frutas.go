@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"../model"
 	"github.com/labstack/echo"
-	"github.com/rfranzoia/tutorial_echo/model"
 )
 
 // ListFrutas lista todas das frutas

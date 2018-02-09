@@ -1,6 +1,6 @@
 package model
 
-import "github.com/rfranzoia/tutorial_echo/util"
+import "../util"
 
 // Usuario modelo para tabela de usuario
 type Usuario struct {
