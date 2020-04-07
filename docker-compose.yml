@@ -1,0 +1,10 @@
+version: '3'
+services: 
+  cupuama-app:
+    image: cupuama-app
+    networks:
+      - cupuama-app-network-2
+      
+networks:
+  cupuama-app-network-2:
+    driver: bridge
