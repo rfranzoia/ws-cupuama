@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "product", uniqueConstraints = @UniqueConstraint(name = "uc_name", columnNames = { "name" }))
+@Table(name = "product", uniqueConstraints = @UniqueConstraint(name = "uc_product_name", columnNames = { "name" }))
 public class Product {
 
 	@Id
