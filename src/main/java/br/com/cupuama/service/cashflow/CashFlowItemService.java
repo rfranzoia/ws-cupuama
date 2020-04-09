@@ -17,7 +17,7 @@ import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidDateRange;
 import br.com.cupuama.repository.CashFlowItemRepository;
-import br.com.cupuama.service.AbstractServiceImplementation;
+import br.com.cupuama.service.DefaultServiceImplementation;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
@@ -25,7 +25,7 @@ import br.com.cupuama.service.AbstractServiceImplementation;
  * <p/>
  */
 @Service
-public class CashFlowItemService extends AbstractServiceImplementation<CashFlowItem, Long> {
+public class CashFlowItemService extends DefaultServiceImplementation<CashFlowItem, Long> {
 
 	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
 	private static final Logger LOG = LoggerFactory.getLogger(CashFlowItemService.class);

@@ -9,7 +9,7 @@ import br.com.cupuama.domain.products.Fruit;
 import br.com.cupuama.dto.FruitDTO;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.repository.FruitRepository;
-import br.com.cupuama.service.AbstractServiceImplementation;
+import br.com.cupuama.service.DefaultServiceImplementation;
 
 
 /**
@@ -18,7 +18,7 @@ import br.com.cupuama.service.AbstractServiceImplementation;
  * <p/>
  */
 @Service
-public class FruitService extends AbstractServiceImplementation<Fruit, Long> {
+public class FruitService extends DefaultServiceImplementation<Fruit, Long> {
 
 	public FruitService(final FruitRepository fruitRepository) {
 		super(fruitRepository);

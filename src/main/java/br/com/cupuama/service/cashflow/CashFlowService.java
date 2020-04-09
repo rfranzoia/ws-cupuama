@@ -16,7 +16,7 @@ import br.com.cupuama.dto.CashFlowDTO;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.repository.CashFlowRepository;
-import br.com.cupuama.service.AbstractServiceImplementation;
+import br.com.cupuama.service.DefaultServiceImplementation;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
@@ -24,7 +24,7 @@ import br.com.cupuama.service.AbstractServiceImplementation;
  * <p/>
  */
 @Service
-public class CashFlowService extends AbstractServiceImplementation<CashFlow, String> {
+public class CashFlowService extends DefaultServiceImplementation<CashFlow, String> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CashFlowService.class);
 	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");

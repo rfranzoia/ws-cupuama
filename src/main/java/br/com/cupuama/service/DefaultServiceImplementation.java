@@ -12,13 +12,13 @@ import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.service.Service;
 
-public abstract class AbstractServiceImplementation<T, ID> implements Service<T, ID> {
+public abstract class DefaultServiceImplementation<T, ID> implements Service<T, ID> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AbstractServiceImplementation.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultServiceImplementation.class);
 	
 	protected final CrudRepository<T, ID> repository;
 	
-	public AbstractServiceImplementation(final CrudRepository<T, ID> repository) {
+	public DefaultServiceImplementation(final CrudRepository<T, ID> repository) {
 		this.repository = repository;
 	}
 
