@@ -13,7 +13,15 @@ public interface ProductFruitService {
     ProductFruit create(ProductFruit productFruitDO) throws ConstraintsViolationException;
 
     void delete(Long productId, Long fruitId) throws EntityNotFoundException;
+    
+    void deleteByProductId(Long productId) throws EntityNotFoundException;
+    
+    void deleteByFruitId(Long fruitId) throws EntityNotFoundException;
 
     List<ProductFruit> findAll();
+    
+    List<ProductFruit> findByProductId(Integer productId);
+    
+    List<ProductFruit> findByFruitId(Integer fruitId);
 
 }

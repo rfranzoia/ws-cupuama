@@ -2,22 +2,51 @@ package br.com.cupuama.service.products;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.cupuama.domain.products.Fruit;
-import br.com.cupuama.exception.ConstraintsViolationException;
+import br.com.cupuama.dto.FruitDTO;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.repository.FruitRepository;
+import br.com.cupuama.service.AbstractServiceImplementation;
 
-public interface FruitService {
 
-    Fruit find(Long fruitId) throws EntityNotFoundException;
+/**
+ * Service to encapsulate the link between DAO and controller and to have
+ * business logic for some fruit specific things.
+ * <p/>
+ */
+@Service
+public class FruitService extends AbstractServiceImplementation<Fruit, Long> {
 
-    Fruit create(Fruit fruitDO) throws ConstraintsViolationException;
+	public FruitService(final FruitRepository fruitRepository) {
+		super(fruitRepository);
+	}
 
-    void delete(Long fruitId) throws EntityNotFoundException;
+	/**
+	 * Update a fruits information.
+	 *
+	 * @param fruitId
+	 * @param longitude
+	 * @param latitude
+	 * @throws EntityNotFoundException
+	 */
+	@Transactional
+	public void update(long fruitId, FruitDTO fruitDTO) throws EntityNotFoundException {
+		Fruit fruit = findByIdChecked(fruitId);
+		fruit.setName(fruitDTO.getName());
+		fruit.setInitials(fruitDTO.getInitials());
+		fruit.setHarvest(fruitDTO.getHarvest());
+	}
 
-    void update(long fruitId, String name) throws EntityNotFoundException;
-
-    List<Fruit> findByName(String name);
-
-    List<Fruit> findAll();
+	/**
+	 * Find all fruits by name.
+	 *
+	 * @param name
+	 */
+	public List<Fruit> findByName(String name) {
+		return ((FruitRepository) repository).findByNameLike(name + "%");
+	}
 
 }
