@@ -22,7 +22,7 @@ public class Product {
 	private Long id;
 
 	@Column(nullable = false)
-	@NotNull(message = "DocumentType Name cannot be null!")
+	@NotNull(message = "Product Name cannot be null!")
 	private String name;
 	
 	@Column(nullable = false)
