@@ -1,4 +1,4 @@
-package br.com.cupuama.service.cashflow;
+package br.com.cupuama.service.cashflow.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import br.com.cupuama.domain.cashflow.DocumentType;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.repository.DocumentTypeRepository;
+import br.com.cupuama.service.cashflow.DocumentTypeService;
 
 
 /**

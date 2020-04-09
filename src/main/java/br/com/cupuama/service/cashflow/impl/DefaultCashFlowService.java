@@ -1,4 +1,4 @@
-package br.com.cupuama.service.cashflow;
+package br.com.cupuama.service.cashflow.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import br.com.cupuama.dto.CashFlowDTO;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.repository.CashFlowRepository;
+import br.com.cupuama.service.cashflow.CashFlowService;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
