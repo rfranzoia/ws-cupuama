@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.AuditableEntity;
 import br.com.cupuama.domain.DefaultEntity;
@@ -35,19 +36,21 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 			T savedT = repository.save(t);
 			return savedT;
 		} catch (DataIntegrityViolationException e) {
-			LOG.warn("ConstraintsViolationException while creating a fruit: {}", t, e);
-			throw new ConstraintsViolationException(e.getMessage());
+			LOG.error("ConstraintsViolationException while creating a fruit: {}", t.toString(), e);
+			throw new ConstraintsViolationException(e);
 		}
 		
 	}
 
 	@Override
+	@Transactional
 	public void delete(final ID id) throws EntityNotFoundException {
 		T t = findByIdChecked(id);
 		
 		if (t instanceof AuditableEntity) {
-			((AuditableEntity) t).getAudit().setDateUpdated(ZonedDateTime.now());
-			((AuditableEntity) t).getAudit().setDeleted(true);
+			AuditableEntity at = (AuditableEntity) t;
+			at.getAudit().setDateUpdated(ZonedDateTime.now());
+			at.getAudit().setDeleted(true);
 		} else {
 			repository.delete(t);
 		}
@@ -56,12 +59,28 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 	@Override
 	public List<T> findAll() {
 		List<T> list = new ArrayList<>();
-		repository.findAll().forEach(c -> {
-			list.add(c);
-		});
+		repository.findAll()
+					.forEach(t -> {
+						if (t instanceof AuditableEntity) {
+							if (!((AuditableEntity) t).getAudit().getDeleted()) {
+								list.add(t);
+							}
+						} else {
+							list.add(t);
+						}
+					});
 		return list;
 	}
 
+	protected List<T> findAny() {
+		List<T> list = new ArrayList<>();
+		repository.findAll()
+					.forEach(t -> {
+						list.add(t);
+					});
+		return list;
+	}
+	
 	protected T findByIdChecked(final ID id) throws EntityNotFoundException {
 		return repository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));

@@ -12,4 +12,18 @@ public class ConstraintsViolationException extends Exception {
 		super(message);
 	}
 
+	public ConstraintsViolationException() {
+		super();
+	}
+
+	public ConstraintsViolationException(String s, Throwable t) {
+		super(s, t);
+	}
+
+	public ConstraintsViolationException(Throwable t) {
+		super(t);
+	}
+	
+	
+
 }
