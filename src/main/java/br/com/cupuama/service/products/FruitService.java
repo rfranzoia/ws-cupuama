@@ -33,7 +33,7 @@ public class FruitService extends DefaultService<Fruit, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(long fruitId, FruitDTO fruitDTO) throws EntityNotFoundException {
+	public void update(final Long fruitId, final FruitDTO fruitDTO) throws EntityNotFoundException {
 		Fruit fruit = findByIdChecked(fruitId);
 		fruit.setName(fruitDTO.getName());
 		fruit.setInitials(fruitDTO.getInitials());
@@ -45,7 +45,7 @@ public class FruitService extends DefaultService<Fruit, Long> {
 	 *
 	 * @param name
 	 */
-	public List<Fruit> findByName(String name) {
+	public List<Fruit> findByName(final String name) {
 		return ((FruitRepository) repository).findByNameLike(name + "%");
 	}
 

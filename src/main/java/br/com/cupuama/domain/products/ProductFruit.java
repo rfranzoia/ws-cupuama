@@ -15,6 +15,13 @@ public class ProductFruit implements DefaultEntity {
 	@Id
 	private ProductFruitKey key;
 	
+	public ProductFruit() {
+	}
+	
+	public ProductFruit(ProductFruitKey key) {
+		this.key = key;
+	}
+
 	public ProductFruitKey getKey() {
 		return key;
 	}

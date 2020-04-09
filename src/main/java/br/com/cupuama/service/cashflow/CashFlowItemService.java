@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,6 @@ import br.com.cupuama.service.DefaultService;
 public class CashFlowItemService extends DefaultService<CashFlowItem, Long> {
 
 	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
-	private static final Logger LOG = LoggerFactory.getLogger(CashFlowItemService.class);
 	
 	@Autowired
 	private CashFlowService cashFlowService;

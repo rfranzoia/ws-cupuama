@@ -40,14 +40,17 @@ public class Fruit implements AuditableEntity {
 	public Fruit() {
 	}
 
-	public Fruit(Long id) {
+	public Fruit(Long id, String name, String initials, String harvest) {
 		this.id = id;
-	}
-
-	public Fruit(String name) {
 		this.name = name;
+		this.initials = initials;
+		this.harvest = harvest;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
+	}
+
+	public Fruit(Long id) {
+		this.id = id;
 	}
 
 	public Long getId() {

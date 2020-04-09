@@ -1,4 +1,4 @@
-package br.com.cupuama.controller.mapper;
+package br.com.cupuama.controller.mapper.cashflow;
 
 import java.util.Collection;
 import java.util.List;

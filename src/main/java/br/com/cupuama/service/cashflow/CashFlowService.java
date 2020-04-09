@@ -4,13 +4,11 @@ import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cupuama.controller.mapper.CashFlowMapper;
+import br.com.cupuama.controller.mapper.cashflow.CashFlowMapper;
 import br.com.cupuama.domain.cashflow.CashFlow;
 import br.com.cupuama.domain.cashflow.CashFlowType;
 import br.com.cupuama.dto.CashFlowDTO;
@@ -27,7 +25,6 @@ import br.com.cupuama.service.DefaultService;
 @Service
 public class CashFlowService extends DefaultService<CashFlow, String> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CashFlowService.class);
 	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
 	public static final String PERIOD_REGEX = "([0-9]{4})([0-9]{2})";
 

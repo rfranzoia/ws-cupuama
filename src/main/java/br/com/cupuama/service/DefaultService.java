@@ -16,7 +16,7 @@ import br.com.cupuama.exception.EntityNotFoundException;
 
 public abstract class DefaultService<T extends DefaultEntity, ID> implements Service<T, ID> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DefaultService.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(DefaultService.class);
 	
 	protected final CrudRepository<T, ID> repository;
 	
@@ -25,7 +25,7 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 	}
 
 	@Override
-	public T find(ID id) throws EntityNotFoundException {
+	public T find(final ID id) throws EntityNotFoundException {
 		return findByIdChecked(id);
 	}
 
@@ -42,7 +42,7 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 	}
 
 	@Override
-	public void delete(ID id) throws EntityNotFoundException {
+	public void delete(final ID id) throws EntityNotFoundException {
 		T t = findByIdChecked(id);
 		
 		if (t instanceof AuditableEntity) {
@@ -62,7 +62,7 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 		return list;
 	}
 
-	protected T findByIdChecked(ID id) throws EntityNotFoundException {
+	protected T findByIdChecked(final ID id) throws EntityNotFoundException {
 		return repository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
 	}

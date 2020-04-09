@@ -33,7 +33,7 @@ public class ProductService extends DefaultService<Product, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(long productId, ProductDTO productDTO) throws EntityNotFoundException {
+	public void update(final Long productId, final ProductDTO productDTO) throws EntityNotFoundException {
 		Product product = findByIdChecked(productId);
 		product.setName(productDTO.getName());
 		product.setUnit(productDTO.getUnit());
@@ -44,7 +44,7 @@ public class ProductService extends DefaultService<Product, Long> {
 	 *
 	 * @param name
 	 */
-	public List<Product> findByName(String name) {
+	public List<Product> findByName(final String name) {
 		return ((ProductRepository) repository).findByNameLike(name + "%");
 	}
 

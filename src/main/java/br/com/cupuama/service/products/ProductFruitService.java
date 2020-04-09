@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +19,13 @@ import br.com.cupuama.service.DefaultService;
 
 public class ProductFruitService extends DefaultService<ProductFruit, ProductFruitKey> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ProductFruitService.class);
-	
 	@Autowired
 	private ProductService productService;
 	
 	@Autowired
 	private FruitService fruitService;
 	
-    public ProductFruitService(CrudRepository<ProductFruit, ProductFruitKey> repository) {
+    public ProductFruitService(final CrudRepository<ProductFruit, ProductFruitKey> repository) {
 		super(repository);
 	}
 
@@ -40,7 +36,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-	public void deleteByProductId(Long productId) throws EntityNotFoundException {
+	public void deleteByProductId(final Long productId) throws EntityNotFoundException {
 		List<ProductFruit> list = findByProductId(productId);
 		if (list.isEmpty()) {
 			throw new EntityNotFoundException(String.format("No fruits associated with the product id %d were found!", productId));
@@ -57,7 +53,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-	public void deleteByFruitId(Long fruitId) throws EntityNotFoundException {
+	public void deleteByFruitId(final Long fruitId) throws EntityNotFoundException {
 		List<ProductFruit> list = findByFruitId(fruitId);
 		if (list.isEmpty()) {
 			throw new EntityNotFoundException(String.format("No products associated with the fruit id %d were found!", fruitId));
@@ -73,7 +69,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	 * @param productId
 	 * @return
 	 */
-	public List<ProductFruit> findByProductId(Long productId) {
+	public List<ProductFruit> findByProductId(final Long productId) {
 		return ((ProductFruitRepository) repository).findByProductId(productId);
 	}
 	
@@ -83,7 +79,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	 * @param fruitId
 	 * @return
 	 */
-	public List<ProductFruit> findByFruitId(Long fruitId) {
+	public List<ProductFruit> findByFruitId(final Long fruitId) {
 		return ((ProductFruitRepository) repository).findByFruitId(fruitId);
 	}
 	
@@ -93,7 +89,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	 * @param productId
 	 * @return List<Fruit>
 	 */
-    public List<Fruit> findFruitsByProductId(Long productId) {
+    public List<Fruit> findFruitsByProductId(final Long productId) {
     	List<ProductFruit> list = ((ProductFruitRepository) repository).findByProductId(productId);
     	List<Fruit> fruits = new ArrayList<>();
     	list.stream().forEach(pf -> fruits.add(pf.getKey().getFruit()));
@@ -106,7 +102,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @param fruitId
      * @return List<Product>
      */
-    public List<Product> findProductsByFruitId(Long fruitId) {
+    public List<Product> findProductsByFruitId(final Long fruitId) {
     	List<ProductFruit> list = ((ProductFruitRepository) repository).findByFruitId(fruitId);
     	List<Product> products = new ArrayList<>();
     	list.stream().forEach(pf -> products.add(pf.getKey().getProduct()));
@@ -121,7 +117,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public List<ProductFruit> synchronizeProductFruitByProductId(Long productId, List<Fruit> fruits) throws EntityNotFoundException {
+    public List<ProductFruit> synchronizeProductFruitByProductId(final Long productId, final List<Fruit> fruits) throws EntityNotFoundException {
     	Product product = productService.find(productId);
     	
     	// attempts to delete all previous association with the current productId
@@ -133,11 +129,10 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	
     	List<ProductFruit> associations = new ArrayList<>();
     	
-    	ProductFruitKey key = new ProductFruitKey();
-    	key.setProduct(product);
-    	
-    	Predicate<Fruit> createProductFruit = fruit -> {
+    	final Predicate<Fruit> createProductFruit = fruit -> {
     		try {
+    			ProductFruitKey key = new ProductFruitKey();
+    			key.setProduct(product);
     			key.setFruit(fruit);
     			
         		ProductFruit productFruit = new ProductFruit();
@@ -167,7 +162,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public List<ProductFruit> synchronizeProductFruitByFruitId(Long fruitId, List<Product> products) throws EntityNotFoundException {
+    public List<ProductFruit> synchronizeProductFruitByFruitId(final Long fruitId, final List<Product> products) throws EntityNotFoundException {
     	Fruit fruit = fruitService.find(fruitId);
     	
     	// attempts to delete all previous association with the current fruitId
@@ -182,7 +177,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	ProductFruitKey key = new ProductFruitKey();
     	key.setFruit(fruit);
     	
-    	Predicate<Product> createProductFruit = product -> {
+    	final Predicate<Product> createProductFruit = product -> {
     		try {
     			key.setProduct(product);
     			
@@ -213,7 +208,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * 
      */
     @Transactional
-	private <T> void createAssociationProductFruit(List<T> list, Predicate<T> createProductFruit) {
+	private <T> void createAssociationProductFruit(final List<T> list, final Predicate<T> createProductFruit) {
 		list.stream()
     		.filter(createProductFruit)
     		.peek(null)

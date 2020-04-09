@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.controller.mapper.CashFlowMapper;
+import br.com.cupuama.controller.mapper.cashflow.CashFlowMapper;
 import br.com.cupuama.domain.cashflow.CashFlow;
 import br.com.cupuama.domain.cashflow.CashFlowType;
 import br.com.cupuama.dto.CashFlowDTO;

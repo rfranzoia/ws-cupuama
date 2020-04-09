@@ -32,7 +32,7 @@ public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(long documentTypeId, String name) throws EntityNotFoundException {
+	public void update(final Long documentTypeId, final String name) throws EntityNotFoundException {
 		DocumentType documentType = findByIdChecked(documentTypeId);
 		documentType.setName(name);
 	}
@@ -42,7 +42,7 @@ public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 	 *
 	 * @param name
 	 */
-	public List<DocumentType> findByName(String name) {
+	public List<DocumentType> findByName(final String name) {
 		return ((DocumentTypeRepository) repository).findByNameLike(name + "%");
 	}
 

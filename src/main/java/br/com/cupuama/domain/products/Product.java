@@ -37,16 +37,18 @@ public class Product implements AuditableEntity {
 	public Product() {
 	}
 
-	public Product(Long id) {
-		this.id = id;
-	}
 
-	public Product(String name) {
+	public Product(Long id, String name, String unit) {
+		this.id = id;
 		this.name = name;
+		this.unit = unit;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
 	}
 
+	public Product(Long id) {
+		this.id = id;
+	}
 	public Long getId() {
 		return id;
 	}

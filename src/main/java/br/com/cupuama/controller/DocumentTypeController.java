@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.controller.mapper.DocumentTypeMapper;
+import br.com.cupuama.controller.mapper.cashflow.DocumentTypeMapper;
 import br.com.cupuama.domain.cashflow.DocumentType;
 import br.com.cupuama.dto.DocumentTypeDTO;
 import br.com.cupuama.exception.ConstraintsViolationException;
