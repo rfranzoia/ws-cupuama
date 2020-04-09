@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.cupuama.domain.cashflow.DocumentType;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.repository.DocumentTypeRepository;
-import br.com.cupuama.service.DefaultServiceImplementation;
+import br.com.cupuama.service.DefaultService;
 
 
 /**
@@ -17,7 +17,7 @@ import br.com.cupuama.service.DefaultServiceImplementation;
  * <p/>
  */
 @Service
-public class DocumentTypeService extends DefaultServiceImplementation<DocumentType, Long> {
+public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 
 	public DocumentTypeService(final DocumentTypeRepository documentTypeRepository) {
 		super(documentTypeRepository);

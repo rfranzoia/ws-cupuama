@@ -14,13 +14,13 @@ import br.com.cupuama.domain.DefaultEntity;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 
-public abstract class DefaultServiceImplementation<T extends DefaultEntity, ID> implements Service<T, ID> {
+public abstract class DefaultService<T extends DefaultEntity, ID> implements Service<T, ID> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DefaultServiceImplementation.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultService.class);
 	
 	protected final CrudRepository<T, ID> repository;
 	
-	public DefaultServiceImplementation(final CrudRepository<T, ID> repository) {
+	public DefaultService(final CrudRepository<T, ID> repository) {
 		this.repository = repository;
 	}
 
