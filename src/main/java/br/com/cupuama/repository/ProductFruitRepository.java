@@ -26,7 +26,7 @@ public interface ProductFruitRepository extends CrudRepository<ProductFruit, Pro
             "inner join product p on p.id = pf.product_id and p.deleted = false " +
 			"where pf.product_id = :productId " +
 			"and pf.fruit_id = :fruitId")
-	public ProductFruit getByProductIdAndFruitId(@Param("productId") Integer productId, @Param("fruitId")Long fruitId) throws EntityNotFoundException;
+	public ProductFruit getByProductIdAndFruitId(@Param("productId") Long productId, @Param("fruitId")Long fruitId) throws EntityNotFoundException;
 	
 	@Query(nativeQuery = true, value = "select pf.* " +
             "from product_fruit pf " +
@@ -34,7 +34,7 @@ public interface ProductFruitRepository extends CrudRepository<ProductFruit, Pro
             "inner join product p on p.id = pf.product_id and p.deleted = false " +
             "where pf.product_id = :productId " + 
             "order by p.name asc")
-	public List<ProductFruit> findByProductId(@Param("productId") Integer productId);
+	public List<ProductFruit> findByProductId(@Param("productId") Long productId);
     
 	@Query(nativeQuery = true, value = "select pf.* " +
             "from product_fruit pf " +
@@ -42,7 +42,7 @@ public interface ProductFruitRepository extends CrudRepository<ProductFruit, Pro
             "inner join product p on p.id = pf.product_id and p.deleted = false " +
             "where pf.fruit_id = :fruitId " + 
             "order by f.name asc")
-    public List<ProductFruit> findByFruitId(@Param("fruitId") Integer fruitId);
+    public List<ProductFruit> findByFruitId(@Param("fruitId") Long fruitId);
     
 	@Query(nativeQuery = true, value = "select pf.* " +
 			"from product_fruit pf " +
