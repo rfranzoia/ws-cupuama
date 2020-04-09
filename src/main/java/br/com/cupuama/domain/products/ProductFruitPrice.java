@@ -1,6 +1,5 @@
 package br.com.cupuama.domain.products;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,9 +12,12 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.com.cupuama.domain.Audit;
+import br.com.cupuama.domain.AuditableEntity;
+
 @Entity
 @Table(name = "product_fruit_price")
-public class ProductFruitPrice implements Serializable {
+public class ProductFruitPrice implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +34,20 @@ public class ProductFruitPrice implements Serializable {
 	@Column(nullable = false, name = "price_expiration_date")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private Date priceExpirationDate;
+
+	@Embedded
+	private Audit audit;
+	
+	
+	public ProductFruitPrice(Long id, ProductFruitKey key, Double price, Date priceExpirationDate) {
+		super();
+		this.id = id;
+		this.key = key;
+		this.price = price;
+		this.priceExpirationDate = priceExpirationDate;
+		this.audit = new Audit();
+		this.audit.setDeleted(false);
+	}
 
 	public ProductFruitKey getKey() {
 		return key;
@@ -55,6 +71,24 @@ public class ProductFruitPrice implements Serializable {
 
 	public void setPriceExpirationDate(Date priceExpirationDate) {
 		this.priceExpirationDate = priceExpirationDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public Audit getAudit() {
+		return audit;
+	}
+
+	@Override
+	public void setAudit(Audit audit) {
+		this.audit = audit;
 	}
 
 	@Override

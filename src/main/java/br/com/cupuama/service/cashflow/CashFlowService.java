@@ -1,6 +1,7 @@
 package br.com.cupuama.service.cashflow;
 
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -87,6 +88,7 @@ public class CashFlowService extends DefaultServiceImplementation<CashFlow, Stri
 			cashFlow = create(CashFlowMapper.makeCashFlow(dto));
 		}
 		
+		cashFlow.getAudit().setDateUpdated(ZonedDateTime.now());
 		cashFlow.setPreviousBalance(previousBalance);
 		updateForwardBalance(cashFlow);
 	}
@@ -117,6 +119,7 @@ public class CashFlowService extends DefaultServiceImplementation<CashFlow, Stri
 				break;
 		}
 		
+		cashFlow.getAudit().setDateUpdated(ZonedDateTime.now());
 		updateForwardBalance(cashFlow);
 	}
 	
@@ -145,6 +148,8 @@ public class CashFlowService extends DefaultServiceImplementation<CashFlow, Stri
 				cashFlow.setDebits(cashFlow.getDebits() + debits);
 				break;
 		}
+		
+		cashFlow.getAudit().setDateUpdated(ZonedDateTime.now());
 		updateForwardBalance(cashFlow);
 	}
 	
@@ -190,6 +195,7 @@ public class CashFlowService extends DefaultServiceImplementation<CashFlow, Stri
 			LOG.info(String.format("Updating previous balance for %s", cashFlowPeriod));
 			
 			nextCashFlow.setPreviousBalance(currentBalance);
+			nextCashFlow.getAudit().setDateUpdated(ZonedDateTime.now());
 			currentBalance = nextCashFlow.getPreviousBalance() + nextCashFlow.getCredits() - nextCashFlow.getDebits();
 			
 		} while (Integer.valueOf(cashFlowPeriod) < Integer.valueOf(currentPeriod));

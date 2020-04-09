@@ -1,9 +1,9 @@
 package br.com.cupuama.domain.cashflow;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,9 +17,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.cupuama.domain.Audit;
+import br.com.cupuama.domain.AuditableEntity;
+
 @Entity
 @Table(name = "cashflow_item")
-public class CashFlowItem implements Serializable {
+public class CashFlowItem implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,6 +51,9 @@ public class CashFlowItem implements Serializable {
 	@Column(name = "value", precision = 12, scale = 2)
 	private Double value;
 	
+	@Embedded
+	private Audit audit;
+	
 	public CashFlowItem() {
 	}
 	
@@ -61,6 +67,8 @@ public class CashFlowItem implements Serializable {
 		this.description = description;
 		this.type = type;
 		this.value = value;
+		this.audit = new Audit();
+		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -119,6 +127,20 @@ public class CashFlowItem implements Serializable {
 		this.value = value;
 	}
 
+	@Override
+	public Audit getAudit() {
+		return audit;
+	}
+
+	@Override
+	public void setAudit(Audit audit) {
+		this.audit = audit;
+	}
+
+	public void setType(CashFlowType type) {
+		this.type = type;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -1,5 +1,6 @@
 package br.com.cupuama.service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.CrudRepository;
 
+import br.com.cupuama.domain.AuditableEntity;
+import br.com.cupuama.domain.DefaultEntity;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
-import br.com.cupuama.service.Service;
 
-public abstract class DefaultServiceImplementation<T, ID> implements Service<T, ID> {
+public abstract class DefaultServiceImplementation<T extends DefaultEntity, ID> implements Service<T, ID> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultServiceImplementation.class);
 	
@@ -42,7 +44,13 @@ public abstract class DefaultServiceImplementation<T, ID> implements Service<T, 
 	@Override
 	public void delete(ID id) throws EntityNotFoundException {
 		T t = findByIdChecked(id);
-		repository.delete(t);
+		
+		if (t instanceof AuditableEntity) {
+			((AuditableEntity) t).getAudit().setDateUpdated(ZonedDateTime.now());
+			((AuditableEntity) t).getAudit().setDeleted(true);
+		} else {
+			repository.delete(t);
+		}
 	}
 
 	@Override

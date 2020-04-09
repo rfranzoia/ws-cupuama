@@ -1,8 +1,7 @@
 package br.com.cupuama.domain.cashflow;
 
-import java.time.ZonedDateTime;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,11 +10,14 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import br.com.cupuama.domain.Audit;
+import br.com.cupuama.domain.AuditableEntity;
 
 @Entity
 @Table(name = "document_type", uniqueConstraints = @UniqueConstraint(name = "uc_doctype_name", columnNames = { "name" }))
-public class DocumentType {
+public class DocumentType implements AuditableEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +27,8 @@ public class DocumentType {
 	@NotNull(message = "DocumentType Name cannot be null!")
 	private String name;
 
-	@Column(nullable = false)
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime dateCreated = ZonedDateTime.now();
-
-	@Column(nullable = false)
-	private Boolean deleted = false;
-
-	@Column
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime dateUpdated = ZonedDateTime.now();
+	@Embedded
+	private Audit audit;
 
 	public DocumentType() {
 	}
@@ -45,7 +39,8 @@ public class DocumentType {
 	
 	public DocumentType(String name) {
 		this.name = name;
-		this.deleted = false;
+		this.audit = new Audit();
+		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -64,28 +59,40 @@ public class DocumentType {
 		this.name = name;
 	}
 
-	public ZonedDateTime getDateCreated() {
-		return dateCreated;
+	@Override
+	public Audit getAudit() {
+		return audit;
 	}
 
-	public void setDateCreated(ZonedDateTime dateCreated) {
-		this.dateCreated = dateCreated;
+	@Override
+	public void setAudit(Audit audit) {
+		this.audit = audit;
 	}
 
-	public Boolean getDeleted() {
-		return deleted;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DocumentType other = (DocumentType) obj;
+		if (id == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!id.equals(other.getId()))
+			return false;
+		return true;
 	}
 
-	public ZonedDateTime getDateUpdated() {
-		return dateUpdated;
-	}
-
-	public void setDateUpdated(ZonedDateTime dateUpdated) {
-		this.dateUpdated = dateUpdated;
-	}
 
 }

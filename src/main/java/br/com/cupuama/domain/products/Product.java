@@ -1,8 +1,7 @@
 package br.com.cupuama.domain.products;
 
-import java.time.ZonedDateTime;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,11 +10,14 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import br.com.cupuama.domain.Audit;
+import br.com.cupuama.domain.AuditableEntity;
 
 @Entity
 @Table(name = "product", uniqueConstraints = @UniqueConstraint(name = "uc_product_name", columnNames = { "name" }))
-public class Product {
+public class Product implements AuditableEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,21 +26,13 @@ public class Product {
 	@Column(nullable = false)
 	@NotNull(message = "Product Name cannot be null!")
 	private String name;
-	
+
 	@Column(nullable = false)
 	@NotNull(message = "Unit cannot be null!")
 	private String unit;
 
-	@Column(nullable = false)
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime dateCreated = ZonedDateTime.now();
-
-	@Column(nullable = false)
-	private Boolean deleted = false;
-
-	@Column
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime dateUpdated = ZonedDateTime.now();
+	@Embedded
+	private Audit audit;
 
 	public Product() {
 	}
@@ -46,10 +40,11 @@ public class Product {
 	public Product(Long id) {
 		this.id = id;
 	}
-	
+
 	public Product(String name) {
 		this.name = name;
-		this.deleted = false;
+		this.audit = new Audit();
+		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -76,28 +71,14 @@ public class Product {
 		this.unit = unit;
 	}
 
-	public ZonedDateTime getDateCreated() {
-		return dateCreated;
+	@Override
+	public Audit getAudit() {
+		return audit;
 	}
 
-	public void setDateCreated(ZonedDateTime dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	public ZonedDateTime getDateUpdated() {
-		return dateUpdated;
-	}
-
-	public void setDateUpdated(ZonedDateTime dateUpdated) {
-		this.dateUpdated = dateUpdated;
+	@Override
+	public void setAudit(Audit audit) {
+		this.audit = audit;
 	}
 
 	@Override
@@ -124,7 +105,5 @@ public class Product {
 			return false;
 		return true;
 	}
-	
-	
 
 }

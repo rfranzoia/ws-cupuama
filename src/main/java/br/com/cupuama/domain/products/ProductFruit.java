@@ -1,17 +1,17 @@
 package br.com.cupuama.domain.products;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.cupuama.domain.DefaultEntity;
+
 @Entity
 @Table(name="product_fruit")
-public class ProductFruit implements Serializable {
+public class ProductFruit implements DefaultEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private ProductFruitKey key;
 	

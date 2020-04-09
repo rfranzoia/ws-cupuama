@@ -2,10 +2,11 @@ package br.com.cupuama.service;
 
 import java.util.List;
 
+import br.com.cupuama.domain.DefaultEntity;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 
-public interface Service<T, ID> {
+public interface Service<T extends DefaultEntity, ID> {
 
     T find(ID id) throws EntityNotFoundException;
 

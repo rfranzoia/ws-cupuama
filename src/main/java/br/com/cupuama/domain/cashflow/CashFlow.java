@@ -1,17 +1,19 @@
 package br.com.cupuama.domain.cashflow;
 
-import java.time.ZonedDateTime;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import br.com.cupuama.domain.Audit;
+import br.com.cupuama.domain.AuditableEntity;
 
 @Entity
 @Table(name = "cashflow")
-public class CashFlow {
+public class CashFlow implements AuditableEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String period;
@@ -25,16 +27,8 @@ public class CashFlow {
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double debits;
 
-	@Column(nullable = false)
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime dateCreated = ZonedDateTime.now();
-
-	@Column(nullable = false)
-	private Boolean deleted = false;
-
-	@Column
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime dateUpdated = ZonedDateTime.now();
+	@Embedded
+	private Audit audit;
 
 	public CashFlow() {
 	}
@@ -44,7 +38,8 @@ public class CashFlow {
 		this.previousBalance = previousBalance;
 		this.credits = credits;
 		this.debits = debits;
-		this.deleted = false;
+		this.audit = new Audit();
+		this.audit.setDeleted(false);
 	}
 
 	public String getPeriod() {
@@ -79,36 +74,19 @@ public class CashFlow {
 		this.debits = debits;
 	}
 
-	public ZonedDateTime getDateCreated() {
-		return dateCreated;
+	@Override
+	public Audit getAudit() {
+		return audit;
 	}
 
-	public void setDateCreated(ZonedDateTime dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	public ZonedDateTime getDateUpdated() {
-		return dateUpdated;
-	}
-
-	public void setDateUpdated(ZonedDateTime dateUpdated) {
-		this.dateUpdated = dateUpdated;
+	@Override
+	public void setAudit(Audit audit) {
+		this.audit = audit;
 	}
 
 	@Override
 	public String toString() {
-		return "CashFlow [period=" + period + ", dateCreated=" + dateCreated + ", deleted=" + deleted + ", dateUpdated="
-				+ dateUpdated + "]";
+		return "CashFlow [period=" + period + ", audit=" + audit + "]";
 	}
-	
-	
 
 }
