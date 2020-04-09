@@ -39,6 +39,7 @@ public class ProductDTO {
 		return name;
 	}
 
+	@JsonProperty
 	public String getUnit() {
 		return unit;
 	}

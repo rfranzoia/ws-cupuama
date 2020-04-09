@@ -15,14 +15,17 @@ public class FruitDTO {
 	
 	@NotNull(message = "Initials cannot be null!")
 	private String initials;
+	
+	private String harvest;
 
 	private FruitDTO() {
 	}
 
-	private FruitDTO(Long id, String name, String initials) {
+	private FruitDTO(Long id, String name, String initials, String harvest) {
 		this.id = id;
 		this.name = name;
 		this.initials = initials;
+		this.harvest = harvest;
 	}
 
 	public static FruitDTOBuilder newBuilder() {
@@ -42,11 +45,18 @@ public class FruitDTO {
 	public String getInitials() {
 		return initials;
 	}
+	
+	public String getHarvest() {
+		return harvest;
+	}
+
+
 
 	public static class FruitDTOBuilder {
 		private Long id;
 		private String name;
 		private String initials;
+		private String harvest;
 
 		public FruitDTOBuilder setId(Long id) {
 			this.id = id;
@@ -62,9 +72,14 @@ public class FruitDTO {
 			this.initials = initials;
 			return this;
 		}
+		
+		public FruitDTOBuilder setHarvest(String harvest) {
+			this.harvest = harvest;
+			return this;
+		}
 
 		public FruitDTO createFruitDTO() {
-			return new FruitDTO(id, name, initials);
+			return new FruitDTO(id, name, initials, harvest);
 		}
 	}
 }
