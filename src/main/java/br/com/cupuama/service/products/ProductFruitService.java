@@ -41,7 +41,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      */
     @Transactional
 	public void deleteByProductId(Long productId) throws EntityNotFoundException {
-		List<ProductFruit> list = ((ProductFruitRepository) repository).findByProductId(productId);
+		List<ProductFruit> list = findByProductId(productId);
 		if (list.isEmpty()) {
 			throw new EntityNotFoundException(String.format("No fruits associated with the product id %d were found!", productId));
 		}
@@ -58,7 +58,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      */
     @Transactional
 	public void deleteByFruitId(Long fruitId) throws EntityNotFoundException {
-		List<ProductFruit> list = ((ProductFruitRepository) repository).findByFruitId(fruitId);
+		List<ProductFruit> list = findByFruitId(fruitId);
 		if (list.isEmpty()) {
 			throw new EntityNotFoundException(String.format("No products associated with the fruit id %d were found!", fruitId));
 		}
@@ -68,12 +68,32 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	};
 
 	/**
+	 * list associations by product id
+	 * 
+	 * @param productId
+	 * @return
+	 */
+	public List<ProductFruit> findByProductId(Long productId) {
+		return ((ProductFruitRepository) repository).findByProductId(productId);
+	}
+	
+	/**
+	 * List associations by fruit id
+	 * 
+	 * @param fruitId
+	 * @return
+	 */
+	public List<ProductFruit> findByFruitId(Long fruitId) {
+		return ((ProductFruitRepository) repository).findByFruitId(fruitId);
+	}
+	
+	/**
 	 * list all fruits associated to the product id
 	 * 
 	 * @param productId
 	 * @return List<Fruit>
 	 */
-    public List<Fruit> findByProductId(Long productId) {
+    public List<Fruit> findFruitsByProductId(Long productId) {
     	List<ProductFruit> list = ((ProductFruitRepository) repository).findByProductId(productId);
     	List<Fruit> fruits = new ArrayList<>();
     	list.stream().forEach(pf -> fruits.add(pf.getKey().getFruit()));
@@ -86,7 +106,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @param fruitId
      * @return List<Product>
      */
-    public List<Product> findByFruitId(Long fruitId) {
+    public List<Product> findProductsByFruitId(Long fruitId) {
     	List<ProductFruit> list = ((ProductFruitRepository) repository).findByFruitId(fruitId);
     	List<Product> products = new ArrayList<>();
     	list.stream().forEach(pf -> products.add(pf.getKey().getProduct()));
@@ -101,7 +121,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public void synchronizeProductFruitByProductId(Long productId, List<Fruit> fruits) throws EntityNotFoundException {
+    public List<ProductFruit> synchronizeProductFruitByProductId(Long productId, List<Fruit> fruits) throws EntityNotFoundException {
     	Product product = productService.find(productId);
     	
     	// attempts to delete all previous association with the current productId
@@ -110,6 +130,8 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 		} catch (EntityNotFoundException ex) {
 			//just ignore the problem since we are creating new associations anyway
 		}
+    	
+    	List<ProductFruit> associations = new ArrayList<>();
     	
     	ProductFruitKey key = new ProductFruitKey();
     	key.setProduct(product);
@@ -122,6 +144,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		productFruit.setKey(key);
 				
         		productFruit = create(productFruit);
+        		associations.add(productFruit);
 				
         		return true;
 			} catch (ConstraintsViolationException ex) {
@@ -131,6 +154,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	};
     	
     	createAssociationProductFruit(fruits, createProductFruit);
+    	return associations;
     	
     }
     
@@ -143,7 +167,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public void synchronizeProductFruitByFruitId(Long fruitId, List<Product> products) throws EntityNotFoundException {
+    public List<ProductFruit> synchronizeProductFruitByFruitId(Long fruitId, List<Product> products) throws EntityNotFoundException {
     	Fruit fruit = fruitService.find(fruitId);
     	
     	// attempts to delete all previous association with the current fruitId
@@ -152,6 +176,8 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 		} catch (EntityNotFoundException ex) {
 			//just ignore the problem since we are creating new associations anyway
 		}
+    	
+    	List<ProductFruit> associations = new ArrayList<>();
     	
     	ProductFruitKey key = new ProductFruitKey();
     	key.setFruit(fruit);
@@ -164,7 +190,8 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		productFruit.setKey(key);
 				
         		productFruit = create(productFruit);
-				
+        		associations.add(productFruit);
+        		
         		return true;
 			} catch (ConstraintsViolationException ex) {
 				LOG.error(String.format("Error during ProductFruit creation"), ex);
@@ -173,7 +200,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	};
     	
     	createAssociationProductFruit(products, createProductFruit);
-    	
+    	return associations;
     }
 
     /**
