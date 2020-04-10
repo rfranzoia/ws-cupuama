@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.stock.entity;
+package br.com.cupuama.domain.processing.entity;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -8,17 +8,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.cupuama.domain.stock.entity.Depot;
 import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
 
 @Entity
-@Table(name = "stocktake_process")
-public class StocktakeProcess implements AuditableEntity {
+@Table(name = "production_process")
+public class ProductionProcess implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private StocktakeProcessKey key;
+	private ProductionProcessKey key;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "depot_id", nullable = false)
@@ -27,21 +28,21 @@ public class StocktakeProcess implements AuditableEntity {
 	@Embedded
 	private Audit audit;
 
-	public StocktakeProcess() {
+	public ProductionProcess() {
 	}
 
-	public StocktakeProcess(StocktakeProcessKey key, Depot depot) {
+	public ProductionProcess(ProductionProcessKey key, Depot depot) {
 		this.key = key;
 		this.depot = depot;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
 	}
 
-	public StocktakeProcessKey getKey() {
+	public ProductionProcessKey getKey() {
 		return key;
 	}
 
-	public void setKey(StocktakeProcessKey key) {
+	public void setKey(ProductionProcessKey key) {
 		this.key = key;
 	}
 
@@ -79,7 +80,7 @@ public class StocktakeProcess implements AuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StocktakeProcess other = (StocktakeProcess) obj;
+		ProductionProcess other = (ProductionProcess) obj;
 		if (key == null) {
 			if (other.getKey() != null)
 				return false;
@@ -90,7 +91,7 @@ public class StocktakeProcess implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "StocktakeProcess [key=" + key + ", depot=" + depot + "]";
+		return "ProductionProcess [key=" + key + ", depot=" + depot + "]";
 	}
 	
 }

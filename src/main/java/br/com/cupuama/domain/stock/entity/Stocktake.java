@@ -51,7 +51,6 @@ public class Stocktake implements AuditableEntity {
 
 	public Stocktake(Long id, ProductFruitKey productFruitKey, Depot depot, Date stocktakeDate, StocktakeInOut stocktakeInOut,
 			Double amount) {
-		super();
 		this.id = id;
 		this.productFruitKey = productFruitKey;
 		this.depot = depot;

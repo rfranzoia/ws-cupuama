@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.stock.entity;
+package br.com.cupuama.domain.processing.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -14,8 +14,8 @@ import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
 
 @Entity
-@Table(name = "stocktake_type", uniqueConstraints = @UniqueConstraint(name = "uc_stocktake_type_name", columnNames = { "name" }))
-public class StocktakeType implements AuditableEntity {
+@Table(name = "process_type", uniqueConstraints = @UniqueConstraint(name = "uc_process_type_name", columnNames = { "name" }))
+public class ProcessType implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,20 +24,20 @@ public class StocktakeType implements AuditableEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	@NotNull(message = "StocktakeType Name cannot be null!")
+	@NotNull(message = "Name cannot be null!")
 	private String name;
 
 	@Embedded
 	private Audit audit;
 
-	public StocktakeType() {
+	public ProcessType() {
 	}
 
-	public StocktakeType(Long id) {
+	public ProcessType(Long id) {
 		this.id = id;
 	}
 	
-	public StocktakeType(String name) {
+	public ProcessType(String name) {
 		this.name = name;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
@@ -85,7 +85,7 @@ public class StocktakeType implements AuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StocktakeType other = (StocktakeType) obj;
+		ProcessType other = (ProcessType) obj;
 		if (id == null) {
 			if (other.getId() != null)
 				return false;
@@ -94,5 +94,9 @@ public class StocktakeType implements AuditableEntity {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "ProcessType [id=" + id + ", name=" + name + "]";
+	}
 
 }
