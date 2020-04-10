@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import br.com.cupuama.domain.cashflow.repository.CashFlowRepository;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)

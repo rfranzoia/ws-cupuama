@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.cupuama.dto.CashFlowDTO;
+import br.com.cupuama.domain.cashflow.dto.CashFlowDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

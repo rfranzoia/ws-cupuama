@@ -1,0 +1,37 @@
+package br.com.cupuama.domain.stock.mapper;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import br.com.cupuama.domain.stock.dto.DepotDTO;
+import br.com.cupuama.domain.stock.entity.Depot;
+
+
+public class DepotMapper {
+	public static Depot makeDepot(DepotDTO dto) {
+		return new Depot(dto.getId(), dto.getName(), dto.isKeepStock());
+	}
+
+	public static DepotDTO makeDepotDTO(Depot depot) {
+		DepotDTO.DepotDTOBuilder depotDTOBuilder = DepotDTO.newBuilder()
+				.setId(depot.getId())
+				.setName(depot.getName())
+				.setKeepStock(depot.isKeepStock());
+
+		return depotDTOBuilder.createDepotDTO();
+	}
+
+	public static List<DepotDTO> makeDepotDTOList(Collection<Depot> depots) {
+		return depots.stream()
+				.map(DepotMapper::makeDepotDTO)
+				.collect(Collectors.toList());
+	}
+	
+	public static List<Depot> makeDepotList(Collection<DepotDTO> dtos) {
+		return dtos.stream()
+				.map(DepotMapper::makeDepot)
+				.collect(Collectors.toList());
+	}
+
+}
