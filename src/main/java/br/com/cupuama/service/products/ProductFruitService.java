@@ -6,17 +6,21 @@ import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.cupuama.controller.mapper.products.ProductFruitMapper;
 import br.com.cupuama.domain.products.Fruit;
 import br.com.cupuama.domain.products.Product;
 import br.com.cupuama.domain.products.ProductFruit;
 import br.com.cupuama.domain.products.ProductFruitKey;
+import br.com.cupuama.dto.ProductFruitDTO;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.repository.ProductFruitRepository;
 import br.com.cupuama.service.DefaultService;
 
+@Service
 public class ProductFruitService extends DefaultService<ProductFruit, ProductFruitKey> {
 
 	@Autowired
@@ -29,6 +33,22 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 		super(repository);
 	}
 
+    public ProductFruit findByProductIdAndFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
+    	ProductFruitKey key = getProductFruitKey(productId, fruitId);
+    	return findByIdChecked(key);
+    }
+    
+    public void deleteByProductIdAndFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
+    	ProductFruitKey key = getProductFruitKey(productId, fruitId);
+    	delete(key);
+    }
+
+	private ProductFruitKey getProductFruitKey(Long productId, Long fruitId) throws EntityNotFoundException {
+		ProductFruitKey key = new ProductFruitKey();
+    	key.setProduct(productService.find(productId));
+    	key.setFruit(fruitService.find(fruitId));
+		return key;
+	}
     /**
      * deletes all association of fruits with the productId 
      * 
@@ -117,7 +137,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public List<ProductFruit> synchronizeProductFruitByProductId(final Long productId, final List<Fruit> fruits) throws EntityNotFoundException {
+    public List<ProductFruitDTO> syncronizeFruitsForProductId(final Long productId, final List<Fruit> fruits) throws EntityNotFoundException {
     	Product product = productService.find(productId);
     	
     	// attempts to delete all previous association with the current productId
@@ -127,7 +147,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 			//just ignore the problem since we are creating new associations anyway
 		}
     	
-    	List<ProductFruit> associations = new ArrayList<>();
+    	List<ProductFruitDTO> associations = new ArrayList<>();
     	
     	final Predicate<Fruit> createProductFruit = fruit -> {
     		try {
@@ -139,7 +159,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		productFruit.setKey(key);
 				
         		productFruit = create(productFruit);
-        		associations.add(productFruit);
+        		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
 				
         		return true;
 			} catch (ConstraintsViolationException ex) {
@@ -162,7 +182,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public List<ProductFruit> synchronizeProductFruitByFruitId(final Long fruitId, final List<Product> products) throws EntityNotFoundException {
+    public List<ProductFruitDTO> synchronizeProductsForFruitId(final Long fruitId, final List<Product> products) throws EntityNotFoundException {
     	Fruit fruit = fruitService.find(fruitId);
     	
     	// attempts to delete all previous association with the current fruitId
@@ -172,7 +192,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 			//just ignore the problem since we are creating new associations anyway
 		}
     	
-    	List<ProductFruit> associations = new ArrayList<>();
+    	List<ProductFruitDTO> associations = new ArrayList<>();
     	
     	ProductFruitKey key = new ProductFruitKey();
     	key.setFruit(fruit);
@@ -185,7 +205,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		productFruit.setKey(key);
 				
         		productFruit = create(productFruit);
-        		associations.add(productFruit);
+        		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
         		
         		return true;
 			} catch (ConstraintsViolationException ex) {
@@ -211,7 +231,6 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	private <T> void createAssociationProductFruit(final List<T> list, final Predicate<T> createProductFruit) {
 		list.stream()
     		.filter(createProductFruit)
-    		.peek(null)
     		.anyMatch(f -> false);
 	}
 

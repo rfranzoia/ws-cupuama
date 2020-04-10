@@ -28,5 +28,11 @@ public class FruitMapper {
 				.map(FruitMapper::makeFruitDTO)
 				.collect(Collectors.toList());
 	}
+	
+	public static List<Fruit> makeFruitList(Collection<FruitDTO> fruitsDTO) {
+		return fruitsDTO.stream()
+				.map(FruitMapper::makeFruit)
+				.collect(Collectors.toList());
+	}
 
 }

@@ -27,5 +27,11 @@ public class ProductMapper {
 				.map(ProductMapper::makeProductDTO)
 				.collect(Collectors.toList());
 	}
+	
+	public static List<Product> makeProductList(Collection<ProductDTO> productsDTO) {
+		return productsDTO.stream()
+				.map(ProductMapper::makeProduct)
+				.collect(Collectors.toList());
+	}
 
 }

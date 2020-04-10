@@ -26,7 +26,13 @@ public class ProductFruitDTO {
 
 	private ProductFruitDTO(Long productId, String productName, String productUnit, Long fruitId, String fruitName, String fruitInitials, String fruitHarvest) {
 		this.productId = productId;
+		this.productName = productName;
+		this.productUnit = productUnit;
+		
 		this.fruitId = fruitId;
+		this.fruitName = fruitName;
+		this.fruitInitials = fruitInitials;
+		this.fruitHarvest = fruitHarvest;
 	}
 
 	public static ProductFruitDTOBuilder newBuilder() {
