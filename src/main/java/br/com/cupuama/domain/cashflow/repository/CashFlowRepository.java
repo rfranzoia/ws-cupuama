@@ -2,6 +2,7 @@ package br.com.cupuama.domain.cashflow.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import br.com.cupuama.domain.cashflow.entity.CashFlow;
@@ -12,6 +13,10 @@ import br.com.cupuama.domain.cashflow.entity.CashFlow;
  */
 public interface CashFlowRepository extends CrudRepository<CashFlow, String> {
 	
-	List<CashFlow> findAllOrderByPeriod();
+	@Query(nativeQuery = true, 
+			value = "select cf.* " + 
+					"from cashflow cf " +
+                    "order by cf.period")
+	List<CashFlow> findOrderByPeriod();
 
 }

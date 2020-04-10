@@ -196,7 +196,7 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	
 	@Transactional
 	private void updateAll() {
-		List<CashFlow> list = ((CashFlowRepository) repository).findAllOrderByPeriod();
+		List<CashFlow> list = ((CashFlowRepository) repository).findOrderByPeriod();
 		
 		boolean first = true;
 		Double periodBalance = 0.0;
