@@ -41,7 +41,7 @@ public class Stocktake implements AuditableEntity {
 	private Date stocktakeDate;
 
 	@Column
-	private StocktakeType type;
+	private StocktakeInOut stocktakeInOut;
 
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double amount;
@@ -49,14 +49,14 @@ public class Stocktake implements AuditableEntity {
 	public Stocktake() {
 	}
 
-	public Stocktake(Long id, ProductFruitKey productFruitKey, Depot depot, Date stocktakeDate, StocktakeType type,
+	public Stocktake(Long id, ProductFruitKey productFruitKey, Depot depot, Date stocktakeDate, StocktakeInOut stocktakeInOut,
 			Double amount) {
 		super();
 		this.id = id;
 		this.productFruitKey = productFruitKey;
 		this.depot = depot;
 		this.stocktakeDate = stocktakeDate;
-		this.type = type;
+		this.stocktakeInOut = stocktakeInOut;
 		this.amount = amount;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
@@ -94,12 +94,12 @@ public class Stocktake implements AuditableEntity {
 		this.stocktakeDate = stocktakeDate;
 	}
 
-	public StocktakeType getType() {
-		return type;
+	public StocktakeInOut getStocktakeInOut() {
+		return stocktakeInOut;
 	}
 
-	public void setType(StocktakeType type) {
-		this.type = type;
+	public void setStocktakeInOut(StocktakeInOut stocktakeInOut) {
+		this.stocktakeInOut = stocktakeInOut;
 	}
 
 	public Double getAmount() {
@@ -154,7 +154,7 @@ public class Stocktake implements AuditableEntity {
 				+ ", productFruitKey=" + productFruitKey.toString() 
 				+ ", depot=" + depot.toString() 
 				+ ", stocktakeDate=" + stocktakeDate 
-				+ ", type=" + type 
+				+ ", stocktakeInOut=" + stocktakeInOut 
 				+ ", amount=" + amount + "]";
 	}
 
