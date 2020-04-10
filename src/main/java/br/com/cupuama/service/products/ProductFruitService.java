@@ -44,10 +44,9 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     }
 
 	private ProductFruitKey getProductFruitKey(Long productId, Long fruitId) throws EntityNotFoundException {
-		ProductFruitKey key = new ProductFruitKey();
-    	key.setProduct(productService.find(productId));
-    	key.setFruit(fruitService.find(fruitId));
-		return key;
+		final Product product = productService.find(productId);
+		final Fruit fruit = fruitService.find(fruitId);
+		return new ProductFruitKey(product, fruit);
 	}
     /**
      * deletes all association of fruits with the productId 
@@ -151,18 +150,17 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	
     	final Predicate<Fruit> createProductFruit = fruit -> {
     		try {
-    			ProductFruitKey key = new ProductFruitKey();
-    			key.setProduct(product);
-    			key.setFruit(fruit);
-    			
-        		ProductFruit productFruit = new ProductFruit();
+    			fruit = fruitService.find(fruit.getId());
+    			final ProductFruitKey key = new ProductFruitKey(product, fruit);
+
+    			ProductFruit productFruit = new ProductFruit();
         		productFruit.setKey(key);
 				
         		productFruit = create(productFruit);
         		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
 				
         		return true;
-			} catch (ConstraintsViolationException ex) {
+			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
 				LOG.error(String.format("Error during ProductFruit creation"), ex);
 				return false;
 			}
@@ -194,12 +192,10 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	
     	List<ProductFruitDTO> associations = new ArrayList<>();
     	
-    	ProductFruitKey key = new ProductFruitKey();
-    	key.setFruit(fruit);
-    	
     	final Predicate<Product> createProductFruit = product -> {
     		try {
-    			key.setProduct(product);
+    			product = productService.find(product.getId());
+    			final ProductFruitKey key = new ProductFruitKey(product, fruit);
     			
         		ProductFruit productFruit = new ProductFruit();
         		productFruit.setKey(key);
@@ -208,7 +204,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
         		
         		return true;
-			} catch (ConstraintsViolationException ex) {
+			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
 				LOG.error(String.format("Error during ProductFruit creation"), ex);
 				return false;
 			}

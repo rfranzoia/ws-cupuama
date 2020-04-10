@@ -20,6 +20,13 @@ public class ProductFruitKey implements Serializable{
 	@JoinColumn(name = "fruit_id", nullable = false)
 	private Fruit fruit;
 
+	public ProductFruitKey() {
+	}
+	
+	public ProductFruitKey(Product product, Fruit fruit) {
+		this.product = product;
+		this.fruit = fruit;
+	}
 
 	public Product getProduct() {
 		return product;
