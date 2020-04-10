@@ -86,7 +86,12 @@ public class CashFlow implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "CashFlow [period=" + period + ", audit=" + audit + "]";
+		return "CashFlow [period=" + period 
+				+ ", previousBalance=" + previousBalance 
+				+ ", credits=" + credits
+				+ ", debits=" + debits + "]";
 	}
+
+
 
 }
