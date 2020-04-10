@@ -34,7 +34,6 @@ public class Depot implements AuditableEntity {
 	}
 	
 	public Depot(Long id, String name, boolean keepStock) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.keepStock = keepStock;
@@ -108,5 +107,11 @@ public class Depot implements AuditableEntity {
 	public String toString() {
 		return "Depot [id=" + id + ", name=" + name + ", keepStock=" + keepStock + "]";
 	}
+	
+	@Override
+	public Depot clone() {
+		return new Depot(id, name, keepStock);
+	}
+	
 	
 }

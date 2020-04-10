@@ -29,6 +29,16 @@ public class InventoryKey implements Serializable {
 	@JoinColumn(name = "depot_id", nullable = false)
 	private Depot depot;
 
+	public InventoryKey() {
+	}
+	
+	public InventoryKey(String period, Product product, Fruit fruit, Depot depot) {
+		this.period = period;
+		this.product = product;
+		this.fruit = fruit;
+		this.depot = depot;
+	}
+
 	public String getPeriod() {
 		return period;
 	}
@@ -113,6 +123,9 @@ public class InventoryKey implements Serializable {
 				+ "]";
 	}
 	
-	
+	@Override
+	public InventoryKey clone() {
+		return new InventoryKey(period, product.clone(), fruit.clone(), depot.clone());
+	}
 	
 }

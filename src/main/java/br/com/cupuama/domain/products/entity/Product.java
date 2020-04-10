@@ -107,5 +107,10 @@ public class Product implements AuditableEntity {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public Product clone() {
+		return new Product(this.id, this.name, this.unit);
+	}
 
 }

@@ -119,5 +119,10 @@ public class Fruit implements AuditableEntity {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public Fruit clone() {
+		return new Fruit(id, name, initials, harvest);
+	}
 
 }
