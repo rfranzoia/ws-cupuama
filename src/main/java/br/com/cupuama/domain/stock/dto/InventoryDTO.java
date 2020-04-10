@@ -1,5 +1,7 @@
 package br.com.cupuama.domain.stock.dto;
 
+import java.util.Optional;
+
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,10 +28,12 @@ public class InventoryDTO {
 
 	public InventoryDTO(InventoryKey inventoryKey, Double initialStock, Double stockIn, Double stockOut) {
 		this.inventoryKey = inventoryKey;
-		this.initialStock = initialStock;
-		this.stockIn = stockIn;
-		this.stockOut = stockOut;
-		this.finalStock = initialStock + stockIn - stockOut;
+		
+		this.initialStock = Optional.ofNullable(initialStock).orElse(0.0);
+		this.stockIn = Optional.ofNullable(stockIn).orElse(0.0);;
+		this.stockOut = Optional.ofNullable(stockOut).orElse(0.0);;
+		
+		this.finalStock = this.initialStock + this.stockIn - this.stockOut;
 	}
 
 	public static InventoryDTOBuilder newBuilder() {

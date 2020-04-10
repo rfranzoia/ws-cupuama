@@ -13,3 +13,5 @@ insert into product (id, name, unit, date_created, deleted) values (2, 'Polpa 10
 insert into fruit (id, name, initials, harvest, date_created, deleted) values (1, 'Cupuacu', 'CUPU', 'Agosto', now(), false);
 insert into fruit (id, name, initials, harvest, date_created, deleted) values (2, 'Maracuja', 'MARA', 'Ano Inteiro', now(), false);
 
+-- add one depot
+insert into depot (id, name, keep_stock, date_created, deleted) values (1, 'Manaus', true, now(), false);

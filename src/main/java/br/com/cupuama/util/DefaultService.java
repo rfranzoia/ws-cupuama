@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -80,7 +81,9 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 	}
 	
 	protected T findByIdChecked(final ID id) throws EntityNotFoundException {
-		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
+		T t = repository.findById(id)
+						.orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + id));
+		Hibernate.initialize(t);
+		return t;
 	}
 }
