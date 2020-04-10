@@ -3,8 +3,8 @@ package br.com.cupuama.domain.cashflow.service;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,32 +33,6 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	}
 
 	/**
-	 * Creates a new cashFlow.
-	 *
-	 * @param cashFlowDO
-	 * @return
-	 * @throws ConstraintsViolationException if a cashFlow already exists with the
-	 *                                       given license plate, ... .
-	 */
-	@Override
-	public CashFlow create(CashFlow cashFlowDO) throws ConstraintsViolationException {
-		try {
-			if (repository.existsById(cashFlowDO.getPeriod())) {
-				LOG.error(String.format("CashFlow with period %s already exists!", cashFlowDO.getPeriod()));
-				throw new DataIntegrityViolationException(String.format("CashFlow with period %s already exists!", cashFlowDO.getPeriod()));
-			}
-			
-			CashFlow cashFlow = repository.save(cashFlowDO);
-			return cashFlow;
-			
-		} catch (DataIntegrityViolationException e) {
-			LOG.error("ConstraintsViolationException while creating a cashFlow: {}", cashFlowDO, e);
-			throw new ConstraintsViolationException(e.getMessage());
-		}
-		
-	}
-
-	/**
 	 * Update or create previous Balance for a period
 	 *
 	 * @param period
@@ -70,23 +44,11 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	@Transactional
 	public void updateOrCreatePreviousBalance(String period, Double previousBalance) throws ConstraintsViolationException, EntityNotFoundException {
 		
-		CashFlow cashFlow = null;
-		try {
-			cashFlow = findByIdChecked(period);
-			
-		} catch (EntityNotFoundException e) {
-			CashFlowDTO dto = CashFlowDTO.newBuilder()
-								.setPeriod(period)
-								.setPreviousBalance(0.0)
-								.setCredits(0.0)
-								.setDebits(0.0)
-								.createCashFlowDTO();
-			
-			cashFlow = create(CashFlowMapper.makeCashFlow(dto));
-		}
+		CashFlow cashFlow = findOrCreateCashFlow(period);
 		
 		cashFlow.getAudit().setDateUpdated(ZonedDateTime.now());
 		cashFlow.setPreviousBalance(previousBalance);
+		
 		updateForwardBalance(cashFlow);
 	}
 	
@@ -230,6 +192,24 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 		}
 
 		return cashFlow;
+	}
+	
+	@Transactional
+	private void updateAll() {
+		List<CashFlow> list = ((CashFlowRepository) repository).findAllOrderByPeriod();
+		
+		boolean first = true;
+		Double periodBalance = 0.0;
+		
+		for (CashFlow cashFlow : list) {
+			if (first) {
+				periodBalance = cashFlow.getPreviousBalance() + cashFlow.getCredits() - cashFlow.getDebits();
+				first = false;
+			} else {
+				cashFlow.setPreviousBalance(periodBalance);
+				periodBalance = cashFlow.getPreviousBalance() + cashFlow.getCredits() - cashFlow.getDebits();
+			}
+		}
 	}
 
 }

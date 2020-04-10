@@ -1,5 +1,7 @@
 package br.com.cupuama.domain.cashflow.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import br.com.cupuama.domain.cashflow.entity.CashFlow;
@@ -9,5 +11,7 @@ import br.com.cupuama.domain.cashflow.entity.CashFlow;
  * <p/>
  */
 public interface CashFlowRepository extends CrudRepository<CashFlow, String> {
+	
+	List<CashFlow> findAllOrderByPeriod();
 
 }

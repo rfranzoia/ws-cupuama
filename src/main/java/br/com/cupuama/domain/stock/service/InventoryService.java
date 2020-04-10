@@ -141,7 +141,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 		} catch (EntityNotFoundException enfex) {
 			InventoryDTO dto = InventoryDTO.newBuilder()
 								.setKey(inventoryKey)
-								.setInitialStock(getPreviousPeriodFinalStock(inventoryKey))
+								.setInitialStock(0.0)
 								.setStockIn(0.0)
 								.setStockOut(0.0).createInventoryDTO();
 
@@ -160,45 +160,28 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 		return inventory;
 	}
 	
-	/**
-	 * Verifies if there's a previous period for the key and retrieves final stock is exists, otherwise returns zero
-	 * 
-	 * @param inventoryKey
-	 * @return
-	 */
-	private Double getPreviousPeriodFinalStock(final InventoryKey inventoryKey) {
-
-		Double previousPeriodFinalStock = 0.0;
-		
-		// instantiate month and year
-		String[] start = inventoryKey.getPeriod()
-							.replaceAll(PERIOD_REGEX, "$1/$2")
-							.split("[/]");
-		
-		int year = Integer.valueOf(start[0]);
-		int month = Integer.valueOf(start[1]);
-		
-		month--;
-		if (month < 1) {
-			year--;
-			month = 12;
-		}
-		
-		//make a copy of the key for safety purposes
-		final InventoryKey previousPeriodKey = inventoryKey.clone();
-		previousPeriodKey.setPeriod(String.format("%04d", year) + String.format("%02d", month));
-		
-		try {
-			final Inventory inventory = findByIdChecked(previousPeriodKey);
-			previousPeriodFinalStock = inventory.getInitialStock() + inventory.getStockIn() - inventory.getStockOut();
-		} catch (EntityNotFoundException ex) {
-		}
-		
-		return previousPeriodFinalStock;
-	}
-	
 	public List<InventoryDTO> findAllOrderByPeriodProductFruitDepot() {
 		return InventoryMapper.makeInventoryDTOList(((InventoryRepository) repository).findAllOrderByPeriodProductFruitDepot());
 	}
 
+	@Transactional
+	private void updateAll(final InventoryKey key) {
+		List<Inventory> list = ((InventoryRepository) repository).findByProductFruitDepotOrderByPeriod(
+				key.getProduct().getId(), 
+				key.getFruit().getId(), 
+				key.getDepot().getId());
+		
+		boolean first = true;
+		Double initialStock = 0.0;
+		
+		for (Inventory inventory : list) {
+			if (first) {
+				initialStock = inventory.getInitialStock() + inventory.getStockIn() - inventory.getStockOut();
+				first = false;
+			} else {
+				inventory.setInitialStock(initialStock);
+				initialStock = inventory.getInitialStock() + inventory.getStockIn() - inventory.getStockOut();
+			}
+		}
+	}
 }
