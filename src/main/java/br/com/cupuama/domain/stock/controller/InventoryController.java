@@ -35,7 +35,7 @@ public class InventoryController {
 
 	@GetMapping("/inventory")
 	public InventoryDTO getInventory(@RequestBody final InventoryDTO inventoryDTO) throws EntityNotFoundException {
-		return InventoryMapper.makeInventoryDTO(inventoryService.find(inventoryDTO.getInventoryKey()));
+		return InventoryMapper.makeInventoryDTO(inventoryService.find(inventoryDTO.getKey()));
 	}
 
 	@PostMapping

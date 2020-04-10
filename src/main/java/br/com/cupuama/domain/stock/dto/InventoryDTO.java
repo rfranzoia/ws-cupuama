@@ -12,10 +12,10 @@ import br.com.cupuama.domain.stock.entity.InventoryKey;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class InventoryDTO {
 
-	@NotNull(message = "Inventory Key cannot be null!")
-	private InventoryKey inventoryKey;
+	@NotNull(message = "InventoryKey cannot be null!")
+	private InventoryKey key;
 
-	@NotNull(message = "Initial Stock Balance cannot be null!")
+	@NotNull(message = "InitialStock Balance cannot be null!")
 	private Double initialStock;
 
 	@NotNull(message = "stockIn cannot be null!")
@@ -26,8 +26,8 @@ public class InventoryDTO {
 	
 	private Double finalStock;
 
-	public InventoryDTO(InventoryKey inventoryKey, Double initialStock, Double stockIn, Double stockOut) {
-		this.inventoryKey = inventoryKey;
+	public InventoryDTO(InventoryKey key, Double initialStock, Double stockIn, Double stockOut) {
+		this.key = key;
 		
 		this.initialStock = Optional.ofNullable(initialStock).orElse(0.0);
 		this.stockIn = Optional.ofNullable(stockIn).orElse(0.0);;
@@ -42,8 +42,8 @@ public class InventoryDTO {
 
 
 	@JsonProperty	
-	public InventoryKey getInventoryKey() {
-		return inventoryKey;
+	public InventoryKey getKey() {
+		return key;
 	}
 
 	@JsonProperty
@@ -67,13 +67,13 @@ public class InventoryDTO {
 	}
 
 	public static class InventoryDTOBuilder {
-		private InventoryKey inventoryKey;
+		private InventoryKey key;
 		private Double initialStock = 0.0;
 		private Double stockIn = 0.0;
 		private Double stockOut = 0.0;
 
-		public InventoryDTOBuilder setInventoryKey(InventoryKey inventoryKey) {
-			this.inventoryKey = inventoryKey;
+		public InventoryDTOBuilder setKey(InventoryKey inventoryKey) {
+			this.key = inventoryKey;
 			return this;
 		}
 
@@ -93,7 +93,7 @@ public class InventoryDTO {
 		}
 
 		public InventoryDTO createInventoryDTO() {
-			return new InventoryDTO(inventoryKey, initialStock, stockIn, stockOut);
+			return new InventoryDTO(key, initialStock, stockIn, stockOut);
 		}
 	}
 }
