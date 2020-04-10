@@ -102,32 +102,6 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 		return ((ProductFruitRepository) repository).findByFruitId(fruitId);
 	}
 	
-	/**
-	 * list all fruits associated to the product id
-	 * 
-	 * @param productId
-	 * @return List<Fruit>
-	 */
-    public List<Fruit> findFruitsByProductId(final Long productId) {
-    	List<ProductFruit> list = ((ProductFruitRepository) repository).findByProductId(productId);
-    	List<Fruit> fruits = new ArrayList<>();
-    	list.stream().forEach(pf -> fruits.add(pf.getKey().getFruit()));
-    	return fruits;
-    }
-    
-    /**
-     * list all products associated to the fruit id
-     * 
-     * @param fruitId
-     * @return List<Product>
-     */
-    public List<Product> findProductsByFruitId(final Long fruitId) {
-    	List<ProductFruit> list = ((ProductFruitRepository) repository).findByFruitId(fruitId);
-    	List<Product> products = new ArrayList<>();
-    	list.stream().forEach(pf -> products.add(pf.getKey().getProduct()));
-    	return products;
-    }
-    
     /**
      * Associate all fruits from List<Fruit> to the productId
      * 
