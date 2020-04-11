@@ -5,10 +5,15 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
@@ -23,16 +28,20 @@ public class Process implements AuditableEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(name = "process_date", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date processDate;
 	
-	@Column(nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "process_type_id", nullable = false)
 	private ProcessType processType;
 	
-	@Column
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "customer_id", nullable = true)
 	private Customer customer;
 	
-	@Column
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "supplier_id", nullable = true)
 	private Supplier supplier;
 	
 	@Column

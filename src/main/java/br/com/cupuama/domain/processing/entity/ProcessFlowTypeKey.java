@@ -18,7 +18,7 @@ public class ProcessFlowTypeKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "stocktake_type_id", nullable = false)
+	@JoinColumn(name = "process_type_id", nullable = false)
 	private ProcessType processType;
 
 	@ManyToOne(fetch = FetchType.EAGER)
