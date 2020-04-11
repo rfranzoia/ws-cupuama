@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.cupuama.domain.cashflow.dto.CashFlowDTO;
-import br.com.cupuama.domain.cashflow.dto.CashFlowDTO.CashFlowDTOBuilder;
 import br.com.cupuama.domain.cashflow.entity.CashFlow;
 
 public class CashFlowMapper {

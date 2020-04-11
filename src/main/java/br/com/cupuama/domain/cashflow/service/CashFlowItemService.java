@@ -1,6 +1,5 @@
 package br.com.cupuama.domain.cashflow.service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidDateRange;
 import br.com.cupuama.util.DefaultService;
+import br.com.cupuama.util.Utils;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
@@ -25,8 +25,6 @@ import br.com.cupuama.util.DefaultService;
 @Service
 public class CashFlowItemService extends DefaultService<CashFlowItem, Long> {
 
-	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
-	
 	@Autowired
 	private CashFlowService cashFlowService;
 	
@@ -85,7 +83,7 @@ public class CashFlowItemService extends DefaultService<CashFlowItem, Long> {
 	@Transactional
 	private void updateCashFlow(CashFlowItem cashFlowItem, CashFlowOperation operation) throws ConstraintsViolationException, EntityNotFoundException {
 		
-		String period = PERIOD_DATE_FORMAT.format(cashFlowItem.getItemDate());
+		String period = Utils.getFormattedPeriod(cashFlowItem.getItemDate());
 		
 		if (operation.equals(CashFlowOperation.ADD)) {
 			cashFlowService.addCreditOrDebit(period, cashFlowItem.getType(), cashFlowItem.getValue(), cashFlowItem.getValue());

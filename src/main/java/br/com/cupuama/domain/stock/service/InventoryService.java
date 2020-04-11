@@ -1,6 +1,5 @@
 package br.com.cupuama.domain.stock.service;
 
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +16,7 @@ import br.com.cupuama.domain.stock.repository.InventoryRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
+import br.com.cupuama.util.Utils;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
@@ -25,9 +25,6 @@ import br.com.cupuama.util.DefaultService;
  */
 @Service
 public class InventoryService extends DefaultService<Inventory, InventoryKey> {
-
-	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
-	public static final String PERIOD_REGEX = "([0-9]{4})([0-9]{2})";
 
 	public InventoryService(final InventoryRepository inventoryRepository) {
 		super(inventoryRepository);
@@ -76,7 +73,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 	 */
 	@Transactional
 	private void updateForwardInitialStock(final Inventory inventory) throws EntityNotFoundException {
-		String currentPeriod = PERIOD_DATE_FORMAT.format(new Date());
+		String currentPeriod = Utils.getFormattedPeriod(new Date());
 		InventoryKey inventoryKey = inventory.getInventoryKey();
 		
 		if (Integer.valueOf(inventoryKey.getPeriod()) >= Integer.valueOf(currentPeriod)) {
@@ -90,7 +87,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 		
 		// instantiate month and year
 		String[] start = inventory.getInventoryKey().getPeriod()
-							.replaceAll(PERIOD_REGEX, "$1/$2")
+							.replaceAll(Utils.PERIOD_REGEX, "$1/$2")
 							.split("[/]");
 		
 		int year = Integer.valueOf(start[0]);

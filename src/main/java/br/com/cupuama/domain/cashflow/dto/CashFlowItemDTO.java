@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.cupuama.domain.cashflow.entity.CashFlowType;
 
@@ -45,34 +46,42 @@ public class CashFlowItemDTO {
 		this.value = value;
 	}
 
+	@JsonProperty
 	public Long getId() {
 		return id;
 	}
 
+	@JsonProperty
 	public Date getItemDate() {
 		return itemDate;
 	}
 
+	@JsonProperty
 	public String getDocumentNumber() {
 		return documentNumber;
 	}
 
+	@JsonProperty
 	public Long getDocumentTypeId() {
 		return documentTypeId;
 	}
 	
+	@JsonProperty
 	public String getDocumentTypeName() {
 		return documentTypeName;
 	}
 
+	@JsonProperty
 	public String getDescription() {
 		return description;
 	}
 
+	@JsonProperty
 	public CashFlowType getType() {
 		return type;
 	}
 
+	@JsonProperty
 	public Double getValue() {
 		return value;
 	}

@@ -1,6 +1,5 @@
 package br.com.cupuama.domain.cashflow.service;
 
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +15,7 @@ import br.com.cupuama.domain.cashflow.repository.CashFlowRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
+import br.com.cupuama.util.Utils;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
@@ -24,9 +24,6 @@ import br.com.cupuama.util.DefaultService;
  */
 @Service
 public class CashFlowService extends DefaultService<CashFlow, String> {
-
-	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
-	public static final String PERIOD_REGEX = "([0-9]{4})([0-9]{2})";
 
 	public CashFlowService(final CashFlowRepository cashFlowRepository) {
 		super(cashFlowRepository);
@@ -121,7 +118,7 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	 */
 	@Transactional
 	private void updateForwardBalance(final CashFlow cashFlow) throws ConstraintsViolationException, EntityNotFoundException {
-		String currentPeriod = PERIOD_DATE_FORMAT.format(new Date());
+		String currentPeriod = Utils.getFormattedPeriod(new Date());
 		String cashFlowPeriod = cashFlow.getPeriod();
 		
 		if (Integer.valueOf(cashFlowPeriod) >= Integer.valueOf(currentPeriod)) {
@@ -135,7 +132,7 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 		
 		// instantiate month and year
 		String[] start = cashFlow.getPeriod()
-							.replaceAll(PERIOD_REGEX, "$1/$2")
+							.replaceAll(Utils.PERIOD_REGEX, "$1/$2")
 							.split("[/]");
 		
 		int year = Integer.valueOf(start[0]);

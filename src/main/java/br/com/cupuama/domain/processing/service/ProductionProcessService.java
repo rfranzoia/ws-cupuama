@@ -1,7 +1,5 @@
 package br.com.cupuama.domain.processing.service;
 
-import java.text.SimpleDateFormat;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +17,6 @@ import br.com.cupuama.util.DefaultService;
  */
 @Service
 public class ProductionProcessService extends DefaultService<ProductionProcess, ProductionProcessKey> {
-
-	public static final SimpleDateFormat PERIOD_DATE_FORMAT = new SimpleDateFormat("yyyyMM");
-	public static final String PERIOD_REGEX = "([0-9]{4})([0-9]{2})";
 
 	public ProductionProcessService(final ProductionProcessRepository productionProcessRepository) {
 		super(productionProcessRepository);

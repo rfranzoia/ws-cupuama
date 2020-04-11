@@ -36,15 +36,18 @@ public class Stocktake implements AuditableEntity {
 	@JoinColumn(name = "depot_id", nullable = false)
 	private Depot depot;
 
-	@Column(nullable = false, name = "item_date")
+	@Column(nullable = false, name = "stocktake_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date stocktakeDate;
 
-	@Column
+	@Column(nullable = false, name = "stocktake_inout")
 	private StocktakeInOut stocktakeInOut;
 
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double amount;
+	
+	@Embedded
+	private Audit audit;
 
 	public Stocktake() {
 	}
@@ -108,9 +111,6 @@ public class Stocktake implements AuditableEntity {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-
-	@Embedded
-	private Audit audit;
 
 	@Override
 	public Audit getAudit() {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.cupuama.domain.cashflow.dto.CashFlowItemDTO;
-import br.com.cupuama.domain.cashflow.dto.CashFlowItemDTO.CashFlowItemDTOBuilder;
 import br.com.cupuama.domain.cashflow.entity.CashFlowItem;
 import br.com.cupuama.domain.cashflow.entity.DocumentType;
 
