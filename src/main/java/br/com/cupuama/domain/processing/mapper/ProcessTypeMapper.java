@@ -17,7 +17,7 @@ public class ProcessTypeMapper {
 		ProcessTypeDTO.ProcessTypeDTOBuilder processTypeDTOBuilder = ProcessTypeDTO.newBuilder()
 				.setId(processType.getId())
 				.setName(processType.getName())
-				.setModel(processType.getModel());
+				.setModel(processType.getFlowTypeModel());
 
 		return processTypeDTOBuilder.createProcessTypeDTO();
 	}

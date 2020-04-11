@@ -1,5 +1,5 @@
 package br.com.cupuama.domain.processing.entity;
 
 public enum FlowTypeModel {
-	Acqisitions, Sales, Processing;
+	Acqisitions, Sales, Processing, Transfer;
 }

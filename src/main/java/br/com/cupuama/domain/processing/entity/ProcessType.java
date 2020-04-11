@@ -32,7 +32,7 @@ public class ProcessType implements AuditableEntity {
 	@Column(nullable = false)
 	@NotNull(message = "FlowTypeModel cannot be null!")
 	@Enumerated(EnumType.STRING)
-	private FlowTypeModel model;
+	private FlowTypeModel flowTypeModel;
 
 	@Embedded
 	private Audit audit;
@@ -44,9 +44,9 @@ public class ProcessType implements AuditableEntity {
 		this.id = id;
 	}
 	
-	public ProcessType(Long id, String name, FlowTypeModel model) {
+	public ProcessType(Long id, String name, FlowTypeModel flowTypeModel) {
 		this.name = name;
-		this.model = model;
+		this.flowTypeModel = flowTypeModel;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
 	}
@@ -77,12 +77,12 @@ public class ProcessType implements AuditableEntity {
 		this.audit = audit;
 	}
 
-	public FlowTypeModel getModel() {
-		return model;
+	public FlowTypeModel getFlowTypeModel() {
+		return flowTypeModel;
 	}
 
-	public void setModel(FlowTypeModel model) {
-		this.model = model;
+	public void setFlowTypeModel(FlowTypeModel flowTypeModel) {
+		this.flowTypeModel = flowTypeModel;
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class ProcessType implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "ProcessType [id=" + id + ", name=" + name + ", model=" + model + "]";
+		return "ProcessType [id=" + id + ", name=" + name + ", FlowTypeModel=" + flowTypeModel + "]";
 	}
 
 }

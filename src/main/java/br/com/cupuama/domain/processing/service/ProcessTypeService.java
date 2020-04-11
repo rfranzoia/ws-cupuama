@@ -31,10 +31,10 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(final Long processTypeId, final String name, final FlowTypeModel model) throws EntityNotFoundException {
+	public void update(final Long processTypeId, final String name, final FlowTypeModel flowTypeModel) throws EntityNotFoundException {
 		ProcessType processType = findByIdChecked(processTypeId);
 		processType.setName(name);
-		processType.setModel(model);
+		processType.setFlowTypeModel(flowTypeModel);
 	}
 
 	/**

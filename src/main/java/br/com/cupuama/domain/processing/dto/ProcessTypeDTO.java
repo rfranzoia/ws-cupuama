@@ -16,15 +16,15 @@ public class ProcessTypeDTO {
 	private String name;
 	
 	@NotNull(message = "FlowTypeModel cannot be null!")
-	private FlowTypeModel model;
+	private FlowTypeModel flowTypeModel;
 
 	private ProcessTypeDTO() {
 	}
 
-	private ProcessTypeDTO(Long id, String name, FlowTypeModel model) {
+	private ProcessTypeDTO(Long id, String name, FlowTypeModel flowTypeModel) {
 		this.id = id;
 		this.name = name;
-		this.model = model;
+		this.flowTypeModel = flowTypeModel;
 	}
 
 	public static ProcessTypeDTOBuilder newBuilder() {
@@ -43,13 +43,13 @@ public class ProcessTypeDTO {
 	
 	@JsonProperty
 	public FlowTypeModel getFlowTypeModel() {
-		return model;
+		return flowTypeModel;
 	}
 
 	public static class ProcessTypeDTOBuilder {
 		private Long id;
 		private String name;
-		private FlowTypeModel model;
+		private FlowTypeModel flowTypeModel;
 
 		public ProcessTypeDTOBuilder setId(Long id) {
 			this.id = id;
@@ -61,13 +61,13 @@ public class ProcessTypeDTO {
 			return this;
 		}
 
-		public ProcessTypeDTOBuilder setModel(FlowTypeModel model) {
-			this.model = model;
+		public ProcessTypeDTOBuilder setModel(FlowTypeModel flowTypeModel) {
+			this.flowTypeModel = flowTypeModel;
 			return this;
 		}
 		
 		public ProcessTypeDTO createProcessTypeDTO() {
-			return new ProcessTypeDTO(id, name, model);
+			return new ProcessTypeDTO(id, name, flowTypeModel);
 		}
 	}
 }
