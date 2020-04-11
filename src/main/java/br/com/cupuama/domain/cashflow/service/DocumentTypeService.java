@@ -27,8 +27,6 @@ public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 	 * Update the location for a documentType.
 	 *
 	 * @param documentTypeId
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional

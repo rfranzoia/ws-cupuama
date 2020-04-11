@@ -13,45 +13,58 @@ import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
 
 @Entity
-@Table(name = "production_process")
-public class ProductionProcess implements AuditableEntity {
+@Table(name = "process_flow_type")
+public class ProcessFlowType implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private ProductionProcessKey key;
+	private ProcessFlowTypeKey key;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "depot_id", nullable = false)
-	private Depot depot;
+	@JoinColumn(name = "depot_in_id")
+	private Depot depotIn;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "depot_out_id")
+	private Depot depotOut;
 
 	@Embedded
 	private Audit audit;
 
-	public ProductionProcess() {
+	public ProcessFlowType() {
 	}
 
-	public ProductionProcess(ProductionProcessKey key, Depot depot) {
+	public ProcessFlowType(ProcessFlowTypeKey key, Depot depotIn, Depot depotOut) {
 		this.key = key;
-		this.depot = depot;
+		this.depotIn = depotIn;
+		this.depotOut = depotOut;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
 	}
 
-	public ProductionProcessKey getKey() {
+	public ProcessFlowTypeKey getKey() {
 		return key;
 	}
 
-	public void setKey(ProductionProcessKey key) {
+	public void setKey(ProcessFlowTypeKey key) {
 		this.key = key;
 	}
 
-	public Depot getDepot() {
-		return depot;
+	public Depot getDepotIn() {
+		return depotIn;
 	}
 
-	public void setDepot(Depot depot) {
-		this.depot = depot;
+	public void setDepotIn(Depot depotIn) {
+		this.depotIn = depotIn;
+	}
+
+	public Depot getDepotOut() {
+		return depotOut;
+	}
+
+	public void setDepotOut(Depot depotOut) {
+		this.depotOut = depotOut;
 	}
 
 	@Override
@@ -80,7 +93,7 @@ public class ProductionProcess implements AuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductionProcess other = (ProductionProcess) obj;
+		ProcessFlowType other = (ProcessFlowType) obj;
 		if (key == null) {
 			if (other.getKey() != null)
 				return false;
@@ -91,7 +104,7 @@ public class ProductionProcess implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "ProductionProcess [key=" + key + ", depot=" + depot + "]";
+		return "ProcessFlowType [key=" + key + ", depotIn=" + depotIn + ", depotOut=" + depotOut + "]";
 	}
 	
 }

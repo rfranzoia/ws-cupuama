@@ -9,14 +9,15 @@ import br.com.cupuama.domain.processing.entity.ProcessType;
 
 
 public class ProcessTypeMapper {
-	public static ProcessType makeProcessType(ProcessTypeDTO processType) {
-		return new ProcessType(processType.getName());
+	public static ProcessType makeProcessType(ProcessTypeDTO dto) {
+		return new ProcessType(dto.getId(), dto.getName(), dto.getFlowTypeModel());
 	}
 
 	public static ProcessTypeDTO makeProcessTypeDTO(ProcessType processType) {
 		ProcessTypeDTO.ProcessTypeDTOBuilder processTypeDTOBuilder = ProcessTypeDTO.newBuilder()
 				.setId(processType.getId())
-				.setName(processType.getName());
+				.setName(processType.getName())
+				.setModel(processType.getModel());
 
 		return processTypeDTOBuilder.createProcessTypeDTO();
 	}

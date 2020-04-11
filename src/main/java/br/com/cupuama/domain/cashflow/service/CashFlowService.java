@@ -33,8 +33,6 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	 * Update or create previous Balance for a period
 	 *
 	 * @param period
-	 * @param longitude
-	 * @param latitude
 	 * @throws ConstraintsViolationException 
 	 * @throws EntityNotFoundException 
 	 */
@@ -53,8 +51,6 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	 * Update credits and debits for a period
 	 *
 	 * @param period
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 * @throws ConstraintsViolationException 
 	 */
@@ -83,8 +79,6 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	 * Update credits and debits for a period
 	 *
 	 * @param period
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 * @throws ConstraintsViolationException 
 	 */

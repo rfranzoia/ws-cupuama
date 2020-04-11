@@ -28,8 +28,6 @@ public class DepotService extends DefaultService<Depot, Long> {
 	 * Update a depots information.
 	 *
 	 * @param depotId
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional

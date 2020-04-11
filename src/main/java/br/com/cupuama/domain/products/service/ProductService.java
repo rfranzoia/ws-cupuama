@@ -28,8 +28,6 @@ public class ProductService extends DefaultService<Product, Long> {
 	 * Update a products information.
 	 *
 	 * @param productId
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional

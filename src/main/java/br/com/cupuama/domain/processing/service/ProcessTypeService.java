@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.entity.ProcessType;
 import br.com.cupuama.domain.processing.repository.ProcessTypeRepository;
 import br.com.cupuama.exception.EntityNotFoundException;
@@ -27,14 +28,13 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 	 * Update the location for a processType.
 	 *
 	 * @param processTypeId
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(final Long processTypeId, final String name) throws EntityNotFoundException {
+	public void update(final Long processTypeId, final String name, final FlowTypeModel model) throws EntityNotFoundException {
 		ProcessType processType = findByIdChecked(processTypeId);
 		processType.setName(name);
+		processType.setModel(model);
 	}
 
 	/**

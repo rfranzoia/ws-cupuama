@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.processing.dto.ProcessTypeDTO;
+import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.entity.ProcessType;
 import br.com.cupuama.domain.processing.mapper.ProcessTypeMapper;
 import br.com.cupuama.domain.processing.service.ProcessTypeService;
@@ -57,9 +58,9 @@ public class ProcessTypeController {
 	}
 
 	@PutMapping("/{processTypeId}")
-	public void updateLocation(@PathVariable final long processTypeId, @RequestParam final String name)
+	public void updateLocation(@PathVariable final long processTypeId, @RequestParam final String name, @RequestParam final FlowTypeModel model)
 			throws EntityNotFoundException {
-		processTypeService.update(processTypeId, name);
+		processTypeService.update(processTypeId, name, model);
 	}
 
 	@GetMapping("/name/{name}")

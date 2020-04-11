@@ -21,8 +21,8 @@ import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
 
 @Entity
-@Table(name = "cashflow_item")
-public class CashFlowItem implements AuditableEntity {
+@Table(name = "cash_transaction")
+public class CashTransaction implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -54,10 +54,10 @@ public class CashFlowItem implements AuditableEntity {
 	@Embedded
 	private Audit audit;
 	
-	public CashFlowItem() {
+	public CashTransaction() {
 	}
 	
-	public CashFlowItem(Long id, Date itemDate, String documentNumber, DocumentType documentType, String description,
+	public CashTransaction(Long id, Date itemDate, String documentNumber, DocumentType documentType, String description,
 			CashFlowType type, Double value) {
 		
 		this.id = id;
@@ -157,7 +157,7 @@ public class CashFlowItem implements AuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CashFlowItem other = (CashFlowItem) obj;
+		CashTransaction other = (CashTransaction) obj;
 		if (id == null) {
 			if (other.getId() != null)
 				return false;
@@ -168,7 +168,7 @@ public class CashFlowItem implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "CashFlowItem [itemDate=" + itemDate 
+		return "CashTransaction [itemDate=" + itemDate 
 				+ ", documentNumber=" + documentNumber 
 				+ ", documentType=" + documentType 
 				+ ", description=" + description 

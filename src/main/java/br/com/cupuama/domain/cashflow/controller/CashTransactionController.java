@@ -20,51 +20,51 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.domain.cashflow.dto.CashFlowItemDTO;
-import br.com.cupuama.domain.cashflow.entity.CashFlowItem;
-import br.com.cupuama.domain.cashflow.mapper.CashFlowItemMapper;
-import br.com.cupuama.domain.cashflow.service.CashFlowItemService;
+import br.com.cupuama.domain.cashflow.dto.CashTransactionDTO;
+import br.com.cupuama.domain.cashflow.entity.CashTransaction;
+import br.com.cupuama.domain.cashflow.mapper.CashTransactionMapper;
+import br.com.cupuama.domain.cashflow.service.CashTransactionService;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidDateRange;
 
 /**
- * All operations with a cashFlowItem will be routed by this controller.
+ * All operations with a cashTransaction will be routed by this controller.
  * <p/>
  */
 @RestController
-@RequestMapping("/v1/cashFlowItems")
-public class CashFlowItemController {
+@RequestMapping("/v1/cashTransactions")
+public class CashTransactionController {
 
 	public static final SimpleDateFormat SEARCH_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private final CashFlowItemService cashFlowItemService;
+	private final CashTransactionService cashTransactionService;
 
 	@Autowired
-	public CashFlowItemController(final CashFlowItemService cashFlowItemService) {
-		this.cashFlowItemService = cashFlowItemService;
+	public CashTransactionController(final CashTransactionService cashTransactionService) {
+		this.cashTransactionService = cashTransactionService;
 	}
 
-	@GetMapping("/{cashFlowItemId}")
-	public CashFlowItemDTO getCashFlowItem(@PathVariable final long cashFlowItemId) throws EntityNotFoundException {
-		return CashFlowItemMapper.makeCashFlowItemDTO(cashFlowItemService.find(cashFlowItemId));
+	@GetMapping("/{cashTransactionId}")
+	public CashTransactionDTO getCashTransaction(@PathVariable final long cashTransactionId) throws EntityNotFoundException {
+		return CashTransactionMapper.makeCashTransactionDTO(cashTransactionService.find(cashTransactionId));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CashFlowItemDTO createCashFlowItem(@Valid @RequestBody final CashFlowItemDTO cashFlowItemDTO)
+	public CashTransactionDTO createCashTransaction(@Valid @RequestBody final CashTransactionDTO cashTransactionDTO)
 			throws ConstraintsViolationException, EntityNotFoundException {
-		CashFlowItem cashFlowItem = CashFlowItemMapper.makeCashFlowItem(cashFlowItemDTO);
-		return CashFlowItemMapper.makeCashFlowItemDTO(cashFlowItemService.addCashFlowItem(cashFlowItem));
+		CashTransaction cashTransaction = CashTransactionMapper.makeCashTransaction(cashTransactionDTO);
+		return CashTransactionMapper.makeCashTransactionDTO(cashTransactionService.addCashTransaction(cashTransaction));
 	}
 
-	@DeleteMapping("/{cashFlowItemId}")
-	public void deleteCashFlowItem(@PathVariable final long cashFlowItemId) 
+	@DeleteMapping("/{cashTransactionId}")
+	public void deleteCashTransaction(@PathVariable final long cashTransactionId) 
 			throws ConstraintsViolationException, EntityNotFoundException {
-		cashFlowItemService.removeCashFlowItem(cashFlowItemId);
+		cashTransactionService.removeCashTransaction(cashTransactionId);
 	}
 
 	@GetMapping("/dates")
-	public List<CashFlowItemDTO> findByDateRange(@RequestParam(required = false) final String start, 
+	public List<CashTransactionDTO> findByDateRange(@RequestParam(required = false) final String start, 
 			@RequestParam(required = false) final String end) throws InvalidDateRange {
 		try {
 			Date startDate = (StringUtils.isEmpty(start))? SEARCH_DATE_FORMAT.parse(start): new Date();
@@ -74,7 +74,7 @@ public class CashFlowItemController {
 				throw new InvalidDateRange("The end date must be greater than start date");
 			}
 			
-			return CashFlowItemMapper.makeCashFlowItemDTOList(cashFlowItemService.findByDateRange(startDate, endDate));
+			return CashTransactionMapper.makeCashTransactionDTOList(cashTransactionService.findByDateRange(startDate, endDate));
 			
 		} catch (InvalidDateRange | ParseException ex) {
 			throw new InvalidDateRange("There was a problem while processing your request", ex);
@@ -83,7 +83,7 @@ public class CashFlowItemController {
 	}
 	
 	@GetMapping
-	public List<CashFlowItemDTO> findAllCashFlowItems() {
-		return CashFlowItemMapper.makeCashFlowItemDTOList(cashFlowItemService.findAll());
+	public List<CashTransactionDTO> findAllCashTransactions() {
+		return CashTransactionMapper.makeCashTransactionDTOList(cashTransactionService.findAll());
 	}
 }

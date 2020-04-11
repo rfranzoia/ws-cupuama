@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.cupuama.domain.cashflow.entity.CashFlowType;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CashFlowItemDTO {
+public class CashTransactionDTO {
 
 	private Long id;
 
@@ -34,7 +34,7 @@ public class CashFlowItemDTO {
 	@NotNull(message = "Value cannot be null!")
 	private Double value;
 	
-	private CashFlowItemDTO(Long id, Date itemDate, Long documentTypeId, String documentTypeName, String documentNumber,
+	private CashTransactionDTO(Long id, Date itemDate, Long documentTypeId, String documentTypeName, String documentNumber,
 			String description, CashFlowType type, Double value) {
 		this.id = id;
 		this.itemDate = itemDate;
@@ -86,11 +86,11 @@ public class CashFlowItemDTO {
 		return value;
 	}
 
-	public static CashFlowItemDTOBuilder newBuilder() {
-		return new CashFlowItemDTOBuilder();
+	public static CashTransactionDTOBuilder newBuilder() {
+		return new CashTransactionDTOBuilder();
 	}
 	
-	public static class CashFlowItemDTOBuilder {
+	public static class CashTransactionDTOBuilder {
 		
 		private Long id;
 		private Date itemDate;
@@ -101,48 +101,48 @@ public class CashFlowItemDTO {
 		private CashFlowType type;
 		private Double value; 
 		
-		public CashFlowItemDTOBuilder setId(Long id) {
+		public CashTransactionDTOBuilder setId(Long id) {
 			this.id = id;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setItemDate(Date itemDate) {
+		public CashTransactionDTOBuilder setItemDate(Date itemDate) {
 			this.itemDate = itemDate;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setDocumentNumber(String documentNumber) {
+		public CashTransactionDTOBuilder setDocumentNumber(String documentNumber) {
 			this.documentNumber = documentNumber;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setDocumentTypeId(Long documentTypeId) {
+		public CashTransactionDTOBuilder setDocumentTypeId(Long documentTypeId) {
 			this.documentTypeId = documentTypeId;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setDocumentTypeName(String documentTypeName) {
+		public CashTransactionDTOBuilder setDocumentTypeName(String documentTypeName) {
 			this.documentTypeName = documentTypeName;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setDescription(String description) {
+		public CashTransactionDTOBuilder setDescription(String description) {
 			this.description = description;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setType(CashFlowType type) {
+		public CashTransactionDTOBuilder setType(CashFlowType type) {
 			this.type = type;
 			return this;
 		}
 		
-		public CashFlowItemDTOBuilder setValue(Double value) {
+		public CashTransactionDTOBuilder setValue(Double value) {
 			this.value = value;
 			return this;
 		}
 		
-		public CashFlowItemDTO createCashFlowItemDTO() {
-			return new CashFlowItemDTO(id, itemDate, documentTypeId, documentTypeName, documentNumber, description, type, value);
+		public CashTransactionDTO createCashTransation() {
+			return new CashTransactionDTO(id, itemDate, documentTypeId, documentTypeName, documentNumber, description, type, value);
 		}
 	}
 }

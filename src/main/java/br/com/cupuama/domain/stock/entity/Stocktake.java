@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +43,7 @@ public class Stocktake implements AuditableEntity {
 	private Date stocktakeDate;
 
 	@Column(nullable = false, name = "stocktake_inout")
+	@Enumerated(EnumType.STRING)
 	private StocktakeInOut stocktakeInOut;
 
 	@Column(nullable = false, precision = 9, scale = 3)

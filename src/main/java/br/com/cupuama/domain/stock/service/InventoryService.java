@@ -38,8 +38,6 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 	 * Update stockIn and stockOut for a inventoryKey
 	 *
 	 * @param inventoryKey
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 * @throws ConstraintsViolationException 
 	 */

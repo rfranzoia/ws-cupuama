@@ -28,8 +28,6 @@ public class FruitService extends DefaultService<Fruit, Long> {
 	 * Update a fruits information.
 	 *
 	 * @param fruitId
-	 * @param longitude
-	 * @param latitude
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
