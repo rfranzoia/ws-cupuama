@@ -11,7 +11,7 @@ import br.com.cupuama.domain.processing.entity.Processing;
 public class ProcessingMapper {
 	public static Processing makeProcessing(ProcessingDTO dto) {
 		return new Processing(dto.getId(), dto.getProcessDate(), ProcessTypeMapper.makeProcessType(dto.getProcessType()), 
-						dto.getProcessStatus(), CustomerMapper.makeCustomer(dto.getCustomer()), SupplierMapper.makeSupplier(dto.getSupplier()), 
+						CustomerMapper.makeCustomer(dto.getCustomer()), SupplierMapper.makeSupplier(dto.getSupplier()), 
 						dto.getDocumentReference(), dto.getRemarks());
 	}
 

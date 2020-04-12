@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import br.com.cupuama.domain.processing.entity.Processing;
 import br.com.cupuama.domain.processing.entity.ProcessingDetail;
+import br.com.cupuama.domain.products.entity.Fruit;
+import br.com.cupuama.domain.products.entity.Product;
 
 /**
  * Database Access Object for driver table.
@@ -15,27 +18,9 @@ import br.com.cupuama.domain.processing.entity.ProcessingDetail;
  */
 public interface ProcessingDetailRepository extends CrudRepository<ProcessingDetail, Long> {
 
-	@Query(nativeQuery = true, 
-			value = "select pd.* " + 
-					"from process_detail pd " +
-					"inner join product p on p.id = pd.product_id and p.deleted = false " +
-					"inner join fruit f on f.id = pd.fruit_id and f.deleted = false " +
-					"inner join depot d on d.id = pd.depot_id and d.deleted = false " +
-					"inner join processing processing on processing.id = pd.process_id and processing.deleted = false " +
-					"where pd.process_id = :processId " +
-			"order by pd.product_id, pd.fruit_id, pd.depot_id, pd.id")
-	List<ProcessingDetail> findByProcessId(@Param("processId") final Long processId);
+	List<ProcessingDetail> findByProcessing(final Processing processing);
 	
-	@Query(nativeQuery = true, 
-			value = "select pd.* " + 
-					"from process_detail pd " +
-					"inner join product p on p.id = pd.product_id and p.deleted = false " +
-					"inner join fruit f on f.id = pd.fruit_id and f.deleted = false " +
-					"inner join depot d on d.id = pd.depot_id and d.deleted = false " +
-					"inner join processing processing on processing.id = pd.process_id and processing.deleted = false " +
-                    "where pd.product_id = :productId and pd.fruit_id = :fruitId " +
-                    "order by pd.fruit_id, pd.depot_id, pd.id")
-	List<ProcessingDetail> findByProductIdAndFruitId(@Param("productId") final Long productId, @Param("fruitId") final Long fruitId);
+	List<ProcessingDetail> findByProductAndFruit(final Product product, final Fruit fruit);
 	
 	@Query(nativeQuery = true, 
 			value = "select pd.* " + 

@@ -31,8 +31,8 @@ public class ProcessingDetail implements AuditableEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "process_id", nullable = false)
-	private Processing process;
+	@JoinColumn(name = "processing_id", nullable = false)
+	private Processing processing;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
@@ -68,7 +68,7 @@ public class ProcessingDetail implements AuditableEntity {
 	public ProcessingDetail(Long id, Processing process, Product product, Fruit fruit, Depot depot,
 			StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
 		this.id = id;
-		this.process = process;
+		this.processing = process;
 		this.product = product;
 		this.fruit = fruit;
 		this.depot = depot;
@@ -87,11 +87,11 @@ public class ProcessingDetail implements AuditableEntity {
 	}
 
 	public Processing getProcessing() {
-		return process;
+		return processing;
 	}
 
-	public void setProcess(Processing process) {
-		this.process = process;
+	public void setProcess(Processing processing) {
+		this.processing = processing;
 	}
 
 	public Product getProduct() {
@@ -187,7 +187,7 @@ public class ProcessingDetail implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "ProcessDetail [id=" + id + ", process=" + process + ", product=" + product + ", fruit=" + fruit
+		return "ProcessDetail [id=" + id + ", process=" + processing + ", product=" + product + ", fruit=" + fruit
 				+ ", depot=" + depot + ", stocktakeInOut=" + stocktakeInOut + ", amount=" + amount + ", price=" + price
 				+ ", discount=" + discount + "]";
 	}
