@@ -65,7 +65,12 @@ public class ProcessTypeController {
 
 	@GetMapping("/name/{name}")
 	public List<ProcessTypeDTO> findProcessTypesByName(@PathVariable final String name) {
-		return ProcessTypeMapper.makeProcessTypeDTOList(processTypeService.findByName(name));
+		return processTypeService.findByName(name);
+	}
+	
+	@GetMapping("/flowTypeModel/{flowTypeModel}")
+	public List<ProcessTypeDTO> findProcessTypesByFlowTypeModel(@PathVariable final String flowTypeModel) {
+		return processTypeService.findByFlowTypeModel(flowTypeModel);
 	}
 
 	@GetMapping

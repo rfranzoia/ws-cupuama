@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.cupuama.domain.processing.dto.ProcessTypeDTO;
 import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.entity.ProcessType;
+import br.com.cupuama.domain.processing.mapper.ProcessTypeMapper;
 import br.com.cupuama.domain.processing.repository.ProcessTypeRepository;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
@@ -42,8 +44,12 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 	 *
 	 * @param name
 	 */
-	public List<ProcessType> findByName(final String name) {
-		return ((ProcessTypeRepository) repository).findByNameLike(name + "%");
+	public List<ProcessTypeDTO> findByName(final String name) {
+		return ProcessTypeMapper.makeProcessTypeDTOList(((ProcessTypeRepository) repository).findByNameLike(name + "%"));
+	}
+	
+	public List<ProcessTypeDTO> findByFlowTypeModel(final String flowTypeModel) {
+		return ProcessTypeMapper.makeProcessTypeDTOList(((ProcessTypeRepository) repository).findByFlowTypeModel(flowTypeModel));
 	}
 
 }

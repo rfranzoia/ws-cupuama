@@ -14,4 +14,5 @@ public interface ProcessTypeRepository extends CrudRepository<ProcessType, Long>
 
     List<ProcessType> findByNameLike(String name);
 
+    List<ProcessType> findByFlowTypeModel(String flowTypeModel);
 }
