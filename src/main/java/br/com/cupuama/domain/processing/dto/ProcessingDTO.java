@@ -85,11 +85,11 @@ public class ProcessingDTO {
 		return remarks;
 	}
 
-	public static CustomerDTOBuilder newBuilder() {
-		return new CustomerDTOBuilder();
+	public static ProcessingDTOBuilder newBuilder() {
+		return new ProcessingDTOBuilder();
 	}
 	
-	public static class CustomerDTOBuilder {
+	public static class ProcessingDTOBuilder {
 		private Long id;
 		private Date processDate;
 		private ProcessTypeDTO processType;
@@ -100,53 +100,53 @@ public class ProcessingDTO {
 		private String remarks;
 		private List<ProcessingDetailDTO> details;
 
-		public CustomerDTOBuilder setId(Long id) {
+		public ProcessingDTOBuilder setId(Long id) {
 			this.id = id;
 			return this;
 		}
 
-		public CustomerDTOBuilder setProcessDate(Date processDate) {
+		public ProcessingDTOBuilder setProcessDate(Date processDate) {
 			this.processDate = processDate;
 			return this;
 		}
 
-		public CustomerDTOBuilder setProcessType(ProcessTypeDTO processType) {
+		public ProcessingDTOBuilder setProcessType(ProcessTypeDTO processType) {
 			this.processType = processType;
 			return this;
 		}
 		
-		public CustomerDTOBuilder setProcessStatus(ProcessStatus processStatus) {
+		public ProcessingDTOBuilder setProcessStatus(ProcessStatus processStatus) {
 			this.processStatus = processStatus;
 			return this;
 		}
 
-		public CustomerDTOBuilder setCustomer(CustomerDTO customer) {
+		public ProcessingDTOBuilder setCustomer(CustomerDTO customer) {
 			this.customer = customer;
 			return this;
 		}
 
-		public CustomerDTOBuilder setSupplier(SupplierDTO supplier) {
+		public ProcessingDTOBuilder setSupplier(SupplierDTO supplier) {
 			this.supplier = supplier;
 			return this;
 		}
 
-		public CustomerDTOBuilder setDocumentReference(String documentReference) {
+		public ProcessingDTOBuilder setDocumentReference(String documentReference) {
 			this.documentReference = documentReference;
 			return this;
 		}
 
-		public CustomerDTOBuilder setRemarks(String remarks) {
+		public ProcessingDTOBuilder setRemarks(String remarks) {
 			this.remarks = remarks;
 			return this;
 		}
 		
-		public CustomerDTOBuilder setDetails(List<ProcessingDetailDTO> details) {
+		public ProcessingDTOBuilder setDetails(List<ProcessingDetailDTO> details) {
 			this.details = new ArrayList<>();
 			this.details.addAll(details);
 			return this;
 		}
 
-		public ProcessingDTO createCustomerDTO() {
+		public ProcessingDTO createProcessingDTO() {
 			return new ProcessingDTO(id, processDate, processType, processStatus, customer, supplier, documentReference, remarks, details);
 		}
 	}

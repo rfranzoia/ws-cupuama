@@ -12,6 +12,10 @@ import br.com.cupuama.domain.processing.entity.Supplier;
 
 public class SupplierMapper {
 	public static Supplier makeSupplier(final SupplierDTO dto) {
+		if (dto == null) {
+			return new Supplier();
+		}
+		
 		final Address address = new Address(dto.getAddress().getStreet(),
 				dto.getAddress().getCity(), dto.getAddress().getRegion(), 
 				dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
@@ -19,17 +23,21 @@ public class SupplierMapper {
 	}
 
 	public static SupplierDTO makeSupplierDTO(final Supplier supplier) {
-		final AddressDTO address = new AddressDTO(supplier.getAddress().getStreet(), 
-				supplier.getAddress().getCity(), supplier.getAddress().getRegion(), 
-				supplier.getAddress().getPostalCode(), supplier.getAddress().getCountry());
-		SupplierDTO.SupplierDTOBuilder SupplierDTOBuilder = SupplierDTO.newBuilder()
-				.setId(supplier.getId())
-				.setName(supplier.getName())
-				.setCompanyName(supplier.getCompanyName())
-				.setPhone(supplier.getPhone())
-				.setAddress(address);
+		SupplierDTO.SupplierDTOBuilder builder = SupplierDTO.newBuilder();
+		
+		if (supplier != null) {
+			final AddressDTO address = new AddressDTO(supplier.getAddress().getStreet(), 
+					supplier.getAddress().getCity(), supplier.getAddress().getRegion(), 
+					supplier.getAddress().getPostalCode(), supplier.getAddress().getCountry());
+			
+			builder.setId(supplier.getId())
+					.setName(supplier.getName())
+					.setCompanyName(supplier.getCompanyName())
+					.setPhone(supplier.getPhone())
+					.setAddress(address);
+		}
 
-		return SupplierDTOBuilder.createSupplierDTO();
+		return builder.createSupplierDTO();
 	}
 
 	public static List<SupplierDTO> makeSupplierDTOList(final Collection<Supplier> suppliers) {

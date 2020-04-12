@@ -62,8 +62,8 @@ public class Processing implements AuditableEntity {
 	public Processing() {
 	}
 
-	public Processing(Long id, Date processDate, Customer customer, Supplier supplier, ProcessType processType,
-			ProcessStatus processStatus, String documentReference, String remarks) {
+	public Processing(Long id, Date processDate, ProcessType processType, ProcessStatus processStatus, 
+			Customer customer, Supplier supplier, String documentReference, String remarks) {
 		this.id = id;
 		this.processDate = processDate;
 		this.customer = customer;

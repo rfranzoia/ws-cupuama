@@ -15,8 +15,8 @@ public class ProcessingDetailDTO {
 	
 	private Long id;
 
-	@NotNull(message = "Product cannot be null!")
-	private ProcessingDTO process;
+	@NotNull(message = "Processing cannot be null!")
+	private ProcessingDTO processing;
 	
 	@NotNull(message = "Product cannot be null!")
 	private ProductDTO product;
@@ -38,10 +38,10 @@ public class ProcessingDetailDTO {
 	
 	private Double discount;
 	
-	public ProcessingDetailDTO(Long id, ProcessingDTO process, ProductDTO product, FruitDTO fruit, DepotDTO depot, 
+	public ProcessingDetailDTO(Long id, ProcessingDTO processing, ProductDTO product, FruitDTO fruit, DepotDTO depot, 
 								StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
 		this.id = id;
-		this.process = process;
+		this.processing = processing;
 		this.product = product;
 		this.fruit = fruit;
 		this.depot = depot;
@@ -54,6 +54,11 @@ public class ProcessingDetailDTO {
 	@JsonProperty
 	public Long getId() {
 		return id;
+	}
+	
+	@JsonProperty
+	public ProcessingDTO getProcessing() {
+		return processing;
 	}
 
 	@JsonProperty
@@ -91,13 +96,13 @@ public class ProcessingDetailDTO {
 		return discount;
 	}
 
-	public static ProcessDetailDTOBuilder newBuilder() {
-		return new ProcessDetailDTOBuilder();
+	public static ProcessingDetailDTOBuilder newBuilder() {
+		return new ProcessingDetailDTOBuilder();
 	}
 	
-	public static class ProcessDetailDTOBuilder {
+	public static class ProcessingDetailDTOBuilder {
 		private Long id;
-		private ProcessingDTO process;
+		private ProcessingDTO processing;
 		private ProductDTO product;
 		private FruitDTO fruit;
 		private DepotDTO depot;
@@ -106,53 +111,53 @@ public class ProcessingDetailDTO {
 		private Double price;
 		private Double discount;
 
-		public ProcessDetailDTOBuilder setId(Long id) {
+		public ProcessingDetailDTOBuilder setId(Long id) {
 			this.id = id;
 			return this;
 		}
 		
-		public ProcessDetailDTOBuilder setProcess(ProcessingDTO process) {
-			this.process = process;
+		public ProcessingDetailDTOBuilder setProcessing(ProcessingDTO processing) {
+			this.processing = processing;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setProduct(ProductDTO product) {
+		public ProcessingDetailDTOBuilder setProduct(ProductDTO product) {
 			this.product = product;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setFruit(FruitDTO fruit) {
+		public ProcessingDetailDTOBuilder setFruit(FruitDTO fruit) {
 			this.fruit = fruit;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setDepot(DepotDTO depot) {
+		public ProcessingDetailDTOBuilder setDepot(DepotDTO depot) {
 			this.depot = depot;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setStocktakeInOut(StocktakeInOut stocktakeInOut) {
+		public ProcessingDetailDTOBuilder setStocktakeInOut(StocktakeInOut stocktakeInOut) {
 			this.stocktakeInOut = stocktakeInOut;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setAmount(Double amount) {
+		public ProcessingDetailDTOBuilder setAmount(Double amount) {
 			this.amount = amount;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setPrice(Double price) {
+		public ProcessingDetailDTOBuilder setPrice(Double price) {
 			this.price = price;
 			return this;
 		}
 
-		public ProcessDetailDTOBuilder setDiscount(Double discount) {
+		public ProcessingDetailDTOBuilder setDiscount(Double discount) {
 			this.discount = discount;
 			return this;
 		}
 
-		public ProcessingDetailDTO createProcessDetailDTO() {
-			return new ProcessingDetailDTO(id, process, product, fruit, depot, stocktakeInOut, amount, price, discount);
+		public ProcessingDetailDTO createDTO() {
+			return new ProcessingDetailDTO(id, processing, product, fruit, depot, stocktakeInOut, amount, price, discount);
 		}
 	}
 }

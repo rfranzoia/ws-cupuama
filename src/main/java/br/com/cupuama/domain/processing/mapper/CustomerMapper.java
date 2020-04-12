@@ -11,36 +11,45 @@ import br.com.cupuama.domain.processing.entity.Customer;
 
 
 public class CustomerMapper {
-	public static Customer makeCustomer(CustomerDTO dto) {
-		Address address = new Address(dto.getAddress().getStreet(),
-				dto.getAddress().getCity(), dto.getAddress().getRegion(), dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
+	public static Customer makeCustomer(final CustomerDTO dto) {
+		if (dto == null) {
+			return new Customer();
+		}
+		
+		final Address address = new Address(dto.getAddress().getStreet(),
+				dto.getAddress().getCity(), dto.getAddress().getRegion(), 
+				dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
+		
 		return new Customer(dto.getId(), dto.getName(), dto.getCompanyName(), dto.getPhone(), address);
 	}
 
-	public static CustomerDTO makeCustomerDTO(Customer customer) {
-		AddressDTO address = new AddressDTO(customer.getAddress().getStreet(), 
-									customer.getAddress().getCity(),
-									customer.getAddress().getRegion(),
-									customer.getAddress().getPostalCode(),
-									customer.getAddress().getCountry());
+	public static CustomerDTO makeCustomerDTO(final Customer customer) {
+		CustomerDTO.CustomerDTOBuilder builder = CustomerDTO.newBuilder();
 		
-		CustomerDTO.CustomerDTOBuilder CustomerDTOBuilder = CustomerDTO.newBuilder()
-				.setId(customer.getId())
-				.setName(customer.getName())
-				.setCompanyName(customer.getCompanyName())
-				.setPhone(customer.getPhone())
-				.setAddress(address);
+		if (customer != null) {
+			final AddressDTO address = new AddressDTO(customer.getAddress().getStreet(), 
+					customer.getAddress().getCity(),
+					customer.getAddress().getRegion(),
+					customer.getAddress().getPostalCode(),
+					customer.getAddress().getCountry());
+			
+			builder.setId(customer.getId())
+					.setName(customer.getName())
+					.setCompanyName(customer.getCompanyName())
+					.setPhone(customer.getPhone())
+					.setAddress(address);
+		}
 
-		return CustomerDTOBuilder.createCustomerDTO();
+		return builder.createCustomerDTO();
 	}
 
-	public static List<CustomerDTO> makeCustomerDTOList(Collection<Customer> customers) {
+	public static List<CustomerDTO> makeCustomerDTOList(final Collection<Customer> customers) {
 		return customers.stream()
 				.map(CustomerMapper::makeCustomerDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Customer> makeCustomerList(Collection<CustomerDTO> dtos) {
+	public static List<Customer> makeCustomerList(final Collection<CustomerDTO> dtos) {
 		return dtos.stream()
 				.map(CustomerMapper::makeCustomer)
 				.collect(Collectors.toList());

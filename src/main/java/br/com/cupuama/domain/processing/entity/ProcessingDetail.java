@@ -86,7 +86,7 @@ public class ProcessingDetail implements AuditableEntity {
 		this.id = id;
 	}
 
-	public Processing getProcess() {
+	public Processing getProcessing() {
 		return process;
 	}
 
