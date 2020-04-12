@@ -41,7 +41,7 @@ public class ProcessTypeController {
 
 	@GetMapping("/{processTypeId}")
 	public ProcessTypeDTO getProcessType(@PathVariable final long processTypeId) throws EntityNotFoundException {
-		return ProcessTypeMapper.makeProcessTypeDTO(processTypeService.find(processTypeId));
+		return ProcessTypeMapper.makeDTO(processTypeService.find(processTypeId));
 	}
 
 	@PostMapping
@@ -73,6 +73,6 @@ public class ProcessTypeController {
 
 	@GetMapping
 	public List<ProcessTypeDTO> findAllProcessTypes() {
-		return ProcessTypeMapper.makeProcessTypeDTOList(processTypeService.findAll());
+		return ProcessTypeMapper.makeListDTO(processTypeService.findAll());
 	}
 }

@@ -13,7 +13,7 @@ public class DocumentTypeMapper {
 		return new DocumentType(documentType.getName());
 	}
 
-	public static DocumentTypeDTO makeDocumentTypeDTO(DocumentType documentType) {
+	public static DocumentTypeDTO makeDTO(DocumentType documentType) {
 		DocumentTypeDTO.DocumentTypeDTOBuilder documentTypeDTOBuilder = DocumentTypeDTO.newBuilder()
 				.setId(documentType.getId())
 				.setName(documentType.getName());
@@ -21,9 +21,15 @@ public class DocumentTypeMapper {
 		return documentTypeDTOBuilder.createDocumentTypeDTO();
 	}
 
-	public static List<DocumentTypeDTO> makeDocumentTypeDTOList(Collection<DocumentType> documentTypes) {
+	public static List<DocumentTypeDTO> makeListDTO(Collection<DocumentType> documentTypes) {
 		return documentTypes.stream()
-				.map(DocumentTypeMapper::makeDocumentTypeDTO)
+				.map(DocumentTypeMapper::makeDTO)
+				.collect(Collectors.toList());
+	}
+	
+	public static List<DocumentType> makeList(Collection<DocumentTypeDTO> documentTypes) {
+		return documentTypes.stream()
+				.map(DocumentTypeMapper::makeDocumentType)
 				.collect(Collectors.toList());
 	}
 

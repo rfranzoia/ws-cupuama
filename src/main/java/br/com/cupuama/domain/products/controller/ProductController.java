@@ -39,7 +39,7 @@ public class ProductController {
 
 	@GetMapping("/{productId}")
 	public ProductDTO getProduct(@PathVariable final long productId) throws EntityNotFoundException {
-		return ProductMapper.makeProductDTO(productService.find(productId));
+		return ProductMapper.makeDTO(productService.find(productId));
 	}
 
 	@PostMapping
@@ -61,11 +61,11 @@ public class ProductController {
 
 	@GetMapping("/name/{name}")
 	public List<ProductDTO> findProductsByName(@PathVariable final String name) {
-		return ProductMapper.makeProductDTOList(productService.findByName(name));
+		return ProductMapper.makeListDTO(productService.findByName(name));
 	}
 
 	@GetMapping
 	public List<ProductDTO> findAllProducts() {
-		return ProductMapper.makeProductDTOList(productService.findAll());
+		return ProductMapper.makeListDTO(productService.findAll());
 	}
 }

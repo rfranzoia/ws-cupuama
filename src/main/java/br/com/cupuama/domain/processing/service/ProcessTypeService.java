@@ -29,7 +29,7 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 
 	public ProcessTypeDTO create(ProcessTypeDTO dto) throws ConstraintsViolationException {
 		ProcessType processType = ProcessTypeMapper.makeProcessType(dto);
-		return ProcessTypeMapper.makeProcessTypeDTO(create(processType));
+		return ProcessTypeMapper.makeDTO(create(processType));
 	}
 	/**
 	 * Update the location for a processType.
@@ -50,11 +50,11 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 	 * @param name
 	 */
 	public List<ProcessTypeDTO> findByName(final String name) {
-		return ProcessTypeMapper.makeProcessTypeDTOList(((ProcessTypeRepository) repository).findByNameLike(name + "%"));
+		return ProcessTypeMapper.makeListDTO(((ProcessTypeRepository) repository).findByNameLike(name + "%"));
 	}
 	
 	public List<ProcessTypeDTO> findByFlowTypeModel(final String flowTypeModel) {
-		return ProcessTypeMapper.makeProcessTypeDTOList(((ProcessTypeRepository) repository).findByFlowTypeModel(flowTypeModel));
+		return ProcessTypeMapper.makeListDTO(((ProcessTypeRepository) repository).findByFlowTypeModel(flowTypeModel));
 	}
 
 }

@@ -40,7 +40,7 @@ public class DocumentTypeController {
 
 	@GetMapping("/{documentTypeId}")
 	public DocumentTypeDTO getDocumentType(@PathVariable final long documentTypeId) throws EntityNotFoundException {
-		return DocumentTypeMapper.makeDocumentTypeDTO(documentTypeService.find(documentTypeId));
+		return DocumentTypeMapper.makeDTO(documentTypeService.find(documentTypeId));
 	}
 
 	@PostMapping
@@ -62,11 +62,11 @@ public class DocumentTypeController {
 
 	@GetMapping("/name/{name}")
 	public List<DocumentTypeDTO> findDocumentTypesByName(@PathVariable final String name) {
-		return DocumentTypeMapper.makeDocumentTypeDTOList(documentTypeService.findByName(name));
+		return DocumentTypeMapper.makeListDTO(documentTypeService.findByName(name));
 	}
 
 	@GetMapping
 	public List<DocumentTypeDTO> findAllDocumentTypes() {
-		return DocumentTypeMapper.makeDocumentTypeDTOList(documentTypeService.findAll());
+		return DocumentTypeMapper.makeListDTO(documentTypeService.findAll());
 	}
 }

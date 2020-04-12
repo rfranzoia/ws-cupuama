@@ -38,7 +38,7 @@ public class StocktakeController {
 
 	@GetMapping("/{stocktakeId}")
 	public StocktakeDTO getStocktake(@PathVariable final long stocktakeId) throws EntityNotFoundException {
-		return StocktakeMapper.makeStocktakeDTO(stocktakeService.find(stocktakeId));
+		return StocktakeMapper.makeDTO(stocktakeService.find(stocktakeId));
 	}
 
 	@PostMapping
@@ -54,6 +54,6 @@ public class StocktakeController {
 
 	@GetMapping
 	public List<StocktakeDTO> findAllStocktakes() {
-		return StocktakeMapper.makeStocktakeDTOList(stocktakeService.findAll());
+		return StocktakeMapper.makeListDTO(stocktakeService.findAll());
 	}
 }

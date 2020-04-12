@@ -13,7 +13,7 @@ public class DepotMapper {
 		return new Depot(dto.getId(), dto.getName(), dto.isKeepStock());
 	}
 
-	public static DepotDTO makeDepotDTO(Depot depot) {
+	public static DepotDTO makeDTO(Depot depot) {
 		DepotDTO.DepotDTOBuilder depotDTOBuilder = DepotDTO.newBuilder()
 				.setId(depot.getId())
 				.setName(depot.getName())
@@ -22,13 +22,13 @@ public class DepotMapper {
 		return depotDTOBuilder.createDepotDTO();
 	}
 
-	public static List<DepotDTO> makeDepotDTOList(Collection<Depot> depots) {
+	public static List<DepotDTO> makeListDTO(Collection<Depot> depots) {
 		return depots.stream()
-				.map(DepotMapper::makeDepotDTO)
+				.map(DepotMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Depot> makeDepotList(Collection<DepotDTO> dtos) {
+	public static List<Depot> makeList(Collection<DepotDTO> dtos) {
 		return dtos.stream()
 				.map(DepotMapper::makeDepot)
 				.collect(Collectors.toList());

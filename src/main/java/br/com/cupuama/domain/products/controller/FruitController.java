@@ -39,7 +39,7 @@ public class FruitController {
 
 	@GetMapping("/{fruitId}")
 	public FruitDTO getFruit(@PathVariable final long fruitId) throws EntityNotFoundException {
-		return FruitMapper.makeFruitDTO(fruitService.find(fruitId));
+		return FruitMapper.makeDTO(fruitService.find(fruitId));
 	}
 
 	@PostMapping
@@ -61,11 +61,11 @@ public class FruitController {
 
 	@GetMapping("/name/{name}")
 	public List<FruitDTO> findFruitsByName(@PathVariable final String name) {
-		return FruitMapper.makeFruitDTOList(fruitService.findByName(name));
+		return FruitMapper.makeListDTO(fruitService.findByName(name));
 	}
 
 	@GetMapping
 	public List<FruitDTO> findAllFruits() {
-		return FruitMapper.makeFruitDTOList(fruitService.findAll());
+		return FruitMapper.makeListDTO(fruitService.findAll());
 	}
 }

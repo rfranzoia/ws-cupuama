@@ -13,7 +13,7 @@ public class InventoryMapper {
 		return new Inventory(InventoryKeyMapper.makeId(dto.getKey()), dto.getInitialStock(), dto.getStockIn(), dto.getStockOut());
 	}
 
-	public static InventoryDTO makeInventoryDTO(Inventory inventory) {
+	public static InventoryDTO makeDTO(Inventory inventory) {
 		InventoryDTO.InventoryDTOBuilder inventoryDTOBuilder = InventoryDTO.newBuilder()
 				.setKey(InventoryKeyMapper.makeKey(inventory.getInventoryId()))
 				.setInitialStock(inventory.getInitialStock())
@@ -23,13 +23,13 @@ public class InventoryMapper {
 		return inventoryDTOBuilder.createInventoryDTO();
 	}
 
-	public static List<InventoryDTO> makeInventoryDTOList(Collection<Inventory> inventories) {
+	public static List<InventoryDTO> makeListDTO(Collection<Inventory> inventories) {
 		return inventories.stream()
-				.map(InventoryMapper::makeInventoryDTO)
+				.map(InventoryMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Inventory> makeInventoryList(Collection<InventoryDTO> dtos) {
+	public static List<Inventory> makeList(Collection<InventoryDTO> dtos) {
 		return dtos.stream()
 				.map(InventoryMapper::makeInventory)
 				.collect(Collectors.toList());

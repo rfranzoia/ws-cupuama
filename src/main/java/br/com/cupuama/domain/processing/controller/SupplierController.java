@@ -39,7 +39,7 @@ public class SupplierController {
 
 	@GetMapping("/{supplierId}")
 	public SupplierDTO getSupplier(@PathVariable final long supplierId) throws EntityNotFoundException {
-		return SupplierMapper.makeSupplierDTO(supplierService.find(supplierId));
+		return SupplierMapper.makeDTO(supplierService.find(supplierId));
 	}
 
 	@PostMapping
@@ -60,11 +60,11 @@ public class SupplierController {
 
 	@GetMapping("/name/{name}")
 	public List<SupplierDTO> findDocumentTypesByName(@PathVariable final String name) {
-		return SupplierMapper.makeSupplierDTOList(supplierService.findByName(name));
+		return SupplierMapper.makeListDTO(supplierService.findByName(name));
 	}
 	
 	@GetMapping
 	public List<SupplierDTO> findAllSuppliers() {
-		return SupplierMapper.makeSupplierDTOList(supplierService.findAll());
+		return SupplierMapper.makeListDTO(supplierService.findAll());
 	}
 }

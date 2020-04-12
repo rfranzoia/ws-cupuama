@@ -18,13 +18,13 @@ public class ProcessingDetailMapper {
 				dto.getStocktakeInOut(), dto.getAmount(), dto.getPrice(), dto.getDiscount());
 	}
 
-	public static ProcessingDetailDTO makeProcessingDetailDTO(final ProcessingDetail processingDetail) {
+	public static ProcessingDetailDTO makeDTO(final ProcessingDetail processingDetail) {
 		ProcessingDetailDTO.ProcessingDetailDTOBuilder builder = ProcessingDetailDTO.newBuilder()
 				.setId(processingDetail.getId())
-				.setProcessing(ProcessingMapper.makeProcessingDTO(processingDetail.getProcessing()))
-				.setProduct(ProductMapper.makeProductDTO(processingDetail.getProduct()))
-				.setFruit(FruitMapper.makeFruitDTO(processingDetail.getFruit()))
-				.setDepot(DepotMapper.makeDepotDTO(processingDetail.getDepot()))
+				.setProcessing(ProcessingMapper.makeDTO(processingDetail.getProcessing()))
+				.setProduct(ProductMapper.makeDTO(processingDetail.getProduct()))
+				.setFruit(FruitMapper.makeDTO(processingDetail.getFruit()))
+				.setDepot(DepotMapper.makeDTO(processingDetail.getDepot()))
 				.setStocktakeInOut(processingDetail.getStocktakeInOut())
 				.setAmount(processingDetail.getAmount())
 				.setPrice(processingDetail.getPrice())
@@ -33,13 +33,13 @@ public class ProcessingDetailMapper {
 		return builder.createDTO();
 	}
 
-	public static List<ProcessingDetailDTO> makeProcessingDetailDTOList(final Collection<ProcessingDetail> processingDetails) {
+	public static List<ProcessingDetailDTO> makeListDTO(final Collection<ProcessingDetail> processingDetails) {
 		return processingDetails.stream()
-				.map(ProcessingDetailMapper::makeProcessingDetailDTO)
+				.map(ProcessingDetailMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<ProcessingDetail> makeProcessingDetailList(final Collection<ProcessingDetailDTO> dtos) {
+	public static List<ProcessingDetail> makeList(final Collection<ProcessingDetailDTO> dtos) {
 		return dtos.stream()
 				.map(ProcessingDetailMapper::makeProcessingDetail)
 				.collect(Collectors.toList());

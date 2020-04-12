@@ -15,27 +15,27 @@ public class ProcessingMapper {
 						dto.getDocumentReference(), dto.getRemarks());
 	}
 
-	public static ProcessingDTO makeProcessingDTO(Processing processing) {
+	public static ProcessingDTO makeDTO(Processing processing) {
 		ProcessingDTO.ProcessingDTOBuilder builder = ProcessingDTO.newBuilder()
 				.setId(processing.getId())
 				.setProcessDate(processing.getProcessDate())
 				.setProcessStatus(processing.getProcessStatus())
-				.setProcessType(ProcessTypeMapper.makeProcessTypeDTO(processing.getProcessType()))
-				.setCustomer(CustomerMapper.makeCustomerDTO(processing.getCustomer()))
-				.setSupplier(SupplierMapper.makeSupplierDTO(processing.getSupplier()))
+				.setProcessType(ProcessTypeMapper.makeDTO(processing.getProcessType()))
+				.setCustomer(CustomerMapper.makeDTO(processing.getCustomer()))
+				.setSupplier(SupplierMapper.makeDTO(processing.getSupplier()))
 				.setDocumentReference(processing.getDocumentReference())
 				.setRemarks(processing.getRemarks());
 
 		return builder.createProcessingDTO();
 	}
 
-	public static List<ProcessingDTO> makeProcessingDTOList(Collection<Processing> processTypes) {
+	public static List<ProcessingDTO> makeListDTO(Collection<Processing> processTypes) {
 		return processTypes.stream()
-				.map(ProcessingMapper::makeProcessingDTO)
+				.map(ProcessingMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Processing> makeProcessingList(Collection<ProcessingDTO> dtos) {
+	public static List<Processing> makeList(Collection<ProcessingDTO> dtos) {
 		return dtos.stream()
 				.map(ProcessingMapper::makeProcessing)
 				.collect(Collectors.toList());

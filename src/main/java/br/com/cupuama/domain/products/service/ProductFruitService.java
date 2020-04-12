@@ -36,7 +36,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     @Transactional
     public ProductFruitDTO create(ProductFruitDTO productFruitDTO) throws ConstraintsViolationException {
     	ProductFruit productFruit = ProductFruitMapper.makeProductFruit(productFruitDTO);
-		return ProductFruitMapper.makeProductFruitDTO(create(productFruit));
+		return ProductFruitMapper.makeDTO(create(productFruit));
     }
     
     public ProductFruit findByProductIdAndFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
@@ -137,7 +137,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		productFruit.setId(key);
 				
         		productFruit = create(productFruit);
-        		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
+        		associations.add(ProductFruitMapper.makeDTO(productFruit));
 				
         		return true;
 			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
@@ -181,7 +181,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
         		productFruit.setId(key);
 				
         		productFruit = create(productFruit);
-        		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
+        		associations.add(ProductFruitMapper.makeDTO(productFruit));
         		
         		return true;
 			} catch (ConstraintsViolationException | EntityNotFoundException ex) {

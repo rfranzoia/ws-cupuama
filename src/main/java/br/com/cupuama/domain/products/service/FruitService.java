@@ -29,7 +29,7 @@ public class FruitService extends DefaultService<Fruit, Long> {
 	@Transactional
 	public FruitDTO create(FruitDTO dto) throws ConstraintsViolationException {
 		Fruit fruit = FruitMapper.makeFruit(dto);
-		return FruitMapper.makeFruitDTO(create(fruit));
+		return FruitMapper.makeDTO(create(fruit));
 	}
 	
 	/**

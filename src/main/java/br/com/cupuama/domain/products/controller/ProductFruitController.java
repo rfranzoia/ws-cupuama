@@ -43,7 +43,7 @@ public class ProductFruitController {
 
 	@GetMapping("/product/{productId}/fruit/{fruitId}")
 	public ProductFruitDTO getProductFruit(@PathVariable final long productId, @PathVariable final long fruitId) throws EntityNotFoundException {
-		return ProductFruitMapper.makeProductFruitDTO(productFruitService.findByProductIdAndFruitId(productId, fruitId));
+		return ProductFruitMapper.makeDTO(productFruitService.findByProductIdAndFruitId(productId, fruitId));
 	}
 
 	@PostMapping
@@ -69,28 +69,28 @@ public class ProductFruitController {
 
 	@GetMapping("/product/{productId}")
 	public List<ProductFruitDTO> findByProductId(@PathVariable final long productId) {
-		return ProductFruitMapper.makeProductFruitDTOList(productFruitService.findByProductId(productId));
+		return ProductFruitMapper.makeListDTO(productFruitService.findByProductId(productId));
 	}
 	
 	@GetMapping("/fruit/{fruitId}")
 	public List<ProductFruitDTO> findByFruitId(@PathVariable final long fruitId) {
-		return ProductFruitMapper.makeProductFruitDTOList(productFruitService.findByFruitId(fruitId));
+		return ProductFruitMapper.makeListDTO(productFruitService.findByFruitId(fruitId));
 	}
 	
 	@GetMapping
 	public List<ProductFruitDTO> findAllProductFruits() {
-		return ProductFruitMapper.makeProductFruitDTOList(productFruitService.findAll());
+		return ProductFruitMapper.makeListDTO(productFruitService.findAll());
 	}
 	
 	@PutMapping("/product/{productId}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public List<ProductFruitDTO> syncronizeFruitsForProductId(@PathVariable final long productId, @RequestBody final List<FruitDTO> fruits) throws EntityNotFoundException {
-		return productFruitService.syncronizeFruitsForProductId(productId, FruitMapper.makeFruitList(fruits));
+		return productFruitService.syncronizeFruitsForProductId(productId, FruitMapper.makeList(fruits));
 	}
 	
 	@PutMapping("/fruit/{fruitId}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public List<ProductFruitDTO> synchronizeProductsForFruitId(@PathVariable final long fruitId, @RequestBody final List<ProductDTO> products) throws EntityNotFoundException {
-		return productFruitService.synchronizeProductsForFruitId(fruitId, ProductMapper.makeProductList(products));
+		return productFruitService.synchronizeProductsForFruitId(fruitId, ProductMapper.makeList(products));
 	}
 }

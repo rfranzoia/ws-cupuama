@@ -15,18 +15,24 @@ public class ProductFruitMapper {
 		return new ProductFruit(id);
 	}
 
-	public static ProductFruitDTO makeProductFruitDTO(ProductFruit productFruit) {
+	public static ProductFruitDTO makeDTO(ProductFruit productFruit) {
 		ProductFruitDTO.ProductFruitDTOBuilder 
 			productFruitDTOBuilder = ProductFruitDTO.newBuilder()
-				.setProduct(ProductMapper.makeProductDTO(productFruit.getId().getProduct()))
-				.setFruit(FruitMapper.makeFruitDTO(productFruit.getId().getFruit()));
+				.setProduct(ProductMapper.makeDTO(productFruit.getId().getProduct()))
+				.setFruit(FruitMapper.makeDTO(productFruit.getId().getFruit()));
 		
 		return productFruitDTOBuilder.createProductFruitDTO();
 	}
 
-	public static List<ProductFruitDTO> makeProductFruitDTOList(Collection<ProductFruit> productFruits) {
+	public static List<ProductFruitDTO> makeListDTO(Collection<ProductFruit> productFruits) {
 		return productFruits.stream()
-				.map(ProductFruitMapper::makeProductFruitDTO)
+				.map(ProductFruitMapper::makeDTO)
+				.collect(Collectors.toList());
+	}
+	
+	public static List<ProductFruit> makeList(Collection<ProductFruitDTO> productFruits) {
+		return productFruits.stream()
+				.map(ProductFruitMapper::makeProductFruit)
 				.collect(Collectors.toList());
 	}
 

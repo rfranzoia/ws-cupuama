@@ -11,8 +11,8 @@ public class ProductFruitKeyMapper {
 	}
 
 	public static ProductFruitKey makeKey(ProductFruitId id) {
-		return new ProductFruitKey(ProductMapper.makeProductDTO(id.getProduct()), 
-										FruitMapper.makeFruitDTO(id.getFruit()));
+		return new ProductFruitKey(ProductMapper.makeDTO(id.getProduct()), 
+										FruitMapper.makeDTO(id.getFruit()));
 	}
 
 }

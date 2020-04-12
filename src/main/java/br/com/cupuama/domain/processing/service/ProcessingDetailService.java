@@ -51,7 +51,7 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 	@Transactional
 	public ProcessingDetailDTO create(ProcessingDetailDTO processingDetailDTO) throws ConstraintsViolationException {
 		ProcessingDetail processingDetail = ProcessingDetailMapper.makeProcessingDetail(processingDetailDTO);
-		return ProcessingDetailMapper.makeProcessingDetailDTO(create(processingDetail));
+		return ProcessingDetailMapper.makeDTO(create(processingDetail));
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 		Predicate<ProcessingDetail> createProcesingDetail = processDetail -> {
 			try {
 				processDetail.setProcess(processing);
-				list.add(ProcessingDetailMapper.makeProcessingDetailDTO(create(processDetail)));
+				list.add(ProcessingDetailMapper.makeDTO(create(processDetail)));
 				return true;
 			} catch (ConstraintsViolationException ex) {
 				LOG.error(String.format("There was an error while creating a processingDetail %s", processDetail.toString()), ex);
@@ -116,7 +116,7 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 	 * @return
 	 */
 	public List<ProcessingDetailDTO> findByProcessing(final Processing processing) {
-		return ProcessingDetailMapper.makeProcessingDetailDTOList(((ProcessingDetailRepository) repository).findByProcessing(processing));
+		return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProcessing(processing));
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 		try {
 			Product product = productService.find(productId);
 			Fruit fruit = fruitService.find(fruitId);
-			return ProcessingDetailMapper.makeProcessingDetailDTOList(((ProcessingDetailRepository) repository).findByProductAndFruit(product, fruit));
+			return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProductAndFruit(product, fruit));
 		} catch (EntityNotFoundException ex) {
 			LOG.error(String.format("Either a Product(ID:%d) or Fruit(ID:%d) was not found!", productId, fruitId), ex);
 			return new ArrayList<ProcessingDetailDTO>();
@@ -145,6 +145,6 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 	 * @return
 	 */
 	public List<ProcessingDetailDTO> findByProcessDateRange(Date start, Date end) {
-		return ProcessingDetailMapper.makeProcessingDetailDTOList(((ProcessingDetailRepository) repository).findByProcessDateRange(start, end));
+		return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProcessDateRange(start, end));
 	}
 }

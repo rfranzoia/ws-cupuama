@@ -32,7 +32,7 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	@Transactional
 	public CashFlowDTO create(CashFlowDTO cashFlowDTO) throws ConstraintsViolationException {
 		CashFlow cashFlow = CashFlowMapper.makeCashFlow(cashFlowDTO);
-		return CashFlowMapper.makeCashFlowDTO(create(cashFlow));
+		return CashFlowMapper.makeDTO(create(cashFlow));
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 								.setPeriod(period)
 								.setPreviousBalance(0.0)
 								.setCredits(0.0)
-								.setDebits(0.0).createCashFlowDTO();
+								.setDebits(0.0).createDTO();
 
 			cashFlow = create(CashFlowMapper.makeCashFlow(dto));
 		}

@@ -12,17 +12,21 @@ public class CashFlowMapper {
 		return new CashFlow(cashFlow.getPeriod(), cashFlow.getPreviousBalance(), cashFlow.getCredits(),cashFlow.getDebits());
 	}
 
-	public static CashFlowDTO makeCashFlowDTO(CashFlow cashFlow) {
+	public static CashFlowDTO makeDTO(CashFlow cashFlow) {
 		CashFlowDTO.CashFlowDTOBuilder cashFlowDTOBuilder = CashFlowDTO.newBuilder().setPeriod(cashFlow.getPeriod())
 				.setPreviousBalance(cashFlow.getPreviousBalance())
 				.setCredits(cashFlow.getCredits())
 				.setDebits(cashFlow.getDebits());
 
-		return cashFlowDTOBuilder.createCashFlowDTO();
+		return cashFlowDTOBuilder.createDTO();
 	}
 
-	public static List<CashFlowDTO> makeCashFlowDTOList(Collection<CashFlow> cashFlows) {
-		return cashFlows.stream().map(CashFlowMapper::makeCashFlowDTO).collect(Collectors.toList());
+	public static List<CashFlowDTO> makeListDTO(Collection<CashFlow> cashFlows) {
+		return cashFlows.stream().map(CashFlowMapper::makeDTO).collect(Collectors.toList());
+	}
+	
+	public static List<CashFlow> makeList(Collection<CashFlowDTO> cashFlows) {
+		return cashFlows.stream().map(CashFlowMapper::makeCashFlow).collect(Collectors.toList());
 	}
 
 }

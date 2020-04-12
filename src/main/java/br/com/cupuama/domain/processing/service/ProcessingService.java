@@ -59,10 +59,10 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		Processing processing = create(ProcessingMapper.makeProcessing(processingDTO));
 				
 		if (!processingDTO.getProcessingDetail().isEmpty()) {
-			processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeProcessingDetailList(processingDTO.getProcessingDetail()));
+			processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeList(processingDTO.getProcessingDetail()));
 		}
 		
-		return ProcessingMapper.makeProcessingDTO(processing);
+		return ProcessingMapper.makeDTO(processing);
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		
 		// update processing details (remove all, add current ones)
 		processingDetailService.removeAllFromProcessing(processing);
-		processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeProcessingDetailList(dto.getProcessingDetail()));
+		processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeList(dto.getProcessingDetail()));
 		
 	}
 	
@@ -167,7 +167,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 						.setValue(credits)
 						.setDocumentNumber(processing.getDocumentReference())
 						.setDescription(flowTypeModel.toString())
-						.createCashTransation();
+						.createDTO();
 				cashTransationService.addCashTransaction(creditDTO);
 				
 			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
@@ -186,7 +186,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 						.setValue(debits)
 						.setDocumentNumber(processing.getDocumentReference())
 						.setDescription(flowTypeModel.toString())
-						.createCashTransation();
+						.createDTO();
 				cashTransationService.addCashTransaction(debitDTO);
 				
 			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
@@ -307,13 +307,13 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 					ProcessingDTO dto = ProcessingDTO.newBuilder()
 											.setId(p.getId())
 											.setProcessDate(p.getProcessDate())
-											.setProcessType(ProcessTypeMapper.makeProcessTypeDTO(p.getProcessType()))
+											.setProcessType(ProcessTypeMapper.makeDTO(p.getProcessType()))
 											.setProcessStatus(p.getProcessStatus())
-											.setCustomer(CustomerMapper.makeCustomerDTO(p.getCustomer()))
-											.setSupplier(SupplierMapper.makeSupplierDTO(p.getSupplier()))
+											.setCustomer(CustomerMapper.makeDTO(p.getCustomer()))
+											.setSupplier(SupplierMapper.makeDTO(p.getSupplier()))
 											.setDocumentReference(p.getDocumentReference())
 											.setRemarks(p.getRemarks())
-											.setDetails(ProcessingDetailMapper.makeProcessingDetailDTOList(details))
+											.setDetails(ProcessingDetailMapper.makeListDTO(details))
 											.createProcessingDTO();
 					return dto;
 				})

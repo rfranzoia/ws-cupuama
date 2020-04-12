@@ -29,7 +29,7 @@ public class ProcessFlowTypeService extends DefaultService<ProcessFlowType, Proc
 	@Transactional
 	public ProcessFlowTypeDTO create(ProcessFlowTypeDTO processFlowTypeDTO) throws ConstraintsViolationException {
 		ProcessFlowType processFlowType = ProcessFlowTypeMapper.makeProcessFlowType(processFlowTypeDTO);
-		return ProcessFlowTypeMapper.makeProcessFlowTypeDTO(create(processFlowType));
+		return ProcessFlowTypeMapper.makeDTO(create(processFlowType));
 	}
 	
 	/**

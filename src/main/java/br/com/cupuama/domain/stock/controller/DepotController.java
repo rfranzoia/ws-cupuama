@@ -39,7 +39,7 @@ public class DepotController {
 
 	@GetMapping("/{depotId}")
 	public DepotDTO getDepot(@PathVariable final long depotId) throws EntityNotFoundException {
-		return DepotMapper.makeDepotDTO(depotService.find(depotId));
+		return DepotMapper.makeDTO(depotService.find(depotId));
 	}
 
 	@PostMapping
@@ -61,11 +61,11 @@ public class DepotController {
 
 	@GetMapping("/name/{name}")
 	public List<DepotDTO> findDepotsByName(@PathVariable final String name) {
-		return DepotMapper.makeDepotDTOList(depotService.findByName(name));
+		return DepotMapper.makeListDTO(depotService.findByName(name));
 	}
 
 	@GetMapping
 	public List<DepotDTO> findAllDepots() {
-		return DepotMapper.makeDepotDTOList(depotService.findAll());
+		return DepotMapper.makeListDTO(depotService.findAll());
 	}
 }

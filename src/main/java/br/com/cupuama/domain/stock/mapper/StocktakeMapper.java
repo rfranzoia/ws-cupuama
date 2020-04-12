@@ -15,11 +15,11 @@ public class StocktakeMapper {
 						dto.getStocktakeDate(), dto.getStocktakeInOut(), dto.getAmount());
 	}
 
-	public static StocktakeDTO makeStocktakeDTO(Stocktake stocktake) {
+	public static StocktakeDTO makeDTO(Stocktake stocktake) {
 		StocktakeDTO.StocktakeDTOBuilder depotDTOBuilder = StocktakeDTO.newBuilder()
 				.setId(stocktake.getId())
 				.setProductFruitKey(ProductFruitKeyMapper.makeKey(stocktake.getProductFruitId()))
-				.setDepot(DepotMapper.makeDepotDTO(stocktake.getDepot()))
+				.setDepot(DepotMapper.makeDTO(stocktake.getDepot()))
 				.setStocktakeDate(stocktake.getStocktakeDate())
 				.setStocktakeInOut(stocktake.getStocktakeInOut())
 				.setAmount(stocktake.getAmount());
@@ -27,13 +27,13 @@ public class StocktakeMapper {
 		return depotDTOBuilder.createDTO();
 	}
 
-	public static List<StocktakeDTO> makeStocktakeDTOList(Collection<Stocktake> depots) {
+	public static List<StocktakeDTO> makeListDTO(Collection<Stocktake> depots) {
 		return depots.stream()
-				.map(StocktakeMapper::makeStocktakeDTO)
+				.map(StocktakeMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Stocktake> makeStocktakeList(Collection<StocktakeDTO> dtos) {
+	public static List<Stocktake> makeList(Collection<StocktakeDTO> dtos) {
 		return dtos.stream()
 				.map(StocktakeMapper::makeStocktake)
 				.collect(Collectors.toList());

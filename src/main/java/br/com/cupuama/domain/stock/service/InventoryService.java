@@ -34,7 +34,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 	public InventoryDTO addInventory(final InventoryDTO inventoryDTO) throws EntityNotFoundException {
 		InventoryId id = InventoryKeyMapper.makeId(inventoryDTO.getKey());
 		addStockInOrStockOut(id, StocktakeInOut.IN_AND_OUT, inventoryDTO.getStockIn(), inventoryDTO.getStockOut());
-		return InventoryMapper.makeInventoryDTO(find(id));
+		return InventoryMapper.makeDTO(find(id));
 	}
 	/**
 	 * Update stockIn and stockOut for a inventoryId
@@ -158,7 +158,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 	}
 	
 	public List<InventoryDTO> findAllOrderByPeriodProductFruitDepot() {
-		return InventoryMapper.makeInventoryDTOList(((InventoryRepository) repository).findAllOrderByPeriodProductFruitDepot());
+		return InventoryMapper.makeListDTO(((InventoryRepository) repository).findAllOrderByPeriodProductFruitDepot());
 	}
 
 	@Transactional

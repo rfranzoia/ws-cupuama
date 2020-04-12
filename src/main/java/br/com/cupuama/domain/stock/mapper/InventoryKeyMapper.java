@@ -13,8 +13,8 @@ public class InventoryKeyMapper {
 	}
 
 	public static InventoryKey makeKey(InventoryId id) {
-		return new InventoryKey(id.getPeriod(), ProductMapper.makeProductDTO(id.getProduct()), 
-						FruitMapper.makeFruitDTO(id.getFruit()), DepotMapper.makeDepotDTO(id.getDepot()));
+		return new InventoryKey(id.getPeriod(), ProductMapper.makeDTO(id.getProduct()), 
+						FruitMapper.makeDTO(id.getFruit()), DepotMapper.makeDTO(id.getDepot()));
 	}
 
 }

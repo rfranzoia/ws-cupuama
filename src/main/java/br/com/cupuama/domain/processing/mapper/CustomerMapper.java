@@ -23,7 +23,7 @@ public class CustomerMapper {
 		return new Customer(dto.getId(), dto.getName(), dto.getCompanyName(), dto.getPhone(), address);
 	}
 
-	public static CustomerDTO makeCustomerDTO(final Customer customer) {
+	public static CustomerDTO makeDTO(final Customer customer) {
 		CustomerDTO.CustomerDTOBuilder builder = CustomerDTO.newBuilder();
 		
 		if (customer != null) {
@@ -43,13 +43,13 @@ public class CustomerMapper {
 		return builder.createCustomerDTO();
 	}
 
-	public static List<CustomerDTO> makeCustomerDTOList(final Collection<Customer> customers) {
+	public static List<CustomerDTO> makeListDTO(final Collection<Customer> customers) {
 		return customers.stream()
-				.map(CustomerMapper::makeCustomerDTO)
+				.map(CustomerMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Customer> makeCustomerList(final Collection<CustomerDTO> dtos) {
+	public static List<Customer> makeList(final Collection<CustomerDTO> dtos) {
 		return dtos.stream()
 				.map(CustomerMapper::makeCustomer)
 				.collect(Collectors.toList());

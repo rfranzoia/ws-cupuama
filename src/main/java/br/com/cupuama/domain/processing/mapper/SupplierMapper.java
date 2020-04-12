@@ -22,7 +22,7 @@ public class SupplierMapper {
 		return new Supplier(dto.getId(), dto.getName(), dto.getCompanyName(), dto.getPhone(), address);
 	}
 
-	public static SupplierDTO makeSupplierDTO(final Supplier supplier) {
+	public static SupplierDTO makeDTO(final Supplier supplier) {
 		SupplierDTO.SupplierDTOBuilder builder = SupplierDTO.newBuilder();
 		
 		if (supplier != null) {
@@ -40,13 +40,13 @@ public class SupplierMapper {
 		return builder.createSupplierDTO();
 	}
 
-	public static List<SupplierDTO> makeSupplierDTOList(final Collection<Supplier> suppliers) {
+	public static List<SupplierDTO> makeListDTO(final Collection<Supplier> suppliers) {
 		return suppliers.stream()
-				.map(SupplierMapper::makeSupplierDTO)
+				.map(SupplierMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Supplier> makeSupplierList(final Collection<SupplierDTO> dtos) {
+	public static List<Supplier> makeList(final Collection<SupplierDTO> dtos) {
 		return dtos.stream()
 				.map(SupplierMapper::makeSupplier)
 				.collect(Collectors.toList());

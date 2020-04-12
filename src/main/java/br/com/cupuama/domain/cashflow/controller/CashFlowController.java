@@ -41,7 +41,7 @@ public class CashFlowController {
 
 	@GetMapping("/{cashFlowPeriod}")
 	public CashFlowDTO getCashFlow(@PathVariable final String cashFlowPeriod) throws EntityNotFoundException {
-		return CashFlowMapper.makeCashFlowDTO(cashFlowService.find(cashFlowPeriod));
+		return CashFlowMapper.makeDTO(cashFlowService.find(cashFlowPeriod));
 	}
 
 	@PostMapping
@@ -76,6 +76,6 @@ public class CashFlowController {
 
 	@GetMapping
 	public List<CashFlowDTO> findAllCashFlows() {
-		return CashFlowMapper.makeCashFlowDTOList(cashFlowService.findAll());
+		return CashFlowMapper.makeListDTO(cashFlowService.findAll());
 	}
 }

@@ -29,7 +29,7 @@ public class ProductService extends DefaultService<Product, Long> {
 	@Transactional
 	public ProductDTO create(ProductDTO productDTO) throws ConstraintsViolationException {
 		Product product = ProductMapper.makeProduct(productDTO);
-		return ProductMapper.makeProductDTO(create(product));
+		return ProductMapper.makeDTO(create(product));
 	}
 	
 	/**

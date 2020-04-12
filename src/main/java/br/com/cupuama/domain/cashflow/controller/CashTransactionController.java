@@ -45,7 +45,7 @@ public class CashTransactionController {
 
 	@GetMapping("/{cashTransactionId}")
 	public CashTransactionDTO getCashTransaction(@PathVariable final long cashTransactionId) throws EntityNotFoundException {
-		return CashTransactionMapper.makeCashTransactionDTO(cashTransactionService.find(cashTransactionId));
+		return CashTransactionMapper.makeDTO(cashTransactionService.find(cashTransactionId));
 	}
 
 	@PostMapping
@@ -72,7 +72,7 @@ public class CashTransactionController {
 				throw new InvalidRequestException("The end date must be greater than start date");
 			}
 			
-			return CashTransactionMapper.makeCashTransactionDTOList(cashTransactionService.findByDateRange(startDate, endDate));
+			return CashTransactionMapper.makeListDTO(cashTransactionService.findByDateRange(startDate, endDate));
 			
 		} catch (InvalidRequestException | ParseException ex) {
 			throw new InvalidRequestException("There was a problem while processing your request", ex);
@@ -82,6 +82,6 @@ public class CashTransactionController {
 	
 	@GetMapping
 	public List<CashTransactionDTO> findAllCashTransactions() {
-		return CashTransactionMapper.makeCashTransactionDTOList(cashTransactionService.findAll());
+		return CashTransactionMapper.makeListDTO(cashTransactionService.findAll());
 	}
 }

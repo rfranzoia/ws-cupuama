@@ -39,7 +39,7 @@ public class CustomerController {
 
 	@GetMapping("/{customerId}")
 	public CustomerDTO getCustomer(@PathVariable final long customerId) throws EntityNotFoundException {
-		return CustomerMapper.makeCustomerDTO(customerService.find(customerId));
+		return CustomerMapper.makeDTO(customerService.find(customerId));
 	}
 
 	@PostMapping
@@ -60,11 +60,11 @@ public class CustomerController {
 
 	@GetMapping("/name/{name}")
 	public List<CustomerDTO> findDocumentTypesByName(@PathVariable final String name) {
-		return CustomerMapper.makeCustomerDTOList(customerService.findByName(name));
+		return CustomerMapper.makeListDTO(customerService.findByName(name));
 	}
 	
 	@GetMapping
 	public List<CustomerDTO> findAllCustomers() {
-		return CustomerMapper.makeCustomerDTOList(customerService.findAll());
+		return CustomerMapper.makeListDTO(customerService.findAll());
 	}
 }

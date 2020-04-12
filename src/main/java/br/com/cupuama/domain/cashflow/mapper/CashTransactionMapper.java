@@ -6,38 +6,36 @@ import java.util.stream.Collectors;
 
 import br.com.cupuama.domain.cashflow.dto.CashTransactionDTO;
 import br.com.cupuama.domain.cashflow.entity.CashTransaction;
-import br.com.cupuama.domain.cashflow.entity.DocumentType;
 
 public class CashTransactionMapper {
-	public static CashTransaction makeCashTransaction(CashTransactionDTO cashFlowItem) {
-		return new CashTransaction(cashFlowItem.getId(),
-								cashFlowItem.getItemDate(), 
-								cashFlowItem.getDocumentNumber(), 
-								new DocumentType(cashFlowItem.getDocumentTypeId()), 
-								cashFlowItem.getDescription(), 
-								cashFlowItem.getCashFlowType(), 
-								cashFlowItem.getValue());
+	public static CashTransaction makeCashTransaction(CashTransactionDTO dto) {
+		return new CashTransaction(dto.getId(),
+								dto.getItemDate(), 
+								dto.getDocumentNumber(), 
+								DocumentTypeMapper.makeDocumentType(dto.getDocumentType()),
+								dto.getDescription(), 
+								dto.getCashFlowType(), 
+								dto.getValue());
 	}
 
-	public static CashTransactionDTO makeCashTransactionDTO(CashTransaction cashFlowItem) {
+	public static CashTransactionDTO makeDTO(CashTransaction cashFlowItem) {
 		CashTransactionDTO.CashTransactionDTOBuilder cashFlowItemDTOBuilder = CashTransactionDTO.newBuilder()
 				.setId(cashFlowItem.getId())
 				.setItemDate(cashFlowItem.getItemDate())
 				.setDocumentNumber(cashFlowItem.getDocumentNumber())
-				.setDocumentTypeId(cashFlowItem.getDocumentType().getId())
-				.setDocumentTypeName(cashFlowItem.getDocumentType().getName())
+				.setDocumentType(DocumentTypeMapper.makeDTO(cashFlowItem.getDocumentType()))
 				.setDescription(cashFlowItem.getDescription())
 				.setCashFlowType(cashFlowItem.getType())
 				.setValue(cashFlowItem.getValue());
 
-		return cashFlowItemDTOBuilder.createCashTransation();
+		return cashFlowItemDTOBuilder.createDTO();
 	}
 
-	public static List<CashTransactionDTO> makeCashTransactionDTOList(Collection<CashTransaction> cashFlowItems) {
-		return cashFlowItems.stream().map(CashTransactionMapper::makeCashTransactionDTO).collect(Collectors.toList());
+	public static List<CashTransactionDTO> makeListDTO(Collection<CashTransaction> cashFlowItems) {
+		return cashFlowItems.stream().map(CashTransactionMapper::makeDTO).collect(Collectors.toList());
 	}
 	
-	public static List<CashTransaction> makeCashTransationList(Collection<CashTransactionDTO> dtos) {
+	public static List<CashTransaction> makeList(Collection<CashTransactionDTO> dtos) {
 		return dtos.stream().map(CashTransactionMapper::makeCashTransaction).collect(Collectors.toList());
 	}
 

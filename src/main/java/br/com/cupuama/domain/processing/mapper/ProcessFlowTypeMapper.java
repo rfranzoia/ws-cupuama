@@ -13,22 +13,22 @@ public class ProcessFlowTypeMapper {
 		return new ProcessFlowType(ProcessFlowTypeKeyMapper.makeId(dto.getKey()), DepotMapper.makeDepot(dto.getDepotIn()), DepotMapper.makeDepot(dto.getDepotOut()));
 	}
 
-	public static ProcessFlowTypeDTO makeProcessFlowTypeDTO(ProcessFlowType processFlowType) {
+	public static ProcessFlowTypeDTO makeDTO(ProcessFlowType processFlowType) {
 		ProcessFlowTypeDTO.ProcessFlowTypeDTOBuilder processFlowTypeDTOBuilder = ProcessFlowTypeDTO.newBuilder()
 				.setKey(ProcessFlowTypeKeyMapper.makeKey(processFlowType.getId()))
-				.setDepotIn(DepotMapper.makeDepotDTO(processFlowType.getDepotIn()))
-				.setDepotOut(DepotMapper.makeDepotDTO(processFlowType.getDepotOut()));
+				.setDepotIn(DepotMapper.makeDTO(processFlowType.getDepotIn()))
+				.setDepotOut(DepotMapper.makeDTO(processFlowType.getDepotOut()));
 
 		return processFlowTypeDTOBuilder.createProcessFlowTypeDTO();
 	}
 
-	public static List<ProcessFlowTypeDTO> makeProcessFlowTypeDTOList(Collection<ProcessFlowType> inventories) {
+	public static List<ProcessFlowTypeDTO> makeListDTO(Collection<ProcessFlowType> inventories) {
 		return inventories.stream()
-				.map(ProcessFlowTypeMapper::makeProcessFlowTypeDTO)
+				.map(ProcessFlowTypeMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<ProcessFlowType> makeProcessFlowTypeList(Collection<ProcessFlowTypeDTO> dtos) {
+	public static List<ProcessFlowType> makeList(Collection<ProcessFlowTypeDTO> dtos) {
 		return dtos.stream()
 				.map(ProcessFlowTypeMapper::makeProcessFlowType)
 				.collect(Collectors.toList());

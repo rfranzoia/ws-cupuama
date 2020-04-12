@@ -20,9 +20,7 @@ public class CashTransactionDTO {
 	private Date itemDate;
 
 	@NotNull(message = "Document Type cannot be null!")
-	private Long documentTypeId;
-	
-	private String documentTypeName;
+	private DocumentTypeDTO documentType;
 	
 	private String documentNumber;
 	
@@ -34,12 +32,11 @@ public class CashTransactionDTO {
 	@NotNull(message = "Value cannot be null!")
 	private Double value;
 	
-	private CashTransactionDTO(Long id, Date itemDate, Long documentTypeId, String documentTypeName, String documentNumber,
+	private CashTransactionDTO(Long id, Date itemDate, DocumentTypeDTO documentType, String documentNumber,
 			String description, CashFlowType type, Double value) {
 		this.id = id;
 		this.itemDate = itemDate;
-		this.documentTypeId = documentTypeId;
-		this.documentTypeName = documentTypeName;
+		this.documentType = documentType;
 		this.documentNumber = documentNumber;
 		this.description = description;
 		this.cashFlowType = type;
@@ -62,15 +59,10 @@ public class CashTransactionDTO {
 	}
 
 	@JsonProperty
-	public Long getDocumentTypeId() {
-		return documentTypeId;
+	public DocumentTypeDTO getDocumentType() {
+		return documentType;
 	}
 	
-	@JsonProperty
-	public String getDocumentTypeName() {
-		return documentTypeName;
-	}
-
 	@JsonProperty
 	public String getDescription() {
 		return description;
@@ -94,8 +86,7 @@ public class CashTransactionDTO {
 		
 		private Long id;
 		private Date itemDate;
-		private Long documentTypeId;
-		private String documentTypeName;
+		private DocumentTypeDTO documentType;
 		private String documentNumber;
 		private String description;
 		private CashFlowType cashFlowType;
@@ -116,13 +107,8 @@ public class CashTransactionDTO {
 			return this;
 		}
 		
-		public CashTransactionDTOBuilder setDocumentTypeId(Long documentTypeId) {
-			this.documentTypeId = documentTypeId;
-			return this;
-		}
-		
-		public CashTransactionDTOBuilder setDocumentTypeName(String documentTypeName) {
-			this.documentTypeName = documentTypeName;
+		public CashTransactionDTOBuilder setDocumentType(DocumentTypeDTO documentType) {
+			this.documentType = documentType;
 			return this;
 		}
 		
@@ -141,8 +127,8 @@ public class CashTransactionDTO {
 			return this;
 		}
 		
-		public CashTransactionDTO createCashTransation() {
-			return new CashTransactionDTO(id, itemDate, documentTypeId, documentTypeName, documentNumber, description, cashFlowType, value);
+		public CashTransactionDTO createDTO() {
+			return new CashTransactionDTO(id, itemDate, documentType, documentNumber, description, cashFlowType, value);
 		}
 	}
 }

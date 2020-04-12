@@ -13,7 +13,7 @@ public class FruitMapper {
 		return new Fruit(dto.getId(), dto.getName(), dto.getInitials(), dto.getHarvest());
 	}
 
-	public static FruitDTO makeFruitDTO(Fruit fruit) {
+	public static FruitDTO makeDTO(Fruit fruit) {
 		FruitDTO.FruitDTOBuilder fruitDTOBuilder = FruitDTO.newBuilder()
 				.setId(fruit.getId())
 				.setName(fruit.getName())
@@ -23,13 +23,13 @@ public class FruitMapper {
 		return fruitDTOBuilder.createFruitDTO();
 	}
 
-	public static List<FruitDTO> makeFruitDTOList(Collection<Fruit> fruits) {
+	public static List<FruitDTO> makeListDTO(Collection<Fruit> fruits) {
 		return fruits.stream()
-				.map(FruitMapper::makeFruitDTO)
+				.map(FruitMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Fruit> makeFruitList(Collection<FruitDTO> fruitsDTO) {
+	public static List<Fruit> makeList(Collection<FruitDTO> fruitsDTO) {
 		return fruitsDTO.stream()
 				.map(FruitMapper::makeFruit)
 				.collect(Collectors.toList());

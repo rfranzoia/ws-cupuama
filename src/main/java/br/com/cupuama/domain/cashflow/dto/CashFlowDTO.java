@@ -87,7 +87,7 @@ public class CashFlowDTO {
 			return this;
 		}
 		
-		public CashFlowDTO createCashFlowDTO() {
+		public CashFlowDTO createDTO() {
 			return new CashFlowDTO(period, previousBalance, credits, debits);
 		}
 	}

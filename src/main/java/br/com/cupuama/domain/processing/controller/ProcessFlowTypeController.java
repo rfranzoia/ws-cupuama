@@ -40,7 +40,7 @@ public class ProcessFlowTypeController {
 
 	@GetMapping("/processFlowType")
 	public ProcessFlowTypeDTO getProcessFlowType(@RequestBody final ProcessFlowTypeKey key) throws EntityNotFoundException {
-		return ProcessFlowTypeMapper.makeProcessFlowTypeDTO(processFlowTypeService.find(ProcessFlowTypeKeyMapper.makeId(key)));
+		return ProcessFlowTypeMapper.makeDTO(processFlowTypeService.find(ProcessFlowTypeKeyMapper.makeId(key)));
 	}
 
 	@PostMapping
@@ -61,6 +61,6 @@ public class ProcessFlowTypeController {
 
 	@GetMapping
 	public List<ProcessFlowTypeDTO> findAllProcessFlowTypes() {
-		return ProcessFlowTypeMapper.makeProcessFlowTypeDTOList(processFlowTypeService.findAll());
+		return ProcessFlowTypeMapper.makeListDTO(processFlowTypeService.findAll());
 	}
 }

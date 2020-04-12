@@ -37,7 +37,7 @@ public class CashTransactionService extends DefaultService<CashTransaction, Long
 	@Transactional
 	public CashTransactionDTO addCashTransaction(CashTransactionDTO cashTransactionDTO) throws ConstraintsViolationException, EntityNotFoundException {
 		CashTransaction cashTransaction = CashTransactionMapper.makeCashTransaction(cashTransactionDTO);
-		return CashTransactionMapper.makeCashTransactionDTO(addCashTransaction(cashTransaction));
+		return CashTransactionMapper.makeDTO(addCashTransaction(cashTransaction));
 	}
 	
 	/**

@@ -29,7 +29,7 @@ public class DepotService extends DefaultService<Depot, Long> {
 	@Transactional
 	public DepotDTO create(DepotDTO dto) throws ConstraintsViolationException {
 		Depot depot = DepotMapper.makeDepot(dto);
-		return DepotMapper.makeDepotDTO(create(depot));
+		return DepotMapper.makeDTO(create(depot));
 	}
 	
 	/**

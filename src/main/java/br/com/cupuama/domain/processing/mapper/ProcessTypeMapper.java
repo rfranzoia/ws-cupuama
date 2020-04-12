@@ -13,7 +13,7 @@ public class ProcessTypeMapper {
 		return new ProcessType(dto.getId(), dto.getName(), dto.getFlowTypeModel());
 	}
 
-	public static ProcessTypeDTO makeProcessTypeDTO(ProcessType processType) {
+	public static ProcessTypeDTO makeDTO(ProcessType processType) {
 		ProcessTypeDTO.ProcessTypeDTOBuilder processTypeDTOBuilder = ProcessTypeDTO.newBuilder()
 				.setId(processType.getId())
 				.setName(processType.getName())
@@ -22,13 +22,13 @@ public class ProcessTypeMapper {
 		return processTypeDTOBuilder.createProcessTypeDTO();
 	}
 
-	public static List<ProcessTypeDTO> makeProcessTypeDTOList(Collection<ProcessType> processTypes) {
+	public static List<ProcessTypeDTO> makeListDTO(Collection<ProcessType> processTypes) {
 		return processTypes.stream()
-				.map(ProcessTypeMapper::makeProcessTypeDTO)
+				.map(ProcessTypeMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<ProcessType> makeProcessTypeList(Collection<ProcessTypeDTO> dtos) {
+	public static List<ProcessType> makeList(Collection<ProcessTypeDTO> dtos) {
 		return dtos.stream()
 				.map(ProcessTypeMapper::makeProcessType)
 				.collect(Collectors.toList());

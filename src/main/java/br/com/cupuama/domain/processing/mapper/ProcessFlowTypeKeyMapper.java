@@ -13,8 +13,8 @@ public class ProcessFlowTypeKeyMapper {
 	}
 
 	public static ProcessFlowTypeKey makeKey(ProcessFlowTypeId id) {
-		return new ProcessFlowTypeKey(ProcessTypeMapper.makeProcessTypeDTO(id.getProcessType()), 
-										ProductMapper.makeProductDTO(id.getProduct()), 
+		return new ProcessFlowTypeKey(ProcessTypeMapper.makeDTO(id.getProcessType()), 
+										ProductMapper.makeDTO(id.getProduct()), 
 										id.getStocktakeInOut());
 	}
 

@@ -13,7 +13,7 @@ public class ProductMapper {
 		return new Product(dto.getId(), dto.getName(), dto.getUnit());
 	}
 
-	public static ProductDTO makeProductDTO(Product product) {
+	public static ProductDTO makeDTO(Product product) {
 		ProductDTO.ProductDTOBuilder productDTOBuilder = ProductDTO.newBuilder()
 				.setId(product.getId())
 				.setName(product.getName())
@@ -22,13 +22,13 @@ public class ProductMapper {
 		return productDTOBuilder.createProductDTO();
 	}
 
-	public static List<ProductDTO> makeProductDTOList(Collection<Product> products) {
+	public static List<ProductDTO> makeListDTO(Collection<Product> products) {
 		return products.stream()
-				.map(ProductMapper::makeProductDTO)
+				.map(ProductMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<Product> makeProductList(Collection<ProductDTO> productsDTO) {
+	public static List<Product> makeList(Collection<ProductDTO> productsDTO) {
 		return productsDTO.stream()
 				.map(ProductMapper::makeProduct)
 				.collect(Collectors.toList());
