@@ -29,7 +29,7 @@ public class CashTransactionDTO {
 	private String description;
 
 	@NotNull(message = "Type cannot be null!")
-	private CashFlowType type;
+	private CashFlowType cashFlowType;
 
 	@NotNull(message = "Value cannot be null!")
 	private Double value;
@@ -42,7 +42,7 @@ public class CashTransactionDTO {
 		this.documentTypeName = documentTypeName;
 		this.documentNumber = documentNumber;
 		this.description = description;
-		this.type = type;
+		this.cashFlowType = type;
 		this.value = value;
 	}
 
@@ -77,8 +77,8 @@ public class CashTransactionDTO {
 	}
 
 	@JsonProperty
-	public CashFlowType getType() {
-		return type;
+	public CashFlowType getCashFlowType() {
+		return cashFlowType;
 	}
 
 	@JsonProperty
@@ -98,7 +98,7 @@ public class CashTransactionDTO {
 		private String documentTypeName;
 		private String documentNumber;
 		private String description;
-		private CashFlowType type;
+		private CashFlowType cashFlowType;
 		private Double value; 
 		
 		public CashTransactionDTOBuilder setId(Long id) {
@@ -131,8 +131,8 @@ public class CashTransactionDTO {
 			return this;
 		}
 		
-		public CashTransactionDTOBuilder setType(CashFlowType type) {
-			this.type = type;
+		public CashTransactionDTOBuilder setCashFlowType(CashFlowType type) {
+			this.cashFlowType = type;
 			return this;
 		}
 		
@@ -142,7 +142,7 @@ public class CashTransactionDTO {
 		}
 		
 		public CashTransactionDTO createCashTransation() {
-			return new CashTransactionDTO(id, itemDate, documentTypeId, documentTypeName, documentNumber, description, type, value);
+			return new CashTransactionDTO(id, itemDate, documentTypeId, documentTypeName, documentNumber, description, cashFlowType, value);
 		}
 	}
 }

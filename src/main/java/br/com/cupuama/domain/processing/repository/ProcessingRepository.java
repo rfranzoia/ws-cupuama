@@ -24,7 +24,7 @@ public interface ProcessingRepository extends CrudRepository<Processing, Long> {
 					"left outer join supplier s on s.id = p.supplier_id and s.deleted = false " +
                     "where p.process_date between :start and :end " +
                     "order by p.process_date, p.id")
-	List<Process> findByProcessDateRange(@Param("start") final Date start, @Param("end") final Date end);
+	List<Processing> findByProcessDateRange(@Param("start") final Date start, @Param("end") final Date end);
 	
 	@Query(nativeQuery = true, 
 			value = "select p.* " + 
@@ -34,7 +34,7 @@ public interface ProcessingRepository extends CrudRepository<Processing, Long> {
 					"left outer join supplier s on s.id = p.supplier_id and s.deleted = false " +
                     "where p.customer_id is not null and p.customer_id = :customerId " +
                     "order by p.process_date")
-	List<Process> findByCustomer(@Param("customerId") final Long customerId);
+	List<Processing> findByCustomer(@Param("customerId") final Long customerId);
 	
 	@Query(nativeQuery = true, 
 			value = "select p.* " + 
@@ -44,7 +44,7 @@ public interface ProcessingRepository extends CrudRepository<Processing, Long> {
 					"left outer join supplier s on s.id = p.supplier_id and s.deleted = false " +
                     "where p.supplier_id is not null and p.supplier_id = :supplierId " +
                     "order by p.process_date")
-	List<Process> findBySupplier(@Param("supplierId") final Long customerId);
+	List<Processing> findBySupplier(@Param("supplierId") final Long supplierId);
 	
 	@Query(nativeQuery = true, 
 			value = "select p.* " + 
@@ -54,7 +54,7 @@ public interface ProcessingRepository extends CrudRepository<Processing, Long> {
 					"left outer join supplier s on s.id = p.supplier_id and s.deleted = false " +
                     "where p.process_type_id = :processTypeId " +
                     "order by p.process_date")
-	List<Process> findByProcessType(@Param("processTypeId") final Long processTypeId);
+	List<Processing> findByProcessType(@Param("processTypeId") final Long processTypeId);
 	
-	List<Process> findByProcessStatus(final ProcessStatus processStatus);
+	List<Processing> findByProcessStatus(final ProcessStatus processStatus);
 }

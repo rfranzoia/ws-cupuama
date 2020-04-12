@@ -49,7 +49,7 @@ public class CashTransactionService extends DefaultService<CashTransaction, Long
 	 *                                       given id, ... .
 	 * @throws EntityNotFoundException 
 	 */
-	public CashTransaction addCashTransaction(CashTransaction cashTransactionDO) throws ConstraintsViolationException, EntityNotFoundException {
+	private CashTransaction addCashTransaction(CashTransaction cashTransactionDO) throws ConstraintsViolationException, EntityNotFoundException {
 		CashTransaction cashTransaction;
 		try {
 			cashTransaction = repository.save(cashTransactionDO);

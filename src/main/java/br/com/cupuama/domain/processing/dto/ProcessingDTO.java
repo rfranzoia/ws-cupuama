@@ -84,6 +84,11 @@ public class ProcessingDTO {
 	public String getRemarks() {
 		return remarks;
 	}
+	
+	@JsonProperty
+	public List<ProcessingDetailDTO> getProcessingDetail() {
+		return details;
+	}
 
 	public static ProcessingDTOBuilder newBuilder() {
 		return new ProcessingDTOBuilder();

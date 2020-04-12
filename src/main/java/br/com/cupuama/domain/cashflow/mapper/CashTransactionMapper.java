@@ -15,7 +15,7 @@ public class CashTransactionMapper {
 								cashFlowItem.getDocumentNumber(), 
 								new DocumentType(cashFlowItem.getDocumentTypeId()), 
 								cashFlowItem.getDescription(), 
-								cashFlowItem.getType(), 
+								cashFlowItem.getCashFlowType(), 
 								cashFlowItem.getValue());
 	}
 
@@ -27,7 +27,7 @@ public class CashTransactionMapper {
 				.setDocumentTypeId(cashFlowItem.getDocumentType().getId())
 				.setDocumentTypeName(cashFlowItem.getDocumentType().getName())
 				.setDescription(cashFlowItem.getDescription())
-				.setType(cashFlowItem.getType())
+				.setCashFlowType(cashFlowItem.getType())
 				.setValue(cashFlowItem.getValue());
 
 		return cashFlowItemDTOBuilder.createCashTransation();
