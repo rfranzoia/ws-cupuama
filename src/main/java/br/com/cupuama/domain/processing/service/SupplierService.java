@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.processing.dto.SupplierDTO;
-import br.com.cupuama.domain.processing.entity.Address;
-import br.com.cupuama.domain.processing.entity.Supplier;
 import br.com.cupuama.domain.processing.entity.Supplier;
 import br.com.cupuama.domain.processing.repository.SupplierRepository;
 import br.com.cupuama.exception.EntityNotFoundException;
