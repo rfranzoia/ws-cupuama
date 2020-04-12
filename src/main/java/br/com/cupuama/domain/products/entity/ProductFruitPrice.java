@@ -26,7 +26,7 @@ public class ProductFruitPrice implements AuditableEntity {
 	private Long id;
 	
 	@Embedded
-	private ProductFruitKey key;
+	private ProductFruitId productFruitId;
 
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double price;
@@ -39,22 +39,21 @@ public class ProductFruitPrice implements AuditableEntity {
 	private Audit audit;
 	
 	
-	public ProductFruitPrice(Long id, ProductFruitKey key, Double price, Date priceExpirationDate) {
-		super();
+	public ProductFruitPrice(Long id, ProductFruitId productFruitId, Double price, Date priceExpirationDate) {
 		this.id = id;
-		this.key = key;
+		this.productFruitId = productFruitId;
 		this.price = price;
 		this.priceExpirationDate = priceExpirationDate;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
 	}
 
-	public ProductFruitKey getKey() {
-		return key;
+	public ProductFruitId getProductFruitId() {
+		return productFruitId;
 	}
 
-	public void setKey(ProductFruitKey key) {
-		this.key = key;
+	public void setKey(ProductFruitId productFruitId) {
+		this.productFruitId = productFruitId;
 	}
 
 	public Double getPrice() {
@@ -95,10 +94,10 @@ public class ProductFruitPrice implements AuditableEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -108,18 +107,18 @@ public class ProductFruitPrice implements AuditableEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		ProductFruitPrice other = (ProductFruitPrice) obj;
-		if (key == null) {
-			if (other.getKey() != null)
+		if (id == null) {
+			if (other.getId() != null)
 				return false;
-		} else if (!key.equals(other.getKey()))
+		} else if (!id.equals(other.getId()))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductFruitPrice [key=" + key + ", price=" + price + ", priceExpirationDate=" + priceExpirationDate
-				+ "]";
+		return "ProductFruitPrice [id=" + id + ", productFruitId=" + productFruitId + ", price=" + price
+				+ ", priceExpirationDate=" + priceExpirationDate + "]";
 	}
 
 }

@@ -10,12 +10,12 @@ import br.com.cupuama.domain.stock.entity.Inventory;
 
 public class InventoryMapper {
 	public static Inventory makeInventory(InventoryDTO dto) {
-		return new Inventory(dto.getId(), dto.getInitialStock(), dto.getStockIn(), dto.getStockOut());
+		return new Inventory(InventoryKeyMapper.makeId(dto.getKey()), dto.getInitialStock(), dto.getStockIn(), dto.getStockOut());
 	}
 
 	public static InventoryDTO makeInventoryDTO(Inventory inventory) {
 		InventoryDTO.InventoryDTOBuilder inventoryDTOBuilder = InventoryDTO.newBuilder()
-				.setId(inventory.getInventoryId())
+				.setKey(InventoryKeyMapper.makeKey(inventory.getInventoryId()))
 				.setInitialStock(inventory.getInitialStock())
 				.setStockIn(inventory.getStockIn())
 				.setStockOut(inventory.getStockOut());

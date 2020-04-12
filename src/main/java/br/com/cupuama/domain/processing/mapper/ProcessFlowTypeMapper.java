@@ -6,17 +6,18 @@ import java.util.stream.Collectors;
 
 import br.com.cupuama.domain.processing.dto.ProcessFlowTypeDTO;
 import br.com.cupuama.domain.processing.entity.ProcessFlowType;
+import br.com.cupuama.domain.stock.mapper.DepotMapper;
 
 public class ProcessFlowTypeMapper {
 	public static ProcessFlowType makeProcessFlowType(ProcessFlowTypeDTO dto) {
-		return new ProcessFlowType(dto.getKey(), dto.getDepotIn(), dto.getDepotOut());
+		return new ProcessFlowType(ProcessFlowTypeKeyMapper.makeId(dto.getKey()), DepotMapper.makeDepot(dto.getDepotIn()), DepotMapper.makeDepot(dto.getDepotOut()));
 	}
 
 	public static ProcessFlowTypeDTO makeProcessFlowTypeDTO(ProcessFlowType processFlowType) {
 		ProcessFlowTypeDTO.ProcessFlowTypeDTOBuilder processFlowTypeDTOBuilder = ProcessFlowTypeDTO.newBuilder()
-				.setKey(processFlowType.getKey())
-				.setDepotIn(processFlowType.getDepotIn())
-				.setDepotOut(processFlowType.getDepotOut());
+				.setKey(ProcessFlowTypeKeyMapper.makeKey(processFlowType.getId()))
+				.setDepotIn(DepotMapper.makeDepotDTO(processFlowType.getDepotIn()))
+				.setDepotOut(DepotMapper.makeDepotDTO(processFlowType.getDepotOut()));
 
 		return processFlowTypeDTOBuilder.createProcessFlowTypeDTO();
 	}

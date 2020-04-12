@@ -7,13 +7,11 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.domain.stock.entity.InventoryId;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class InventoryDTO {
 
 	@NotNull(message = "InventoryId cannot be null!")
-	private InventoryId key;
+	private InventoryKey key;
 
 	@NotNull(message = "InitialStock Balance cannot be null!")
 	private Double initialStock;
@@ -26,7 +24,7 @@ public class InventoryDTO {
 	
 	private Double finalStock;
 
-	public InventoryDTO(InventoryId key, Double initialStock, Double stockIn, Double stockOut) {
+	public InventoryDTO(InventoryKey key, Double initialStock, Double stockIn, Double stockOut) {
 		this.key = key;
 		
 		this.initialStock = Optional.ofNullable(initialStock).orElse(0.0);
@@ -42,7 +40,7 @@ public class InventoryDTO {
 
 
 	@JsonProperty	
-	public InventoryId getId() {
+	public InventoryKey getKey() {
 		return key;
 	}
 
@@ -67,12 +65,12 @@ public class InventoryDTO {
 	}
 
 	public static class InventoryDTOBuilder {
-		private InventoryId key;
+		private InventoryKey key;
 		private Double initialStock = 0.0;
 		private Double stockIn = 0.0;
 		private Double stockOut = 0.0;
 
-		public InventoryDTOBuilder setId(InventoryId inventoryId) {
+		public InventoryDTOBuilder setKey(InventoryKey inventoryId) {
 			this.key = inventoryId;
 			return this;
 		}

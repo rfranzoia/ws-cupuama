@@ -11,6 +11,7 @@ import br.com.cupuama.domain.stock.dto.InventoryDTO;
 import br.com.cupuama.domain.stock.entity.Inventory;
 import br.com.cupuama.domain.stock.entity.InventoryId;
 import br.com.cupuama.domain.stock.entity.StocktakeInOut;
+import br.com.cupuama.domain.stock.mapper.InventoryKeyMapper;
 import br.com.cupuama.domain.stock.mapper.InventoryMapper;
 import br.com.cupuama.domain.stock.repository.InventoryRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -31,8 +32,9 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 	}
 
 	public InventoryDTO addInventory(final InventoryDTO inventoryDTO) throws EntityNotFoundException {
-		addStockInOrStockOut(inventoryDTO.getId(), StocktakeInOut.IN_AND_OUT, inventoryDTO.getStockIn(), inventoryDTO.getStockOut());
-		return InventoryMapper.makeInventoryDTO(find(inventoryDTO.getId()));
+		InventoryId id = InventoryKeyMapper.makeId(inventoryDTO.getKey());
+		addStockInOrStockOut(id, StocktakeInOut.IN_AND_OUT, inventoryDTO.getStockIn(), inventoryDTO.getStockOut());
+		return InventoryMapper.makeInventoryDTO(find(id));
 	}
 	/**
 	 * Update stockIn and stockOut for a inventoryId
@@ -135,7 +137,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 			inventory = find(inventoryId);
 		} catch (EntityNotFoundException enfex) {
 			InventoryDTO dto = InventoryDTO.newBuilder()
-								.setId(inventoryId)
+								.setKey(InventoryKeyMapper.makeKey(inventoryId))
 								.setInitialStock(0.0)
 								.setStockIn(0.0)
 								.setStockOut(0.0).createInventoryDTO();

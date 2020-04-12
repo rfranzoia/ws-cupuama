@@ -5,22 +5,19 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.domain.products.entity.Fruit;
-import br.com.cupuama.domain.products.entity.Product;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductFruitDTO {
 	
 	@NotNull(message = "Product cannot be null!")
-	private Product product;
+	private ProductDTO product;
 
 	@NotNull(message = "Fruit cannot be null!")
-	private Fruit fruit;
+	private FruitDTO fruit;
 	
 	private ProductFruitDTO() {
 	}
 
-	private ProductFruitDTO(Product product, Fruit fruit) {
+	private ProductFruitDTO(ProductDTO product, FruitDTO fruit) {
 		this.product = product;
 		this.fruit = fruit;
 	}
@@ -30,26 +27,26 @@ public class ProductFruitDTO {
 	}
 
 	@JsonProperty
-	public Product getProduct() {
+	public ProductDTO getProduct() {
 		return product;
 	}
 
 
 	@JsonProperty
-	public Fruit getFruit() {
+	public FruitDTO getFruit() {
 		return fruit;
 	}
 	
 	public static class ProductFruitDTOBuilder {
-		private Product product;
-		private Fruit fruit;
+		private ProductDTO product;
+		private FruitDTO fruit;
 
-		public ProductFruitDTOBuilder setProduct(Product product) {
+		public ProductFruitDTOBuilder setProduct(ProductDTO product) {
 			this.product = product;
 			return this;
 		}
 
-		public ProductFruitDTOBuilder setFruit(Fruit fruit) {
+		public ProductFruitDTOBuilder setFruit(FruitDTO fruit) {
 			this.fruit = fruit;
 			return this;
 		}

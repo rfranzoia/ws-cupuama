@@ -5,8 +5,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.domain.processing.entity.Address;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerDTO {
 	
@@ -20,12 +18,12 @@ public class CustomerDTO {
 	private String phone;
 	
 	@NotNull(message = "Name cannot be null!")
-	private Address address;
+	private AddressDTO address;
 	
 	private CustomerDTO() {
 	}
 
-	private CustomerDTO(Long id, String name, String companyName, String phone, Address address) {
+	private CustomerDTO(Long id, String name, String companyName, String phone, AddressDTO address) {
 		this.id = id;
 		this.name = name;
 		this.companyName = companyName;
@@ -58,7 +56,7 @@ public class CustomerDTO {
 	}
 
 	@JsonProperty
-	public Address getAddress() {
+	public AddressDTO getAddress() {
 		return address;
 	}
 
@@ -67,7 +65,7 @@ public class CustomerDTO {
 		private String name;
 		private String companyName;
 		private String phone;
-		private Address address;
+		private AddressDTO address;
 
 		public CustomerDTOBuilder setId(Long id) {
 			this.id = id;
@@ -89,7 +87,7 @@ public class CustomerDTO {
 			return this;
 		}
 
-		public CustomerDTOBuilder setAddress(Address address) {
+		public CustomerDTOBuilder setAddress(AddressDTO address) {
 			this.address = address;
 			return this;
 		}

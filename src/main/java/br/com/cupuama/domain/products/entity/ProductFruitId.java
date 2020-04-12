@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class ProductFruitKey implements Serializable{
+public class ProductFruitId implements Serializable{
 
 	private static final long serialVersionUID = 7163808945435615192L;
 
@@ -20,10 +20,10 @@ public class ProductFruitKey implements Serializable{
 	@JoinColumn(name = "fruit_id", nullable = false)
 	private Fruit fruit;
 
-	public ProductFruitKey() {
+	public ProductFruitId() {
 	}
 	
-	public ProductFruitKey(Product product, Fruit fruit) {
+	public ProductFruitId(Product product, Fruit fruit) {
 		this.product = product;
 		this.fruit = fruit;
 	}
@@ -61,7 +61,7 @@ public class ProductFruitKey implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductFruitKey other = (ProductFruitKey) obj;
+		ProductFruitId other = (ProductFruitId) obj;
 		if (fruit == null) {
 			if (other.getFruit() != null)
 				return false;

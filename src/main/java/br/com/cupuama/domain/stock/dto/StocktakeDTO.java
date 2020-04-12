@@ -7,8 +7,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.domain.products.entity.ProductFruitKey;
-import br.com.cupuama.domain.stock.entity.Depot;
+import br.com.cupuama.domain.products.dto.ProductFruitKey;
 import br.com.cupuama.domain.stock.entity.StocktakeInOut;
 
 public class StocktakeDTO {
@@ -19,7 +18,7 @@ public class StocktakeDTO {
 	private ProductFruitKey productFruitKey;
 	
 	@NotNull(message = "ProductFruitKey cannot be null!")
-	private Depot depot;
+	private DepotDTO depot;
 	
 	@NotNull(message = "stocktakeDate cannot be null!")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -34,7 +33,7 @@ public class StocktakeDTO {
 	public StocktakeDTO() {
 	}
 
-	public StocktakeDTO(Long id, ProductFruitKey productFruitKey, Depot depot, 
+	public StocktakeDTO(Long id, ProductFruitKey productFruitKey, DepotDTO depot, 
 			Date stocktakeDate, StocktakeInOut stocktakeInOut, Double amount) {
 		this.id = id;
 		this.productFruitKey = productFruitKey;
@@ -55,7 +54,7 @@ public class StocktakeDTO {
 	}
 
 	@JsonProperty
-	public Depot getDepot() {
+	public DepotDTO getDepot() {
 		return depot;
 	}
 
@@ -82,7 +81,7 @@ public class StocktakeDTO {
 		
 		private Long id;
 		private ProductFruitKey productFruitKey;
-		private Depot depot;
+		private DepotDTO depot;
 		private Date stocktakeDate;
 		private StocktakeInOut stocktakeInOut;
 		private Double amount;
@@ -97,7 +96,7 @@ public class StocktakeDTO {
 			return this;
 		}
 		
-		public StocktakeDTOBuilder setDepot(Depot depot) {
+		public StocktakeDTOBuilder setDepot(DepotDTO depot) {
 			this.depot = depot;
 			return this;
 		}

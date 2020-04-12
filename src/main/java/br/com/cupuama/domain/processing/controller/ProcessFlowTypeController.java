@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.processing.dto.ProcessFlowTypeDTO;
 import br.com.cupuama.domain.processing.dto.ProcessFlowTypeKey;
-import br.com.cupuama.domain.processing.mapper.ProcessFlowTypeIdMapper;
+import br.com.cupuama.domain.processing.mapper.ProcessFlowTypeKeyMapper;
 import br.com.cupuama.domain.processing.mapper.ProcessFlowTypeMapper;
 import br.com.cupuama.domain.processing.service.ProcessFlowTypeService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -40,7 +40,7 @@ public class ProcessFlowTypeController {
 
 	@GetMapping("/processFlowType")
 	public ProcessFlowTypeDTO getProcessFlowType(@RequestBody final ProcessFlowTypeKey key) throws EntityNotFoundException {
-		return ProcessFlowTypeMapper.makeProcessFlowTypeDTO(processFlowTypeService.find(ProcessFlowTypeIdMapper.makeId(key)));
+		return ProcessFlowTypeMapper.makeProcessFlowTypeDTO(processFlowTypeService.find(ProcessFlowTypeKeyMapper.makeId(key)));
 	}
 
 	@PostMapping
@@ -51,7 +51,7 @@ public class ProcessFlowTypeController {
 
 	@DeleteMapping("/processFlowType")
 	public void deleteProcessFlowType(@RequestBody final ProcessFlowTypeKey key) throws EntityNotFoundException {
-		processFlowTypeService.delete(ProcessFlowTypeIdMapper.makeId(key));
+		processFlowTypeService.delete(ProcessFlowTypeKeyMapper.makeId(key));
 	}
 
 	@PutMapping("/processFlowType")

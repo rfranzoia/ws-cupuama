@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.stock.dto.InventoryDTO;
-import br.com.cupuama.domain.stock.entity.InventoryId;
+import br.com.cupuama.domain.stock.dto.InventoryKey;
+import br.com.cupuama.domain.stock.mapper.InventoryKeyMapper;
 import br.com.cupuama.domain.stock.mapper.InventoryMapper;
 import br.com.cupuama.domain.stock.service.InventoryService;
 import br.com.cupuama.exception.EntityNotFoundException;
@@ -35,8 +36,8 @@ public class InventoryController {
 	}
 
 	@GetMapping("/inventory")
-	public InventoryDTO getInventory(@RequestBody final InventoryId key) throws EntityNotFoundException {
-		return InventoryMapper.makeInventoryDTO(inventoryService.find(key));
+	public InventoryDTO getInventory(@RequestBody final InventoryKey key) throws EntityNotFoundException {
+		return InventoryMapper.makeInventoryDTO(inventoryService.find(InventoryKeyMapper.makeId(key)));
 	}
 
 	@PostMapping

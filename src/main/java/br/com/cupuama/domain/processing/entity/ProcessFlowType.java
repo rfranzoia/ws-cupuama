@@ -19,7 +19,7 @@ public class ProcessFlowType implements AuditableEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private ProcessFlowTypeId key;
+	private ProcessFlowTypeId id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "depot_in_id")
@@ -35,20 +35,20 @@ public class ProcessFlowType implements AuditableEntity {
 	public ProcessFlowType() {
 	}
 
-	public ProcessFlowType(ProcessFlowTypeId key, Depot depotIn, Depot depotOut) {
-		this.key = key;
+	public ProcessFlowType(ProcessFlowTypeId id, Depot depotIn, Depot depotOut) {
+		this.id = id;
 		this.depotIn = depotIn;
 		this.depotOut = depotOut;
 		this.audit = new Audit();
 		this.audit.setDeleted(false);
 	}
 
-	public ProcessFlowTypeId getKey() {
-		return key;
+	public ProcessFlowTypeId getId() {
+		return id;
 	}
 
-	public void setKey(ProcessFlowTypeId key) {
-		this.key = key;
+	public void setId(ProcessFlowTypeId id) {
+		this.id = id;
 	}
 
 	public Depot getDepotIn() {
@@ -81,7 +81,7 @@ public class ProcessFlowType implements AuditableEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -94,17 +94,17 @@ public class ProcessFlowType implements AuditableEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		ProcessFlowType other = (ProcessFlowType) obj;
-		if (key == null) {
-			if (other.getKey() != null)
+		if (id == null) {
+			if (other.getId() != null)
 				return false;
-		} else if (!key.equals(other.getKey()))
+		} else if (!id.equals(other.getId()))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ProcessFlowType [key=" + key + ", depotIn=" + depotIn + ", depotOut=" + depotOut + "]";
+		return "ProcessFlowType [id=" + id + ", depotIn=" + depotIn + ", depotOut=" + depotOut + "]";
 	}
 	
 }

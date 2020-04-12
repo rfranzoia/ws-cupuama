@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.cupuama.domain.processing.dto.ProcessFlowTypeDTO;
 import br.com.cupuama.domain.processing.entity.ProcessFlowType;
 import br.com.cupuama.domain.processing.entity.ProcessFlowTypeId;
+import br.com.cupuama.domain.processing.mapper.ProcessFlowTypeKeyMapper;
 import br.com.cupuama.domain.processing.mapper.ProcessFlowTypeMapper;
 import br.com.cupuama.domain.processing.repository.ProcessFlowTypeRepository;
+import br.com.cupuama.domain.stock.mapper.DepotMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
@@ -38,9 +40,9 @@ public class ProcessFlowTypeService extends DefaultService<ProcessFlowType, Proc
 	 */
 	@Transactional
 	public void update(final ProcessFlowTypeDTO dto) throws EntityNotFoundException {
-		ProcessFlowType processFlowType = findByIdChecked(dto.getKey());
-		processFlowType.setDepotIn(dto.getDepotIn());
-		processFlowType.setDepotOut(dto.getDepotOut());
+		ProcessFlowType processFlowType = findByIdChecked(ProcessFlowTypeKeyMapper.makeId(dto.getKey()));
+		processFlowType.setDepotIn(DepotMapper.makeDepot(dto.getDepotIn()));
+		processFlowType.setDepotOut(DepotMapper.makeDepot(dto.getDepotOut()));
 	}
 
 }

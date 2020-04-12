@@ -5,7 +5,7 @@ import br.com.cupuama.domain.processing.entity.ProcessFlowTypeId;
 import br.com.cupuama.domain.products.mapper.ProductMapper;
 
 
-public class ProcessFlowTypeIdMapper {
+public class ProcessFlowTypeKeyMapper {
 	public static ProcessFlowTypeId makeId(ProcessFlowTypeKey key) {
 		return new ProcessFlowTypeId(ProcessTypeMapper.makeProcessType(key.getProcessType()), 
 										ProductMapper.makeProduct(key.getProduct()), 

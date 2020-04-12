@@ -11,14 +11,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.com.cupuama.domain.products.entity.ProductFruit;
-import br.com.cupuama.domain.products.entity.ProductFruitKey;
+import br.com.cupuama.domain.products.entity.ProductFruitId;
 import br.com.cupuama.exception.EntityNotFoundException;
 
 /**
  *
  * @author Romeu Franzoia Jr
  */
-public interface ProductFruitRepository extends CrudRepository<ProductFruit, ProductFruitKey> {
+public interface ProductFruitRepository extends CrudRepository<ProductFruit, ProductFruitId> {
 
 	@Query(nativeQuery = true, value = "select pf.* " +
 			"from product_fruit pf " +

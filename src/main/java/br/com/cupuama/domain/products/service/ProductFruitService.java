@@ -13,7 +13,7 @@ import br.com.cupuama.domain.products.dto.ProductFruitDTO;
 import br.com.cupuama.domain.products.entity.Fruit;
 import br.com.cupuama.domain.products.entity.Product;
 import br.com.cupuama.domain.products.entity.ProductFruit;
-import br.com.cupuama.domain.products.entity.ProductFruitKey;
+import br.com.cupuama.domain.products.entity.ProductFruitId;
 import br.com.cupuama.domain.products.mapper.ProductFruitMapper;
 import br.com.cupuama.domain.products.repository.ProductFruitRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -21,7 +21,7 @@ import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
 @Service
-public class ProductFruitService extends DefaultService<ProductFruit, ProductFruitKey> {
+public class ProductFruitService extends DefaultService<ProductFruit, ProductFruitId> {
 
 	@Autowired
 	private ProductService productService;
@@ -29,7 +29,7 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	@Autowired
 	private FruitService fruitService;
 	
-    public ProductFruitService(final CrudRepository<ProductFruit, ProductFruitKey> repository) {
+    public ProductFruitService(final CrudRepository<ProductFruit, ProductFruitId> repository) {
 		super(repository);
 	}
 
@@ -40,19 +40,19 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     }
     
     public ProductFruit findByProductIdAndFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
-    	ProductFruitKey key = getProductFruitKey(productId, fruitId);
+    	ProductFruitId key = getProductFruitId(productId, fruitId);
     	return findByIdChecked(key);
     }
     
     public void deleteByProductIdAndFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
-    	ProductFruitKey key = getProductFruitKey(productId, fruitId);
+    	ProductFruitId key = getProductFruitId(productId, fruitId);
     	delete(key);
     }
 
-	private ProductFruitKey getProductFruitKey(Long productId, Long fruitId) throws EntityNotFoundException {
+	private ProductFruitId getProductFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
 		final Product product = productService.find(productId);
 		final Fruit fruit = fruitService.find(fruitId);
-		return new ProductFruitKey(product, fruit);
+		return new ProductFruitId(product, fruit);
 	}
     /**
      * deletes all association of fruits with the productId 
@@ -131,10 +131,10 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	final Predicate<Fruit> createProductFruit = fruit -> {
     		try {
     			fruit = fruitService.find(fruit.getId());
-    			final ProductFruitKey key = new ProductFruitKey(product, fruit);
+    			final ProductFruitId key = new ProductFruitId(product, fruit);
 
     			ProductFruit productFruit = new ProductFruit();
-        		productFruit.setKey(key);
+        		productFruit.setId(key);
 				
         		productFruit = create(productFruit);
         		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));
@@ -175,10 +175,10 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	final Predicate<Product> createProductFruit = product -> {
     		try {
     			product = productService.find(product.getId());
-    			final ProductFruitKey key = new ProductFruitKey(product, fruit);
+    			final ProductFruitId key = new ProductFruitId(product, fruit);
     			
         		ProductFruit productFruit = new ProductFruit();
-        		productFruit.setKey(key);
+        		productFruit.setId(key);
 				
         		productFruit = create(productFruit);
         		associations.add(ProductFruitMapper.makeProductFruitDTO(productFruit));

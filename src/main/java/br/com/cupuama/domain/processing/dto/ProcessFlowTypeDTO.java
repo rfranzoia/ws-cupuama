@@ -5,22 +5,21 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.domain.processing.entity.ProcessFlowTypeId;
-import br.com.cupuama.domain.stock.entity.Depot;
+import br.com.cupuama.domain.stock.dto.DepotDTO;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcessFlowTypeDTO {
 	
 	@NotNull(message = "Key cannot be null!")
-	private ProcessFlowTypeId key;
+	private ProcessFlowTypeKey key;
 	
-	private Depot depotIn;
-	private Depot depotOut;
+	private DepotDTO depotIn;
+	private DepotDTO depotOut;
 	
 	private ProcessFlowTypeDTO() {
 	}
 
-	private ProcessFlowTypeDTO(ProcessFlowTypeId key, Depot depotIn, Depot depotOut) {
+	private ProcessFlowTypeDTO(ProcessFlowTypeKey key, DepotDTO depotIn, DepotDTO depotOut) {
 		this.key = key;
 		this.depotIn = depotIn;
 		this.depotOut = depotOut;
@@ -31,36 +30,36 @@ public class ProcessFlowTypeDTO {
 	}
 
 	@JsonProperty
-	public ProcessFlowTypeId getKey() {
+	public ProcessFlowTypeKey getKey() {
 		return key;
 	}
 
 	@JsonProperty
-	public Depot getDepotIn() {
+	public DepotDTO getDepotIn() {
 		return depotIn;
 	}
 	
 	@JsonProperty
-	public Depot getDepotOut() {
+	public DepotDTO getDepotOut() {
 		return depotOut;
 	}
 	
 	public static class ProcessFlowTypeDTOBuilder {
-		private ProcessFlowTypeId key;
-		private Depot depotIn;
-		private Depot depotOut;
+		private ProcessFlowTypeKey key;
+		private DepotDTO depotIn;
+		private DepotDTO depotOut;
 
-		public ProcessFlowTypeDTOBuilder setKey(ProcessFlowTypeId key) {
+		public ProcessFlowTypeDTOBuilder setKey(ProcessFlowTypeKey key) {
 			this.key = key;
 			return this;
 		}
 
-		public ProcessFlowTypeDTOBuilder setDepotIn(Depot depotIn) {
+		public ProcessFlowTypeDTOBuilder setDepotIn(DepotDTO depotIn) {
 			this.depotIn = depotIn;
 			return this;
 		}
 		
-		public ProcessFlowTypeDTOBuilder setDepotOut(Depot depotOut) {
+		public ProcessFlowTypeDTOBuilder setDepotOut(DepotDTO depotOut) {
 			this.depotOut = depotOut;
 			return this;
 		}

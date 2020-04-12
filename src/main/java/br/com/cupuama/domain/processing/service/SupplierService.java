@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.processing.dto.SupplierDTO;
+import br.com.cupuama.domain.processing.entity.Address;
 import br.com.cupuama.domain.processing.entity.Supplier;
 import br.com.cupuama.domain.processing.mapper.SupplierMapper;
 import br.com.cupuama.domain.processing.repository.SupplierRepository;
@@ -40,11 +41,14 @@ public class SupplierService extends DefaultService<Supplier, Long> {
 	 */
 	@Transactional
 	public void update(final Long supplierId, final SupplierDTO dto) throws EntityNotFoundException {
+		final Address address = new Address(dto.getAddress().getStreet(),
+				dto.getAddress().getCity(), dto.getAddress().getRegion(), dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
+		
 		Supplier supplier = findByIdChecked(supplierId);
 		supplier.setName(dto.getName());
 		supplier.setCompanyName(dto.getCompanyName());
 		supplier.setPhone(dto.getPhone());
-		supplier.setAddress(dto.getAddress());
+		supplier.setAddress(address);
 	}
 
 	/**

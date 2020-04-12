@@ -58,8 +58,8 @@ public class StocktakeService extends DefaultService<Stocktake, Long> {
 		
 		InventoryId inventoryId = new InventoryId();
 		inventoryId.setPeriod(period);
-		inventoryId.setProduct(stocktake.getProductFruitKey().getProduct());
-		inventoryId.setFruit(stocktake.getProductFruitKey().getFruit());
+		inventoryId.setProduct(stocktake.getProductFruitId().getProduct());
+		inventoryId.setFruit(stocktake.getProductFruitId().getFruit());
 		inventoryId.setDepot(stocktake.getDepot());
 		
 		Double stockIn = stocktake.getAmount() * (action.equals(StocktakeAction.ADD)? 1: -1);

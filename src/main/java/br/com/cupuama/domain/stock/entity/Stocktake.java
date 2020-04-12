@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.cupuama.domain.products.entity.ProductFruitKey;
+import br.com.cupuama.domain.products.entity.ProductFruitId;
 import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
 
@@ -32,7 +32,7 @@ public class Stocktake implements AuditableEntity {
 	private Long id;
 	
 	@Embedded
-	private ProductFruitKey productFruitKey;
+	private ProductFruitId productFruitId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "depot_id", nullable = false)
@@ -55,10 +55,10 @@ public class Stocktake implements AuditableEntity {
 	public Stocktake() {
 	}
 
-	public Stocktake(Long id, ProductFruitKey productFruitKey, Depot depot, Date stocktakeDate, StocktakeInOut stocktakeInOut,
+	public Stocktake(Long id, ProductFruitId productFruitId, Depot depot, Date stocktakeDate, StocktakeInOut stocktakeInOut,
 			Double amount) {
 		this.id = id;
-		this.productFruitKey = productFruitKey;
+		this.productFruitId = productFruitId;
 		this.depot = depot;
 		this.stocktakeDate = stocktakeDate;
 		this.stocktakeInOut = stocktakeInOut;
@@ -75,12 +75,12 @@ public class Stocktake implements AuditableEntity {
 		this.id = id;
 	}
 
-	public ProductFruitKey getProductFruitKey() {
-		return productFruitKey;
+	public ProductFruitId getProductFruitId() {
+		return productFruitId;
 	}
 
-	public void setProductFruitKey(ProductFruitKey productFruitKey) {
-		this.productFruitKey = productFruitKey;
+	public void setProductFruitId(ProductFruitId productFruitId) {
+		this.productFruitId = productFruitId;
 	}
 
 	public Depot getDepot() {
@@ -153,7 +153,7 @@ public class Stocktake implements AuditableEntity {
 	@Override
 	public String toString() {
 		return "Stocktake [id=" + id 
-				+ ", productFruitKey=" + productFruitKey.toString() 
+				+ ", productFruitKey=" + productFruitId.toString() 
 				+ ", depot=" + depot.toString() 
 				+ ", stocktakeDate=" + stocktakeDate 
 				+ ", stocktakeInOut=" + stocktakeInOut 

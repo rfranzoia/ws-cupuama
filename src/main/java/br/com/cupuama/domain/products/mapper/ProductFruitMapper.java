@@ -6,20 +6,20 @@ import java.util.stream.Collectors;
 
 import br.com.cupuama.domain.products.dto.ProductFruitDTO;
 import br.com.cupuama.domain.products.entity.ProductFruit;
-import br.com.cupuama.domain.products.entity.ProductFruitKey;
+import br.com.cupuama.domain.products.entity.ProductFruitId;
 
 
 public class ProductFruitMapper {
 	public static ProductFruit makeProductFruit(ProductFruitDTO dto) {
-		final ProductFruitKey key = new ProductFruitKey(dto.getProduct(), dto.getFruit());
-		return new ProductFruit(key);
+		ProductFruitId id = new ProductFruitId(ProductMapper.makeProduct(dto.getProduct()), FruitMapper.makeFruit(dto.getFruit()));
+		return new ProductFruit(id);
 	}
 
 	public static ProductFruitDTO makeProductFruitDTO(ProductFruit productFruit) {
 		ProductFruitDTO.ProductFruitDTOBuilder 
 			productFruitDTOBuilder = ProductFruitDTO.newBuilder()
-				.setProduct(productFruit.getKey().getProduct())
-				.setFruit(productFruit.getKey().getFruit());
+				.setProduct(ProductMapper.makeProductDTO(productFruit.getId().getProduct()))
+				.setFruit(FruitMapper.makeFruitDTO(productFruit.getId().getFruit()));
 		
 		return productFruitDTOBuilder.createProductFruitDTO();
 	}

@@ -13,28 +13,28 @@ public class ProductFruit implements DefaultEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private ProductFruitKey key;
+	private ProductFruitId id;
 	
 	public ProductFruit() {
 	}
 	
-	public ProductFruit(ProductFruitKey key) {
-		this.key = key;
+	public ProductFruit(ProductFruitId id) {
+		this.id = id;
 	}
 
-	public ProductFruitKey getKey() {
-		return key;
+	public ProductFruitId getId() {
+		return id;
 	}
 
-	public void setKey(ProductFruitKey key) {
-		this.key = key;
+	public void setId(ProductFruitId id) {
+		this.id = id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -47,17 +47,17 @@ public class ProductFruit implements DefaultEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		ProductFruit other = (ProductFruit) obj;
-		if (key == null) {
-			if (other.getKey() != null)
+		if (id == null) {
+			if (other.getId() != null)
 				return false;
-		} else if (!key.equals(other.getKey()))
+		} else if (!id.equals(other.getId()))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductFruit [key=" + key.toString() + "]";
+		return "ProductFruit [id=" + id.toString() + "]";
 	}
 	
 	 
