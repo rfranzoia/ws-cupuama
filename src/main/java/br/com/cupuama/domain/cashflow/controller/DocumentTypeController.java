@@ -55,7 +55,7 @@ public class DocumentTypeController {
 	}
 
 	@PutMapping("/{documentTypeId}")
-	public void updateLocation(@PathVariable final long documentTypeId, @RequestParam final String name)
+	public void updateDocumentType(@PathVariable final long documentTypeId, @RequestParam final String name)
 			throws EntityNotFoundException {
 		documentTypeService.update(documentTypeId, name);
 	}

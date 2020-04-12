@@ -55,7 +55,7 @@ public class ProcessFlowTypeController {
 	}
 
 	@PutMapping("/processFlowType")
-	public void updateLocation(@RequestBody final ProcessFlowTypeDTO processFlowTypeDTO) throws EntityNotFoundException {
+	public void update(@RequestBody final ProcessFlowTypeDTO processFlowTypeDTO) throws EntityNotFoundException {
 		processFlowTypeService.update(processFlowTypeDTO);
 	}
 

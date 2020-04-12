@@ -54,7 +54,7 @@ public class FruitController {
 	}
 
 	@PutMapping("/{fruitId}")
-	public void updateLocation(@PathVariable final long fruitId, @RequestBody final FruitDTO fruitDTO)
+	public void update(@PathVariable final long fruitId, @RequestBody final FruitDTO fruitDTO)
 			throws EntityNotFoundException {
 		fruitService.update(fruitId, fruitDTO);
 	}

@@ -54,7 +54,7 @@ public class CustomerController {
 	}
 
 	@PutMapping("/{customerId}")
-	public void updateLocation(@PathVariable final long customerId, @RequestBody final CustomerDTO customerDTO) throws EntityNotFoundException {
+	public void updateCustomer(@PathVariable final long customerId, @RequestBody final CustomerDTO customerDTO) throws EntityNotFoundException {
 		customerService.update(customerId, customerDTO);
 	}
 

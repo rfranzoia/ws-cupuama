@@ -68,11 +68,11 @@ public class ProcessingController {
 	}
 
 	@PutMapping("/{processingId}")
-	public void updateLocation(@PathVariable final long processingId, @RequestBody final ProcessingDTO processingDTO) throws EntityNotFoundException {
+	public void update(@PathVariable final long processingId, @RequestBody final ProcessingDTO processingDTO) throws EntityNotFoundException {
 		processingService.update(processingId, processingDTO);
 	}
 	
-	@PutMapping("/{processingId}")
+	@PutMapping("/processingStatus/{processingId}")
 	public void updateProcessStatus(@PathVariable final long processingId, 
 			@RequestParam final ProcessStatus processStatus) throws EntityNotFoundException, InvalidRequestException {
 		processingService.updateProcessStatus(processingId, processStatus);

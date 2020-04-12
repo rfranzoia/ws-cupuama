@@ -54,7 +54,7 @@ public class DepotController {
 	}
 
 	@PutMapping("/{depotId}")
-	public void updateLocation(@PathVariable final long depotId, @RequestBody final DepotDTO depotDTO)
+	public void update(@PathVariable final long depotId, @RequestBody final DepotDTO depotDTO)
 			throws EntityNotFoundException {
 		depotService.update(depotId, depotDTO);
 	}

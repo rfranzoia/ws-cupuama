@@ -54,7 +54,7 @@ public class ProductController {
 	}
 
 	@PutMapping("/{productId}")
-	public void updateLocation(@PathVariable final long productId, @RequestBody final ProductDTO productDTO)
+	public void update(@PathVariable final long productId, @RequestBody final ProductDTO productDTO)
 			throws EntityNotFoundException {
 		productService.update(productId, productDTO);
 	}

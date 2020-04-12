@@ -54,7 +54,7 @@ public class SupplierController {
 	}
 
 	@PutMapping("/{supplierId}")
-	public void updateLocation(@PathVariable final long supplierId, @RequestBody final SupplierDTO supplierDTO) throws EntityNotFoundException {
+	public void update(@PathVariable final long supplierId, @RequestBody final SupplierDTO supplierDTO) throws EntityNotFoundException {
 		supplierService.update(supplierId, supplierDTO);
 	}
 

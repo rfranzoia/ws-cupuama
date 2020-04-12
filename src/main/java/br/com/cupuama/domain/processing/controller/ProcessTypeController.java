@@ -56,7 +56,7 @@ public class ProcessTypeController {
 	}
 
 	@PutMapping("/{processTypeId}")
-	public void updateLocation(@PathVariable final long processTypeId, @RequestParam final String name, @RequestParam final FlowTypeModel model)
+	public void update(@PathVariable final long processTypeId, @RequestParam final String name, @RequestParam final FlowTypeModel model)
 			throws EntityNotFoundException {
 		processTypeService.update(processTypeId, name, model);
 	}
