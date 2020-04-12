@@ -118,84 +118,6 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		}
 	}
 	
-	/**
-	 * Updates the inventory with all ProcessingDetail associated to the Processing
-	 * 
-	 * @param processing
-	 */
-	private void updateInventory(final Processing processing) {
-		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
-		
-		for (ProcessingDetailDTO processingDetail : details) {
-			Double amount = processingDetail.getAmount();
-			
-			try {
-				final ProductFruitKey productFruitKey = new ProductFruitKey(processingDetail.getProduct(), processingDetail.getFruit());
-				final StocktakeDTO stocktakeDTO = StocktakeDTO.newBuilder()
-										.setProductFruitKey(productFruitKey)
-										.setDepot(processingDetail.getDepot())
-										.setAmount(amount)
-										.setStocktakeDate(processing.getProcessDate())
-										.setStocktakeInOut(processingDetail.getStocktakeInOut())
-										.createDTO();
-				stocktakeService.addStocktake(stocktakeDTO);
-			} catch (ConstraintsViolationException ex) {
-				LOG.error(String.format("There was an error to perform a addStocktake(dto)"), ex);
-			}
-		}
-	}
-	
-	/**
-	 * Update the cash flow for Sales and Acquisition processing types
-	 * @param processing
-	 */
-	@Transactional
-	private void updateCashFlow(final Processing processing) {
-		final FlowTypeModel flowTypeModel = processing.getProcessType().getFlowTypeModel();
-		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
-		
-		if (flowTypeModel == FlowTypeModel.Sales) {
-			Double credits = 0.0;
-			for (ProcessingDetailDTO processDetail : details) {
-				credits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
-			}
-			
-			try {
-				final CashTransactionDTO creditDTO = CashTransactionDTO.newBuilder()
-						.setItemDate(processing.getProcessDate())
-						.setCashFlowType(CashFlowType.CREDIT)
-						.setValue(credits)
-						.setDocumentNumber(processing.getDocumentReference())
-						.setDescription(flowTypeModel.toString())
-						.createDTO();
-				cashTransationService.addCashTransaction(creditDTO);
-				
-			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
-				LOG.error(String.format("There was an error to perform a addCashTransaction(credit)"), ex);
-			}
-		} else if (flowTypeModel == FlowTypeModel.Acqisitions) {
-			Double debits = 0.0;
-			for (ProcessingDetailDTO processDetail : details) {
-				debits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
-			}
-			
-			try {
-				final CashTransactionDTO debitDTO = CashTransactionDTO.newBuilder()
-						.setItemDate(processing.getProcessDate())
-						.setCashFlowType(CashFlowType.DEBIT)
-						.setValue(debits)
-						.setDocumentNumber(processing.getDocumentReference())
-						.setDescription(flowTypeModel.toString())
-						.createDTO();
-				cashTransationService.addCashTransaction(debitDTO);
-				
-			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
-				LOG.error(String.format("There was an error to perform a addCashTransaction(debit)"), ex);
-			}
-		}
-		
-	}
-	
 	@Transactional
 	public void delete(final Long processingId) throws EntityNotFoundException {
 		Processing processing = findByIdChecked(processingId);
@@ -294,6 +216,84 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		return processingDTOList;
 	}
 
+	/**
+	 * Updates the inventory with all ProcessingDetail associated to the Processing
+	 * 
+	 * @param processing
+	 */
+	private void updateInventory(final Processing processing) {
+		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
+		
+		for (ProcessingDetailDTO processingDetail : details) {
+			Double amount = processingDetail.getAmount();
+			
+			try {
+				final ProductFruitKey productFruitKey = new ProductFruitKey(processingDetail.getProduct(), processingDetail.getFruit());
+				final StocktakeDTO stocktakeDTO = StocktakeDTO.newBuilder()
+										.setProductFruitKey(productFruitKey)
+										.setDepot(processingDetail.getDepot())
+										.setAmount(amount)
+										.setStocktakeDate(processing.getProcessDate())
+										.setStocktakeInOut(processingDetail.getStocktakeInOut())
+										.createDTO();
+				stocktakeService.addStocktake(stocktakeDTO);
+			} catch (ConstraintsViolationException ex) {
+				LOG.error(String.format("There was an error to perform a addStocktake(dto)"), ex);
+			}
+		}
+	}
+	
+	/**
+	 * Update the cash flow for Sales and Acquisition processing types
+	 * @param processing
+	 */
+	@Transactional
+	private void updateCashFlow(final Processing processing) {
+		final FlowTypeModel flowTypeModel = processing.getProcessType().getFlowTypeModel();
+		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
+		
+		if (flowTypeModel == FlowTypeModel.Sales) {
+			Double credits = 0.0;
+			for (ProcessingDetailDTO processDetail : details) {
+				credits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
+			}
+			
+			try {
+				final CashTransactionDTO creditDTO = CashTransactionDTO.newBuilder()
+						.setItemDate(processing.getProcessDate())
+						.setCashFlowType(CashFlowType.CREDIT)
+						.setValue(credits)
+						.setDocumentNumber(processing.getDocumentReference())
+						.setDescription(flowTypeModel.toString())
+						.createDTO();
+				cashTransationService.addCashTransaction(creditDTO);
+				
+			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
+				LOG.error(String.format("There was an error to perform a addCashTransaction(credit)"), ex);
+			}
+		} else if (flowTypeModel == FlowTypeModel.Acqisitions) {
+			Double debits = 0.0;
+			for (ProcessingDetailDTO processDetail : details) {
+				debits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
+			}
+			
+			try {
+				final CashTransactionDTO debitDTO = CashTransactionDTO.newBuilder()
+						.setItemDate(processing.getProcessDate())
+						.setCashFlowType(CashFlowType.DEBIT)
+						.setValue(debits)
+						.setDocumentNumber(processing.getDocumentReference())
+						.setDescription(flowTypeModel.toString())
+						.createDTO();
+				cashTransationService.addCashTransaction(debitDTO);
+				
+			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
+				LOG.error(String.format("There was an error to perform a addCashTransaction(debit)"), ex);
+			}
+		}
+		
+	}
+	
 	/**
 	 * add processing details for each memeber of a given processing list
 	 * 

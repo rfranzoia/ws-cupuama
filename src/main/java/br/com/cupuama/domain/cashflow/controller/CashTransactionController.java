@@ -1,7 +1,6 @@
 package br.com.cupuama.domain.cashflow.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +25,7 @@ import br.com.cupuama.domain.cashflow.service.CashTransactionService;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;
+import br.com.cupuama.util.Utils;
 
 /**
  * All operations with a cashTransaction will be routed by this controller.
@@ -35,7 +35,6 @@ import br.com.cupuama.exception.InvalidRequestException;
 @RequestMapping("/v1/cashTransactions")
 public class CashTransactionController {
 
-	public static final SimpleDateFormat SEARCH_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private final CashTransactionService cashTransactionService;
 
 	@Autowired
@@ -62,11 +61,11 @@ public class CashTransactionController {
 	}
 
 	@GetMapping("/dates")
-	public List<CashTransactionDTO> findByDateRange(@RequestParam(required = false) final String start, 
-			@RequestParam(required = false) final String end) throws InvalidRequestException {
+	public List<CashTransactionDTO> findByDateRange(@RequestParam(required = false, name = "startDate") final String start, 
+			@RequestParam(required = false, name = "endDate") final String end) throws InvalidRequestException {
 		try {
-			Date startDate = (StringUtils.isEmpty(start))? SEARCH_DATE_FORMAT.parse(start): new Date();
-			Date endDate = (StringUtils.isEmpty(end))? SEARCH_DATE_FORMAT.parse(end): new Date();
+			Date startDate = (StringUtils.isEmpty(start))? Utils.SEARCH_DATE_FORMAT.parse(start): new Date();
+			Date endDate = (StringUtils.isEmpty(end))? Utils.SEARCH_DATE_FORMAT.parse(end): new Date();
 			
 			if (endDate.before(startDate)) {
 				throw new InvalidRequestException("The end date must be greater than start date");
