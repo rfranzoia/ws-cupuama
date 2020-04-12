@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.products.dto.ProductDTO;
 import br.com.cupuama.domain.products.entity.Product;
+import br.com.cupuama.domain.products.mapper.ProductMapper;
 import br.com.cupuama.domain.products.repository.ProductRepository;
+import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
@@ -24,6 +26,12 @@ public class ProductService extends DefaultService<Product, Long> {
 		super(productRepository);
 	}
 
+	@Transactional
+	public ProductDTO create(ProductDTO productDTO) throws ConstraintsViolationException {
+		Product product = ProductMapper.makeProduct(productDTO);
+		return ProductMapper.makeProductDTO(create(product));
+	}
+	
 	/**
 	 * Update a products information.
 	 *

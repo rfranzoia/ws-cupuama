@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.cashflow.dto.CashTransactionDTO;
-import br.com.cupuama.domain.cashflow.entity.CashTransaction;
 import br.com.cupuama.domain.cashflow.mapper.CashTransactionMapper;
 import br.com.cupuama.domain.cashflow.service.CashTransactionService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -51,14 +50,13 @@ public class CashTransactionController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CashTransactionDTO createCashTransaction(@Valid @RequestBody final CashTransactionDTO cashTransactionDTO)
+	public CashTransactionDTO addCashTransaction(@Valid @RequestBody final CashTransactionDTO cashTransactionDTO)
 			throws ConstraintsViolationException, EntityNotFoundException {
-		CashTransaction cashTransaction = CashTransactionMapper.makeCashTransaction(cashTransactionDTO);
-		return CashTransactionMapper.makeCashTransactionDTO(cashTransactionService.addCashTransaction(cashTransaction));
+		return cashTransactionService.addCashTransaction(cashTransactionDTO);
 	}
 
 	@DeleteMapping("/{cashTransactionId}")
-	public void deleteCashTransaction(@PathVariable final long cashTransactionId) 
+	public void removeCashTransaction(@PathVariable final long cashTransactionId) 
 			throws ConstraintsViolationException, EntityNotFoundException {
 		cashTransactionService.removeCashTransaction(cashTransactionId);
 	}

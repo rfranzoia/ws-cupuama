@@ -10,6 +10,7 @@ import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.entity.ProcessType;
 import br.com.cupuama.domain.processing.mapper.ProcessTypeMapper;
 import br.com.cupuama.domain.processing.repository.ProcessTypeRepository;
+import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
@@ -26,6 +27,10 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 		super(processTypeRepository);
 	}
 
+	public ProcessTypeDTO create(ProcessTypeDTO dto) throws ConstraintsViolationException {
+		ProcessType processType = ProcessTypeMapper.makeProcessType(dto);
+		return ProcessTypeMapper.makeProcessTypeDTO(create(processType));
+	}
 	/**
 	 * Update the location for a processType.
 	 *

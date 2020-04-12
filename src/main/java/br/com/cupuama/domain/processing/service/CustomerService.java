@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.processing.dto.CustomerDTO;
 import br.com.cupuama.domain.processing.entity.Customer;
+import br.com.cupuama.domain.processing.mapper.CustomerMapper;
 import br.com.cupuama.domain.processing.repository.CustomerRepository;
+import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
@@ -24,6 +26,12 @@ public class CustomerService extends DefaultService<Customer, Long> {
 		super(customerRepository);
 	}
 
+	@Transactional
+	public CustomerDTO create(CustomerDTO customerDTO) throws ConstraintsViolationException {
+		Customer customer = CustomerMapper.makeCustomer(customerDTO);
+		return CustomerMapper.makeCustomerDTO(create(customer));
+	}
+	
 	/**
 	 * Update Customer information
 	 *

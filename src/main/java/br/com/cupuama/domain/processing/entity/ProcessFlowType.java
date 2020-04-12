@@ -19,7 +19,7 @@ public class ProcessFlowType implements AuditableEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private ProcessFlowTypeKey key;
+	private ProcessFlowTypeId key;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "depot_in_id")
@@ -35,7 +35,7 @@ public class ProcessFlowType implements AuditableEntity {
 	public ProcessFlowType() {
 	}
 
-	public ProcessFlowType(ProcessFlowTypeKey key, Depot depotIn, Depot depotOut) {
+	public ProcessFlowType(ProcessFlowTypeId key, Depot depotIn, Depot depotOut) {
 		this.key = key;
 		this.depotIn = depotIn;
 		this.depotOut = depotOut;
@@ -43,11 +43,11 @@ public class ProcessFlowType implements AuditableEntity {
 		this.audit.setDeleted(false);
 	}
 
-	public ProcessFlowTypeKey getKey() {
+	public ProcessFlowTypeId getKey() {
 		return key;
 	}
 
-	public void setKey(ProcessFlowTypeKey key) {
+	public void setKey(ProcessFlowTypeId key) {
 		this.key = key;
 	}
 

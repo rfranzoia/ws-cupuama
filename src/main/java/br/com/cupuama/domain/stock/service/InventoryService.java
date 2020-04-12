@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.stock.dto.InventoryDTO;
 import br.com.cupuama.domain.stock.entity.Inventory;
-import br.com.cupuama.domain.stock.entity.InventoryKey;
+import br.com.cupuama.domain.stock.entity.InventoryId;
 import br.com.cupuama.domain.stock.entity.StocktakeInOut;
 import br.com.cupuama.domain.stock.mapper.InventoryMapper;
 import br.com.cupuama.domain.stock.repository.InventoryRepository;
@@ -24,26 +24,26 @@ import br.com.cupuama.util.Utils;
  * <p/>
  */
 @Service
-public class InventoryService extends DefaultService<Inventory, InventoryKey> {
+public class InventoryService extends DefaultService<Inventory, InventoryId> {
 
 	public InventoryService(final InventoryRepository inventoryRepository) {
 		super(inventoryRepository);
 	}
 
 	public InventoryDTO addInventory(final InventoryDTO inventoryDTO) throws EntityNotFoundException {
-		addStockInOrStockOut(inventoryDTO.getKey(), StocktakeInOut.IN_AND_OUT, inventoryDTO.getStockIn(), inventoryDTO.getStockOut());
-		return InventoryMapper.makeInventoryDTO(find(inventoryDTO.getKey()));
+		addStockInOrStockOut(inventoryDTO.getId(), StocktakeInOut.IN_AND_OUT, inventoryDTO.getStockIn(), inventoryDTO.getStockOut());
+		return InventoryMapper.makeInventoryDTO(find(inventoryDTO.getId()));
 	}
 	/**
-	 * Update stockIn and stockOut for a inventoryKey
+	 * Update stockIn and stockOut for a inventoryId
 	 *
-	 * @param inventoryKey
+	 * @param inventoryId
 	 * @throws EntityNotFoundException
 	 * @throws ConstraintsViolationException 
 	 */
 	@Transactional
-	public void addStockInOrStockOut(final InventoryKey inventoryKey, final StocktakeInOut inOut, final Double stockIn, final Double stockOut) throws EntityNotFoundException {
-		Inventory inventory = findOrCreateInventory(inventoryKey);
+	public void addStockInOrStockOut(final InventoryId inventoryId, final StocktakeInOut inOut, final Double stockIn, final Double stockOut) throws EntityNotFoundException {
+		Inventory inventory = findOrCreateInventory(inventoryId);
 		
 		switch (inOut) {
 			case IN:
@@ -63,7 +63,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 	}
 	
 	/**
-	 * Forward updates previous balances up to current date inventoryKey
+	 * Forward updates previous balances up to current date inventoryId
 	 * 
 	 * @param inventory
 	 * @throws ConstraintsViolationException
@@ -72,26 +72,26 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 	@Transactional
 	private void updateForwardInitialStock(final Inventory inventory) throws EntityNotFoundException {
 		String currentPeriod = Utils.getFormattedPeriod(new Date());
-		InventoryKey inventoryKey = inventory.getInventoryKey();
+		InventoryId inventoryId = inventory.getInventoryId();
 		
-		if (Integer.valueOf(inventoryKey.getPeriod()) >= Integer.valueOf(currentPeriod)) {
+		if (Integer.valueOf(inventoryId.getPeriod()) >= Integer.valueOf(currentPeriod)) {
 			return;
 		}
 		
-		LOG.info(String.format("Starting forward Stock update for %s", inventoryKey.getPeriod()));
+		LOG.info(String.format("Starting forward Stock update for %s", inventoryId.getPeriod()));
 		
-		// save the current balance of the updated cash flow inventoryKey
+		// save the current balance of the updated cash flow inventoryId
 		Double initialStock = inventory.getInitialStock() + inventory.getStockIn() - inventory.getStockOut();
 		
 		// instantiate month and year
-		String[] start = inventory.getInventoryKey().getPeriod()
+		String[] start = inventory.getInventoryId().getPeriod()
 							.replaceAll(Utils.PERIOD_REGEX, "$1/$2")
 							.split("[/]");
 		
 		int year = Integer.valueOf(start[0]);
 		int month = Integer.valueOf(start[1]);
 		
-		InventoryKey nextPeriodKey = null;
+		InventoryId nextPeriodId = null;
 		
 		do {
 			month++;
@@ -101,20 +101,20 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 			}
 			
 			//make a copy of the key for safety purposes
-			nextPeriodKey = inventoryKey.clone();
+			nextPeriodId = inventoryId.clone();
 			
 			//set the new period
-			nextPeriodKey.setPeriod(String.format("%04d", year) + String.format("%02d", month));
+			nextPeriodId.setPeriod(String.format("%04d", year) + String.format("%02d", month));
 			
-			Inventory nextInventory = findOrCreateInventory(nextPeriodKey);
+			Inventory nextInventory = findOrCreateInventory(nextPeriodId);
 			
-			LOG.info(String.format("Updating previous stock for %s", inventoryKey));
+			LOG.info(String.format("Updating previous stock for %s", nextPeriodId));
 			
 			nextInventory.setInitialStock(initialStock);
 			nextInventory.getAudit().setDateUpdated(ZonedDateTime.now());
 			initialStock = nextInventory.getInitialStock() + nextInventory.getStockIn() - nextInventory.getStockOut();
 			
-		} while (Integer.valueOf(nextPeriodKey.getPeriod()) < Integer.valueOf(currentPeriod));
+		} while (Integer.valueOf(nextPeriodId.getPeriod()) < Integer.valueOf(currentPeriod));
 	
 		LOG.info(String.format("Stock update ended!"));
 	}
@@ -122,20 +122,20 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 	/**
 	 * Try to locate Inventory or create a new if not found
 	 * 
-	 * @param inventoryKey
+	 * @param inventoryId
 	 * @return
 	 * @throws EntityNotFoundException
 	 * @throws ConstraintsViolationException
 	 */
 	@Transactional
-	public Inventory findOrCreateInventory(final InventoryKey inventoryKey) throws EntityNotFoundException {
+	public Inventory findOrCreateInventory(final InventoryId inventoryId) throws EntityNotFoundException {
 		Inventory inventory = null;
 
 		try {
-			inventory = find(inventoryKey);
+			inventory = find(inventoryId);
 		} catch (EntityNotFoundException enfex) {
 			InventoryDTO dto = InventoryDTO.newBuilder()
-								.setKey(inventoryKey)
+								.setId(inventoryId)
 								.setInitialStock(0.0)
 								.setStockIn(0.0)
 								.setStockOut(0.0).createInventoryDTO();
@@ -148,7 +148,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 		}
 
 		if (inventory == null) {
-			LOG.error(String.format("Inventory for inventoryKey %s was not properly created!", inventoryKey));
+			LOG.error(String.format("Inventory for inventoryId %s was not properly created!", inventoryId));
 			throw new EntityNotFoundException("There was a problem while creating a new Inventory");
 		}
 
@@ -160,7 +160,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryKey> {
 	}
 
 	@Transactional
-	private void updateAll(final InventoryKey key) {
+	private void updateAll(final InventoryId key) {
 		List<Inventory> list = ((InventoryRepository) repository).findByProductFruitDepotOrderByPeriod(
 				key.getProduct().getId(), 
 				key.getFruit().getId(), 

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.products.dto.FruitDTO;
-import br.com.cupuama.domain.products.entity.Fruit;
 import br.com.cupuama.domain.products.mapper.FruitMapper;
 import br.com.cupuama.domain.products.service.FruitService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -46,8 +45,7 @@ public class FruitController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public FruitDTO createFruit(@Valid @RequestBody final FruitDTO fruitDTO) throws ConstraintsViolationException {
-		Fruit fruit = FruitMapper.makeFruit(fruitDTO);
-		return FruitMapper.makeFruitDTO(fruitService.create(fruit));
+		return fruitService.create(fruitDTO);
 	}
 
 	@DeleteMapping("/{fruitId}")

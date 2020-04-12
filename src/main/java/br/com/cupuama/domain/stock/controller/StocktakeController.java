@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.stock.dto.StocktakeDTO;
-import br.com.cupuama.domain.stock.entity.Stocktake;
 import br.com.cupuama.domain.stock.mapper.StocktakeMapper;
 import br.com.cupuama.domain.stock.service.StocktakeService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -45,8 +44,7 @@ public class StocktakeController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public StocktakeDTO createStocktake(@Valid @RequestBody final StocktakeDTO stocktakeDTO) throws ConstraintsViolationException {
-		Stocktake stocktake = StocktakeMapper.makeStocktake(stocktakeDTO);
-		return StocktakeMapper.makeStocktakeDTO(stocktakeService.create(stocktake));
+		return stocktakeService.create(stocktakeDTO);
 	}
 
 	@DeleteMapping("/{stocktakeId}")

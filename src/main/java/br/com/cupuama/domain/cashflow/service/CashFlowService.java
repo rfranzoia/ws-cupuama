@@ -29,6 +29,12 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 		super(cashFlowRepository);
 	}
 
+	@Transactional
+	public CashFlowDTO create(CashFlowDTO cashFlowDTO) throws ConstraintsViolationException {
+		CashFlow cashFlow = CashFlowMapper.makeCashFlow(cashFlowDTO);
+		return CashFlowMapper.makeCashFlowDTO(create(cashFlow));
+	}
+	
 	/**
 	 * Update or create previous Balance for a period
 	 *

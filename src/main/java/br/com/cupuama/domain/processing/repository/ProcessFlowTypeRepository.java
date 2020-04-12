@@ -7,13 +7,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.com.cupuama.domain.processing.entity.ProcessFlowType;
-import br.com.cupuama.domain.processing.entity.ProcessFlowTypeKey;
+import br.com.cupuama.domain.processing.entity.ProcessFlowTypeId;
 
 /**
  * Database Access Object for driver table.
  * <p/>
  */
-public interface ProcessFlowTypeRepository extends CrudRepository<ProcessFlowType, ProcessFlowTypeKey> {
+public interface ProcessFlowTypeRepository extends CrudRepository<ProcessFlowType, ProcessFlowTypeId> {
 
 	@Query(nativeQuery = true, value = "select pft.* " +
 			"from process_flow_type pft " +

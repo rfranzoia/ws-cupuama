@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.cupuama.domain.cashflow.dto.DocumentTypeDTO;
 import br.com.cupuama.domain.cashflow.entity.DocumentType;
+import br.com.cupuama.domain.cashflow.mapper.DocumentTypeMapper;
 import br.com.cupuama.domain.cashflow.repository.DocumentTypeRepository;
+import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
@@ -23,6 +26,12 @@ public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 		super(documentTypeRepository);
 	}
 
+	@Transactional
+	public DocumentTypeDTO create(DocumentTypeDTO documentTypeDTO) throws ConstraintsViolationException {
+		DocumentType documentType = DocumentTypeMapper.makeDocumentType(documentTypeDTO);
+		return DocumentTypeMapper.makeDocumentTypeDTO(create(documentType));
+	}
+	
 	/**
 	 * Update the location for a documentType.
 	 *

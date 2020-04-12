@@ -14,7 +14,7 @@ import br.com.cupuama.domain.products.entity.Product;
 import br.com.cupuama.domain.stock.entity.StocktakeInOut;
 
 @Embeddable
-public class ProcessFlowTypeKey implements Serializable {
+public class ProcessFlowTypeId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,11 +30,11 @@ public class ProcessFlowTypeKey implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StocktakeInOut stocktakeInOut;
 
-	public ProcessFlowTypeKey() {
+	public ProcessFlowTypeId() {
 	}
 
-	public ProcessFlowTypeKey(ProcessType stocktakeType, Product product, StocktakeInOut stocktakeInOut) {
-		this.processType = stocktakeType;
+	public ProcessFlowTypeId(ProcessType processType, Product product, StocktakeInOut stocktakeInOut) {
+		this.processType = processType;
 		this.product = product;
 		this.stocktakeInOut = stocktakeInOut;
 	}
@@ -81,7 +81,7 @@ public class ProcessFlowTypeKey implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProcessFlowTypeKey other = (ProcessFlowTypeKey) obj;
+		ProcessFlowTypeId other = (ProcessFlowTypeId) obj;
 		if (product == null) {
 			if (other.getProduct() != null)
 				return false;

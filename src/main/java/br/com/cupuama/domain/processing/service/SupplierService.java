@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.processing.dto.SupplierDTO;
 import br.com.cupuama.domain.processing.entity.Supplier;
+import br.com.cupuama.domain.processing.mapper.SupplierMapper;
 import br.com.cupuama.domain.processing.repository.SupplierRepository;
+import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
@@ -24,6 +26,12 @@ public class SupplierService extends DefaultService<Supplier, Long> {
 		super(supplierRepository);
 	}
 
+	@Transactional
+	public SupplierDTO create(SupplierDTO supplierDTO) throws ConstraintsViolationException {
+		Supplier supplier = SupplierMapper.makeSupplier(supplierDTO);
+		return SupplierMapper.makeSupplierDTO(create(supplier));
+	}
+	
 	/**
 	 * Update Supplier information
 	 *

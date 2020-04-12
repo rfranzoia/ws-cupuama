@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.processing.dto.CustomerDTO;
-import br.com.cupuama.domain.processing.entity.Customer;
 import br.com.cupuama.domain.processing.mapper.CustomerMapper;
 import br.com.cupuama.domain.processing.service.CustomerService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -46,8 +45,7 @@ public class CustomerController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CustomerDTO createCustomer(@Valid @RequestBody final CustomerDTO customerDTO) throws ConstraintsViolationException {
-		Customer customer = CustomerMapper.makeCustomer(customerDTO);
-		return CustomerMapper.makeCustomerDTO(customerService.create(customer));
+		return customerService.create(customerDTO);
 	}
 
 	@DeleteMapping("/{customerId}")

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.products.dto.ProductDTO;
-import br.com.cupuama.domain.products.entity.Product;
 import br.com.cupuama.domain.products.mapper.ProductMapper;
 import br.com.cupuama.domain.products.service.ProductService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -46,8 +45,7 @@ public class ProductController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProductDTO createProduct(@Valid @RequestBody final ProductDTO productDTO) throws ConstraintsViolationException {
-		Product product = ProductMapper.makeProduct(productDTO);
-		return ProductMapper.makeProductDTO(productService.create(product));
+		return productService.create(productDTO);
 	}
 
 	@DeleteMapping("/{productId}")

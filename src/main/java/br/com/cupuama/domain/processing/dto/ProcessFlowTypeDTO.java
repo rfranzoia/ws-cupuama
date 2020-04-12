@@ -5,14 +5,14 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.domain.processing.entity.ProcessFlowTypeKey;
+import br.com.cupuama.domain.processing.entity.ProcessFlowTypeId;
 import br.com.cupuama.domain.stock.entity.Depot;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcessFlowTypeDTO {
 	
 	@NotNull(message = "Key cannot be null!")
-	private ProcessFlowTypeKey key;
+	private ProcessFlowTypeId key;
 	
 	private Depot depotIn;
 	private Depot depotOut;
@@ -20,7 +20,7 @@ public class ProcessFlowTypeDTO {
 	private ProcessFlowTypeDTO() {
 	}
 
-	private ProcessFlowTypeDTO(ProcessFlowTypeKey key, Depot depotIn, Depot depotOut) {
+	private ProcessFlowTypeDTO(ProcessFlowTypeId key, Depot depotIn, Depot depotOut) {
 		this.key = key;
 		this.depotIn = depotIn;
 		this.depotOut = depotOut;
@@ -31,7 +31,7 @@ public class ProcessFlowTypeDTO {
 	}
 
 	@JsonProperty
-	public ProcessFlowTypeKey getKey() {
+	public ProcessFlowTypeId getKey() {
 		return key;
 	}
 
@@ -46,11 +46,11 @@ public class ProcessFlowTypeDTO {
 	}
 	
 	public static class ProcessFlowTypeDTOBuilder {
-		private ProcessFlowTypeKey key;
+		private ProcessFlowTypeId key;
 		private Depot depotIn;
 		private Depot depotOut;
 
-		public ProcessFlowTypeDTOBuilder setKey(ProcessFlowTypeKey key) {
+		public ProcessFlowTypeDTOBuilder setKey(ProcessFlowTypeId key) {
 			this.key = key;
 			return this;
 		}

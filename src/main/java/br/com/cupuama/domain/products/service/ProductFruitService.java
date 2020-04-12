@@ -33,6 +33,12 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 		super(repository);
 	}
 
+    @Transactional
+    public ProductFruitDTO create(ProductFruitDTO productFruitDTO) throws ConstraintsViolationException {
+    	ProductFruit productFruit = ProductFruitMapper.makeProductFruit(productFruitDTO);
+		return ProductFruitMapper.makeProductFruitDTO(create(productFruit));
+    }
+    
     public ProductFruit findByProductIdAndFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
     	ProductFruitKey key = getProductFruitKey(productId, fruitId);
     	return findByIdChecked(key);

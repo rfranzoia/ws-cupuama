@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.cashflow.entity.CashTransaction;
+import br.com.cupuama.domain.cashflow.mapper.CashTransactionMapper;
+import br.com.cupuama.domain.cashflow.dto.CashTransactionDTO;
 import br.com.cupuama.domain.cashflow.entity.CashFlowOperation;
 import br.com.cupuama.domain.cashflow.repository.CashTransactionRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -30,6 +32,12 @@ public class CashTransactionService extends DefaultService<CashTransaction, Long
 	
 	public CashTransactionService(final CashTransactionRepository cashTransactionRepository) {
 		super(cashTransactionRepository);
+	}
+	
+	@Transactional
+	public CashTransactionDTO addCashTransaction(CashTransactionDTO cashTransactionDTO) throws ConstraintsViolationException, EntityNotFoundException {
+		CashTransaction cashTransaction = CashTransactionMapper.makeCashTransaction(cashTransactionDTO);
+		return CashTransactionMapper.makeCashTransactionDTO(addCashTransaction(cashTransaction));
 	}
 	
 	/**

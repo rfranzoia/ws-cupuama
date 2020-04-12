@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.products.dto.FruitDTO;
 import br.com.cupuama.domain.products.entity.Fruit;
+import br.com.cupuama.domain.products.mapper.FruitMapper;
 import br.com.cupuama.domain.products.repository.FruitRepository;
+import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;
 
@@ -24,6 +26,12 @@ public class FruitService extends DefaultService<Fruit, Long> {
 		super(fruitRepository);
 	}
 
+	@Transactional
+	public FruitDTO create(FruitDTO dto) throws ConstraintsViolationException {
+		Fruit fruit = FruitMapper.makeFruit(dto);
+		return FruitMapper.makeFruitDTO(create(fruit));
+	}
+	
 	/**
 	 * Update a fruits information.
 	 *

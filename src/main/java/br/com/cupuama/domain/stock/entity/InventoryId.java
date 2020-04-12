@@ -11,7 +11,7 @@ import br.com.cupuama.domain.products.entity.Fruit;
 import br.com.cupuama.domain.products.entity.Product;
 
 @Embeddable
-public class InventoryKey implements Serializable {
+public class InventoryId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,10 +29,10 @@ public class InventoryKey implements Serializable {
 	@JoinColumn(name = "depot_id", nullable = false)
 	private Depot depot;
 
-	public InventoryKey() {
+	public InventoryId() {
 	}
 	
-	public InventoryKey(String period, Product product, Fruit fruit, Depot depot) {
+	public InventoryId(String period, Product product, Fruit fruit, Depot depot) {
 		this.period = period;
 		this.product = product;
 		this.fruit = fruit;
@@ -90,7 +90,7 @@ public class InventoryKey implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		InventoryKey other = (InventoryKey) obj;
+		InventoryId other = (InventoryId) obj;
 		if (depot == null) {
 			if (other.getDepot() != null)
 				return false;
@@ -124,8 +124,8 @@ public class InventoryKey implements Serializable {
 	}
 	
 	@Override
-	public InventoryKey clone() {
-		return new InventoryKey(period, product.clone(), fruit.clone(), depot.clone());
+	public InventoryId clone() {
+		return new InventoryId(period, product.clone(), fruit.clone(), depot.clone());
 	}
 	
 }

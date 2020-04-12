@@ -7,13 +7,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.com.cupuama.domain.stock.entity.Inventory;
-import br.com.cupuama.domain.stock.entity.InventoryKey;
+import br.com.cupuama.domain.stock.entity.InventoryId;
 
 /**
  * Database Access Object for driver table.
  * <p/>
  */
-public interface InventoryRepository extends CrudRepository<Inventory, InventoryKey> {
+public interface InventoryRepository extends CrudRepository<Inventory, InventoryId> {
 	
 	@Query(nativeQuery = true, value = "select i.* " +
 			"from inventory i " +

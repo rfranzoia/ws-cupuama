@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.cashflow.dto.DocumentTypeDTO;
-import br.com.cupuama.domain.cashflow.entity.DocumentType;
 import br.com.cupuama.domain.cashflow.mapper.DocumentTypeMapper;
 import br.com.cupuama.domain.cashflow.service.DocumentTypeService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -47,8 +46,7 @@ public class DocumentTypeController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public DocumentTypeDTO createDocumentType(@Valid @RequestBody final DocumentTypeDTO documentTypeDTO) throws ConstraintsViolationException {
-		DocumentType documentType = DocumentTypeMapper.makeDocumentType(documentTypeDTO);
-		return DocumentTypeMapper.makeDocumentTypeDTO(documentTypeService.create(documentType));
+		return documentTypeService.create(documentTypeDTO);
 	}
 
 	@DeleteMapping("/{documentTypeId}")

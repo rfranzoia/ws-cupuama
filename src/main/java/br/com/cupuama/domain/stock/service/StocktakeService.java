@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cupuama.domain.stock.entity.InventoryKey;
+import br.com.cupuama.domain.stock.dto.StocktakeDTO;
+import br.com.cupuama.domain.stock.entity.InventoryId;
 import br.com.cupuama.domain.stock.entity.Stocktake;
+import br.com.cupuama.domain.stock.mapper.StocktakeMapper;
 import br.com.cupuama.domain.stock.repository.StocktakeRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
@@ -28,6 +30,12 @@ public class StocktakeService extends DefaultService<Stocktake, Long> {
 		super(stocktakeRepository);
 	}
 
+	@Transactional
+	public StocktakeDTO create(StocktakeDTO stocktakeDTO) throws ConstraintsViolationException {
+		Stocktake stocktake = StocktakeMapper.makeStocktake(stocktakeDTO);
+		return StocktakeMapper.makeStocktakeDTO(create(stocktake));
+	}
+	
 	@Override
 	@Transactional
 	public Stocktake create(Stocktake stockTakeDO) throws ConstraintsViolationException {
@@ -48,18 +56,18 @@ public class StocktakeService extends DefaultService<Stocktake, Long> {
 		
 		String period = Utils.getFormattedPeriod(stocktake.getStocktakeDate());
 		
-		InventoryKey inventoryKey = new InventoryKey();
-		inventoryKey.setPeriod(period);
-		inventoryKey.setProduct(stocktake.getProductFruitKey().getProduct());
-		inventoryKey.setFruit(stocktake.getProductFruitKey().getFruit());
-		inventoryKey.setDepot(stocktake.getDepot());
+		InventoryId inventoryId = new InventoryId();
+		inventoryId.setPeriod(period);
+		inventoryId.setProduct(stocktake.getProductFruitKey().getProduct());
+		inventoryId.setFruit(stocktake.getProductFruitKey().getFruit());
+		inventoryId.setDepot(stocktake.getDepot());
 		
 		Double stockIn = stocktake.getAmount() * (action.equals(StocktakeAction.ADD)? 1: -1);
 		Double stockOut = stocktake.getAmount() * (action.equals(StocktakeAction.ADD)? 1: -1);
 		
 		// assuming that the method bellow will "always" create a proper entry for the inventory, we are just ignoring if there's a problem there
 		try {
-			inventoryService.addStockInOrStockOut(inventoryKey, stocktake.getStocktakeInOut(), stockIn, stockOut);
+			inventoryService.addStockInOrStockOut(inventoryId, stocktake.getStocktakeInOut(), stockIn, stockOut);
 		} catch (EntityNotFoundException ex) {
 			LOG.error(String.format("Failed to update inventory for %s", stocktake.toString()), ex);
 		}

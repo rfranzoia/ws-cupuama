@@ -16,7 +16,7 @@ public class Inventory implements AuditableEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private InventoryKey inventoryKey;
+	private InventoryId inventoryId;
 
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double initialStock;
@@ -33,8 +33,8 @@ public class Inventory implements AuditableEntity {
 	public Inventory() {
 	}
 
-	public Inventory(InventoryKey inventoryKey, Double initialStock, Double stockIn, Double stockOut) {
-		this.inventoryKey = inventoryKey;
+	public Inventory(InventoryId inventoryId, Double initialStock, Double stockIn, Double stockOut) {
+		this.inventoryId = inventoryId;
 		this.initialStock = initialStock;
 		this.stockIn = stockIn;
 		this.stockOut = stockOut;
@@ -42,12 +42,12 @@ public class Inventory implements AuditableEntity {
 		this.audit.setDeleted(false);
 	}
 
-	public InventoryKey getInventoryKey() {
-		return inventoryKey;
+	public InventoryId getInventoryId() {
+		return inventoryId;
 	}
 
-	public void setInventoryKey(InventoryKey inventoryKey) {
-		this.inventoryKey = inventoryKey;
+	public void setInventoryId(InventoryId inventoryId) {
+		this.inventoryId = inventoryId;
 	}
 
 	public Double getInitialStock() {
@@ -88,7 +88,7 @@ public class Inventory implements AuditableEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((inventoryKey == null) ? 0 : inventoryKey.hashCode());
+		result = prime * result + ((inventoryId == null) ? 0 : inventoryId.hashCode());
 		return result;
 	}
 
@@ -101,17 +101,17 @@ public class Inventory implements AuditableEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Inventory other = (Inventory) obj;
-		if (inventoryKey == null) {
-			if (other.getInventoryKey() != null)
+		if (inventoryId == null) {
+			if (other.getInventoryId() != null)
 				return false;
-		} else if (!inventoryKey.equals(other.getInventoryKey()))
+		} else if (!inventoryId.equals(other.getInventoryId()))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Inventory [inventoryKey=" + inventoryKey 
+		return "Inventory [inventoryId=" + inventoryId 
 				+ ", initialStock=" + initialStock 
 				+ ", stockIn=" + stockIn
 				+ ", stockOut=" + stockOut + "]";

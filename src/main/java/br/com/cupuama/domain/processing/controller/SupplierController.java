@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.processing.dto.SupplierDTO;
-import br.com.cupuama.domain.processing.entity.Supplier;
 import br.com.cupuama.domain.processing.mapper.SupplierMapper;
 import br.com.cupuama.domain.processing.service.SupplierService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -46,8 +45,7 @@ public class SupplierController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public SupplierDTO createSupplier(@Valid @RequestBody final SupplierDTO supplierDTO) throws ConstraintsViolationException {
-		Supplier supplier = SupplierMapper.makeSupplier(supplierDTO);
-		return SupplierMapper.makeSupplierDTO(supplierService.create(supplier));
+		return supplierService.create(supplierDTO);
 	}
 
 	@DeleteMapping("/{supplierId}")

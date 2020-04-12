@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.stock.dto.DepotDTO;
-import br.com.cupuama.domain.stock.entity.Depot;
 import br.com.cupuama.domain.stock.mapper.DepotMapper;
 import br.com.cupuama.domain.stock.service.DepotService;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -46,8 +45,7 @@ public class DepotController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public DepotDTO createDepot(@Valid @RequestBody final DepotDTO depotDTO) throws ConstraintsViolationException {
-		Depot depot = DepotMapper.makeDepot(depotDTO);
-		return DepotMapper.makeDepotDTO(depotService.create(depot));
+		return depotService.create(depotDTO);
 	}
 
 	@DeleteMapping("/{depotId}")

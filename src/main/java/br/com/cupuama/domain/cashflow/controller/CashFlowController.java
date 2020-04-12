@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.cashflow.dto.CashFlowDTO;
-import br.com.cupuama.domain.cashflow.entity.CashFlow;
 import br.com.cupuama.domain.cashflow.entity.CashFlowType;
 import br.com.cupuama.domain.cashflow.mapper.CashFlowMapper;
 import br.com.cupuama.domain.cashflow.service.CashFlowService;
@@ -48,8 +47,7 @@ public class CashFlowController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CashFlowDTO createCashFlow(@Valid @RequestBody final CashFlowDTO cashFlowDTO) throws ConstraintsViolationException {
-		CashFlow cashFlow = CashFlowMapper.makeCashFlow(cashFlowDTO);
-		return CashFlowMapper.makeCashFlowDTO(cashFlowService.create(cashFlow));
+		return cashFlowService.create(cashFlowDTO);
 	}
 
 	@DeleteMapping("/{cashFlowPeriod}")
