@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +21,8 @@ import br.com.cupuama.util.Audit;
 import br.com.cupuama.util.AuditableEntity;
 
 @Entity
-@Table(name = "process")
-public class Process implements AuditableEntity {
+@Table(name = "processing")
+public class Processing implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,13 +30,17 @@ public class Process implements AuditableEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "process_date", nullable = false)
+	@Column(name = "processing_date", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date processDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "process_type_id", nullable = false)
 	private ProcessType processType;
+	
+	@Column(name = "status", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private ProcessStatus processStatus;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_id", nullable = true)
@@ -44,7 +50,7 @@ public class Process implements AuditableEntity {
 	@JoinColumn(name = "supplier_id", nullable = true)
 	private Supplier supplier;
 	
-	@Column
+	@Column(name = "document_reference")
 	private String documentReference;
 	
 	@Column
@@ -53,16 +59,17 @@ public class Process implements AuditableEntity {
 	@Embedded
 	private Audit audit = new Audit();
 	
-	public Process() {
+	public Processing() {
 	}
 
-	public Process(Long id, Date processDate, Customer customer, Supplier supplier, ProcessType processType,
-			String documentReference, String remarks) {
+	public Processing(Long id, Date processDate, Customer customer, Supplier supplier, ProcessType processType,
+			ProcessStatus processStatus, String documentReference, String remarks) {
 		this.id = id;
 		this.processDate = processDate;
 		this.customer = customer;
 		this.supplier = supplier;
 		this.processType = processType;
+		this.processStatus = processStatus;
 		this.documentReference = documentReference;
 		this.remarks = remarks;
 	}
@@ -107,6 +114,14 @@ public class Process implements AuditableEntity {
 		this.processType = processType;
 	}
 
+	public ProcessStatus getProcessStatus() {
+		return processStatus;
+	}
+
+	public void setProcessStatus(ProcessStatus processStatus) {
+		this.processStatus = processStatus;
+	}
+
 	public String getDocumentReference() {
 		return documentReference;
 	}
@@ -149,7 +164,7 @@ public class Process implements AuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Process other = (Process) obj;
+		Processing other = (Processing) obj;
 		if (id == null) {
 			if (other.getId() != null)
 				return false;
@@ -160,9 +175,11 @@ public class Process implements AuditableEntity {
 
 	@Override
 	public String toString() {
-		return "Process [id=" + id + ", processDate=" + processDate + ", customer=" + customer + ", supplier="
-				+ supplier + ", processType=" + processType + ", documentReference=" + documentReference + ", remarks="
-				+ remarks + "]";
+		return "Process [id=" + id + ", processDate=" + processDate + ", processType=" + processType
+				+ ", processStatus=" + processStatus + ", customer=" + customer + ", supplier=" + supplier
+				+ ", documentReference=" + documentReference + ", remarks=" + remarks + "]";
 	}
+
+
 	
 }

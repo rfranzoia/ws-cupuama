@@ -2,6 +2,7 @@ package br.com.cupuama.domain.processing.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +26,7 @@ public class ProcessFlowTypeKey implements Serializable {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 
+	@Column(name = "stocktake_in_out")
 	@Enumerated(EnumType.STRING)
 	private StocktakeInOut stocktakeInOut;
 

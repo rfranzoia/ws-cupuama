@@ -9,8 +9,10 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.cupuama.domain.processing.entity.ProcessStatus;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProcessDTO {
+public class ProcessingDTO {
 	
 	private Long id;
 
@@ -20,18 +22,21 @@ public class ProcessDTO {
 	@NotNull(message = "ProcessType cannot be null!")
 	private ProcessTypeDTO processType;
 	
+	private ProcessStatus processStatus;
+	
 	private CustomerDTO customer;
 	private SupplierDTO supplier;
 	private String documentReference;
 	private String remarks;
 	
-	private List<ProcessDetailDTO> details;
+	private List<ProcessingDetailDTO> details;
 	
-	public ProcessDTO(Long id, Date processDate, ProcessTypeDTO processType, CustomerDTO customer,
-			SupplierDTO supplier, String documentReference, String remarks, List<ProcessDetailDTO> details) {
+	public ProcessingDTO(Long id, Date processDate, ProcessTypeDTO processType, ProcessStatus processStatus, CustomerDTO customer,
+			SupplierDTO supplier, String documentReference, String remarks, List<ProcessingDetailDTO> details) {
 		this.id = id;
 		this.processDate = processDate;
 		this.processType = processType;
+		this.processStatus = processStatus;
 		this.customer = customer;
 		this.supplier = supplier;
 		this.documentReference = documentReference;
@@ -55,6 +60,11 @@ public class ProcessDTO {
 		return processType;
 	}
 
+	@JsonProperty
+	public ProcessStatus getProcessStatus() {
+		return processStatus;
+	}
+	
 	@JsonProperty
 	public CustomerDTO getCustomer() {
 		return customer;
@@ -83,11 +93,12 @@ public class ProcessDTO {
 		private Long id;
 		private Date processDate;
 		private ProcessTypeDTO processType;
+		private ProcessStatus processStatus;
 		private CustomerDTO customer;
 		private SupplierDTO supplier;
 		private String documentReference;
 		private String remarks;
-		private List<ProcessDetailDTO> details;
+		private List<ProcessingDetailDTO> details;
 
 		public CustomerDTOBuilder setId(Long id) {
 			this.id = id;
@@ -101,6 +112,11 @@ public class ProcessDTO {
 
 		public CustomerDTOBuilder setProcessType(ProcessTypeDTO processType) {
 			this.processType = processType;
+			return this;
+		}
+		
+		public CustomerDTOBuilder setProcessStatus(ProcessStatus processStatus) {
+			this.processStatus = processStatus;
 			return this;
 		}
 
@@ -124,14 +140,14 @@ public class ProcessDTO {
 			return this;
 		}
 		
-		public CustomerDTOBuilder setDetails(List<ProcessDetailDTO> details) {
+		public CustomerDTOBuilder setDetails(List<ProcessingDetailDTO> details) {
 			this.details = new ArrayList<>();
 			this.details.addAll(details);
 			return this;
 		}
 
-		public ProcessDTO createCustomerDTO() {
-			return new ProcessDTO(id, processDate, processType, customer, supplier, documentReference, remarks, details);
+		public ProcessingDTO createCustomerDTO() {
+			return new ProcessingDTO(id, processDate, processType, processStatus, customer, supplier, documentReference, remarks, details);
 		}
 	}
 }

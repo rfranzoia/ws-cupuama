@@ -22,7 +22,7 @@ import br.com.cupuama.util.AuditableEntity;
 
 @Entity
 @Table(name = "process_detail")
-public class ProcessDetail implements AuditableEntity {
+public class ProcessingDetail implements AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class ProcessDetail implements AuditableEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "process_id", nullable = false)
-	private Process process;
+	private Processing process;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
@@ -62,10 +62,10 @@ public class ProcessDetail implements AuditableEntity {
 	@Embedded
 	private Audit audit = new Audit();
 
-	public ProcessDetail() {
+	public ProcessingDetail() {
 	}
 	
-	public ProcessDetail(Long id, Process process, Product product, Fruit fruit, Depot depot,
+	public ProcessingDetail(Long id, Processing process, Product product, Fruit fruit, Depot depot,
 			StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
 		this.id = id;
 		this.process = process;
@@ -86,11 +86,11 @@ public class ProcessDetail implements AuditableEntity {
 		this.id = id;
 	}
 
-	public Process getProcess() {
+	public Processing getProcess() {
 		return process;
 	}
 
-	public void setProcess(Process process) {
+	public void setProcess(Processing process) {
 		this.process = process;
 	}
 
@@ -176,7 +176,7 @@ public class ProcessDetail implements AuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProcessDetail other = (ProcessDetail) obj;
+		ProcessingDetail other = (ProcessingDetail) obj;
 		if (id == null) {
 			if (other.getId() != null)
 				return false;

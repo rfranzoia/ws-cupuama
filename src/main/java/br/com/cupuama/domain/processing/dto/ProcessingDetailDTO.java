@@ -11,12 +11,12 @@ import br.com.cupuama.domain.stock.dto.DepotDTO;
 import br.com.cupuama.domain.stock.entity.StocktakeInOut;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProcessDetailDTO {
+public class ProcessingDetailDTO {
 	
 	private Long id;
 
 	@NotNull(message = "Product cannot be null!")
-	private ProcessDTO process;
+	private ProcessingDTO process;
 	
 	@NotNull(message = "Product cannot be null!")
 	private ProductDTO product;
@@ -38,7 +38,7 @@ public class ProcessDetailDTO {
 	
 	private Double discount;
 	
-	public ProcessDetailDTO(Long id, ProcessDTO process, ProductDTO product, FruitDTO fruit, DepotDTO depot, 
+	public ProcessingDetailDTO(Long id, ProcessingDTO process, ProductDTO product, FruitDTO fruit, DepotDTO depot, 
 								StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
 		this.id = id;
 		this.process = process;
@@ -97,7 +97,7 @@ public class ProcessDetailDTO {
 	
 	public static class ProcessDetailDTOBuilder {
 		private Long id;
-		private ProcessDTO process;
+		private ProcessingDTO process;
 		private ProductDTO product;
 		private FruitDTO fruit;
 		private DepotDTO depot;
@@ -111,7 +111,7 @@ public class ProcessDetailDTO {
 			return this;
 		}
 		
-		public ProcessDetailDTOBuilder setProcess(ProcessDTO process) {
+		public ProcessDetailDTOBuilder setProcess(ProcessingDTO process) {
 			this.process = process;
 			return this;
 		}
@@ -151,8 +151,8 @@ public class ProcessDetailDTO {
 			return this;
 		}
 
-		public ProcessDetailDTO createProcessDetailDTO() {
-			return new ProcessDetailDTO(id, process, product, fruit, depot, stocktakeInOut, amount, price, discount);
+		public ProcessingDetailDTO createProcessDetailDTO() {
+			return new ProcessingDetailDTO(id, process, product, fruit, depot, stocktakeInOut, amount, price, discount);
 		}
 	}
 }
