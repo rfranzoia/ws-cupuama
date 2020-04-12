@@ -13,6 +13,7 @@ import br.com.cupuama.domain.cashflow.dto.CashTransactionDTO;
 import br.com.cupuama.domain.cashflow.entity.CashFlowType;
 import br.com.cupuama.domain.cashflow.service.CashTransactionService;
 import br.com.cupuama.domain.processing.dto.ProcessingDTO;
+import br.com.cupuama.domain.processing.dto.ProcessingDetailDTO;
 import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.entity.ProcessStatus;
 import br.com.cupuama.domain.processing.entity.Processing;
@@ -23,8 +24,12 @@ import br.com.cupuama.domain.processing.mapper.ProcessingDetailMapper;
 import br.com.cupuama.domain.processing.mapper.ProcessingMapper;
 import br.com.cupuama.domain.processing.mapper.SupplierMapper;
 import br.com.cupuama.domain.processing.repository.ProcessingRepository;
+import br.com.cupuama.domain.products.dto.ProductFruitKey;
+import br.com.cupuama.domain.stock.dto.StocktakeDTO;
+import br.com.cupuama.domain.stock.service.StocktakeService;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.exception.InvalidRequestException;
 import br.com.cupuama.util.DefaultService;
 
 
@@ -39,6 +44,12 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	@Autowired
 	private CashTransactionService cashTransationService;
 	
+	@Autowired
+	private StocktakeService stocktakeService;
+	
+	@Autowired
+	private ProcessingDetailService processingDetailService;
+	
 	public ProcessingService(final ProcessingRepository processingRepository) {
 		super(processingRepository);
 	}
@@ -48,7 +59,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		Processing processing = create(ProcessingMapper.makeProcessing(processingDTO));
 				
 		if (!processingDTO.getProcessingDetail().isEmpty()) {
-			
+			processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeProcessingDetailList(processingDTO.getProcessingDetail()));
 		}
 		
 		return ProcessingMapper.makeProcessingDTO(processing);
@@ -71,30 +82,67 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		processing.setRemarks(dto.getRemarks());
 		
 		// update processing details (remove all, add current ones)
+		processingDetailService.removeAllFromProcessing(processing);
+		processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeProcessingDetailList(dto.getProcessingDetail()));
 		
 	}
 	
 	@Transactional
-	public void updateProcessStatus(final Long processingId, ProcessStatus processStatus) throws EntityNotFoundException {
+	public void updateProcessStatus(final Long processingId, ProcessStatus processStatus) throws EntityNotFoundException, InvalidRequestException {
 		Processing processing = findByIdChecked(processingId);
-		processing.setProcessStatus(processStatus);
 		
+		// Processing cancellation is only allowed during Created, Approved and Rejected statuses
 		switch (processStatus) {
 			case Canceled:
+				switch (processing.getProcessStatus()) {
+					case Canceled:
+					case Paid:
+					case Completed:
+						throw new InvalidRequestException(String.format("Process cancelation is not permitted anymore!"));
+					default:
+						processing.setProcessStatus(processStatus);
+						break;
+				}
+				break;
 			case Completed:
+				processing.setProcessStatus(processStatus);
 				updateInventory(processing);
 				break;
 			case Paid:
+				processing.setProcessStatus(processStatus);
 				updateCashFlow(processing);
 				break;
 			default:
+				processing.setProcessStatus(processStatus);
 				break;
 		}
 	}
 	
+	/**
+	 * Updates the inventory with all ProcessingDetail associated to the Processing
+	 * 
+	 * @param processing
+	 */
 	private void updateInventory(final Processing processing) {
-		final List<ProcessingDetail> details = new ArrayList<>(); // TODO: use processingDetailService here
-		// use stream and predicate to process each detail
+		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
+		
+		for (ProcessingDetailDTO processingDetail : details) {
+			Double amount = processingDetail.getAmount();
+			
+			try {
+				final ProductFruitKey productFruitKey = new ProductFruitKey(processingDetail.getProduct(), processingDetail.getFruit());
+				final StocktakeDTO stocktakeDTO = StocktakeDTO.newBuilder()
+										.setProductFruitKey(productFruitKey)
+										.setDepot(processingDetail.getDepot())
+										.setAmount(amount)
+										.setStocktakeDate(processing.getProcessDate())
+										.setStocktakeInOut(processingDetail.getStocktakeInOut())
+										.createDTO();
+				stocktakeService.addStocktake(stocktakeDTO);
+			} catch (ConstraintsViolationException ex) {
+				LOG.error(String.format("There was an error to perform a addStocktake(dto)"), ex);
+			}
+		}
 	}
 	
 	/**
@@ -104,16 +152,16 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	@Transactional
 	private void updateCashFlow(final Processing processing) {
 		final FlowTypeModel flowTypeModel = processing.getProcessType().getFlowTypeModel();
-		final List<ProcessingDetail> details = new ArrayList<>(); // TODO: use processingDetailService here
+		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
 		
 		if (flowTypeModel == FlowTypeModel.Sales) {
 			Double credits = 0.0;
-			for (ProcessingDetail processDetail : details) {
+			for (ProcessingDetailDTO processDetail : details) {
 				credits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
 			}
 			
 			try {
-				CashTransactionDTO creditDTO = CashTransactionDTO.newBuilder()
+				final CashTransactionDTO creditDTO = CashTransactionDTO.newBuilder()
 						.setItemDate(processing.getProcessDate())
 						.setCashFlowType(CashFlowType.CREDIT)
 						.setValue(credits)
@@ -127,12 +175,12 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 			}
 		} else if (flowTypeModel == FlowTypeModel.Acqisitions) {
 			Double debits = 0.0;
-			for (ProcessingDetail processDetail : details) {
+			for (ProcessingDetailDTO processDetail : details) {
 				debits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
 			}
 			
 			try {
-				CashTransactionDTO debitDTO = CashTransactionDTO.newBuilder()
+				final CashTransactionDTO debitDTO = CashTransactionDTO.newBuilder()
 						.setItemDate(processing.getProcessDate())
 						.setCashFlowType(CashFlowType.DEBIT)
 						.setValue(debits)
@@ -152,7 +200,8 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	public void delete(final Long processingId) throws EntityNotFoundException {
 		Processing processing = findByIdChecked(processingId);
 		
-		//update processing details (remove all for the processingId)
+		//remove all ProcessingDetail associated to this processing
+		processingDetailService.removeAllFromProcessing(processing);
 		
 		super.delete(processingId);
 	}

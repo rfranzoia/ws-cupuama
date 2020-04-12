@@ -15,7 +15,7 @@ import br.com.cupuama.domain.cashflow.entity.CashFlowOperation;
 import br.com.cupuama.domain.cashflow.repository.CashTransactionRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
-import br.com.cupuama.exception.InvalidDateRange;
+import br.com.cupuama.exception.InvalidRequestException;
 import br.com.cupuama.util.DefaultService;
 import br.com.cupuama.util.Utils;
 
@@ -81,10 +81,10 @@ public class CashTransactionService extends DefaultService<CashTransaction, Long
 	 * @param start Starting Date
 	 * @param end Ending Date
 	 * @return List<CashTransaction>
-	 * @throws InvalidDateRange if the informed dates are not valid
+	 * @throws InvalidRequestException if the informed dates are not valid
 	 * 
 	 */
-	public List<CashTransaction> findByDateRange(Date start, Date end) throws InvalidDateRange {
+	public List<CashTransaction> findByDateRange(Date start, Date end) throws InvalidRequestException {
 		return ((CashTransactionRepository) repository).findByDateRange(start, end);
 	}
 

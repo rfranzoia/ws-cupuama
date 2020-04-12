@@ -25,7 +25,7 @@ import br.com.cupuama.domain.cashflow.mapper.CashTransactionMapper;
 import br.com.cupuama.domain.cashflow.service.CashTransactionService;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
-import br.com.cupuama.exception.InvalidDateRange;
+import br.com.cupuama.exception.InvalidRequestException;
 
 /**
  * All operations with a cashTransaction will be routed by this controller.
@@ -63,19 +63,19 @@ public class CashTransactionController {
 
 	@GetMapping("/dates")
 	public List<CashTransactionDTO> findByDateRange(@RequestParam(required = false) final String start, 
-			@RequestParam(required = false) final String end) throws InvalidDateRange {
+			@RequestParam(required = false) final String end) throws InvalidRequestException {
 		try {
 			Date startDate = (StringUtils.isEmpty(start))? SEARCH_DATE_FORMAT.parse(start): new Date();
 			Date endDate = (StringUtils.isEmpty(end))? SEARCH_DATE_FORMAT.parse(end): new Date();
 			
 			if (endDate.before(startDate)) {
-				throw new InvalidDateRange("The end date must be greater than start date");
+				throw new InvalidRequestException("The end date must be greater than start date");
 			}
 			
 			return CashTransactionMapper.makeCashTransactionDTOList(cashTransactionService.findByDateRange(startDate, endDate));
 			
-		} catch (InvalidDateRange | ParseException ex) {
-			throw new InvalidDateRange("There was a problem while processing your request", ex);
+		} catch (InvalidRequestException | ParseException ex) {
+			throw new InvalidRequestException("There was a problem while processing your request", ex);
 		}
 		
 	}

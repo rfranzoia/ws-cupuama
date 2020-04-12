@@ -43,8 +43,8 @@ public class StocktakeController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public StocktakeDTO createStocktake(@Valid @RequestBody final StocktakeDTO stocktakeDTO) throws ConstraintsViolationException {
-		return stocktakeService.create(stocktakeDTO);
+	public StocktakeDTO addStocktake(@Valid @RequestBody final StocktakeDTO stocktakeDTO) throws ConstraintsViolationException {
+		return stocktakeService.addStocktake(stocktakeDTO);
 	}
 
 	@DeleteMapping("/{stocktakeId}")

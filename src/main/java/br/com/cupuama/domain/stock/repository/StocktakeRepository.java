@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import br.com.cupuama.domain.stock.entity.Stocktake;
-import br.com.cupuama.exception.InvalidDateRange;
+import br.com.cupuama.exception.InvalidRequestException;
 
 /**
  * Database Access Object for driver table.
@@ -24,6 +24,6 @@ public interface StocktakeRepository extends CrudRepository<Stocktake, Long> {
                     "where st.stocktake_date between :start and :end " +
 					"and st.deleted = false " +
                     "order by st.stocktake_date, st.stocktake_inout")
-	public List<Stocktake> findByDateRangeOrderByStocktakeDate(@Param("start") Date start, @Param("end") Date end) throws InvalidDateRange;
+	public List<Stocktake> findByDateRangeOrderByStocktakeDate(@Param("start") Date start, @Param("end") Date end) throws InvalidRequestException;
 	
 }

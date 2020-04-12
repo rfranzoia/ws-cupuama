@@ -31,7 +31,7 @@ public class StocktakeService extends DefaultService<Stocktake, Long> {
 	}
 
 	@Transactional
-	public StocktakeDTO create(StocktakeDTO stocktakeDTO) throws ConstraintsViolationException {
+	public StocktakeDTO addStocktake(StocktakeDTO stocktakeDTO) throws ConstraintsViolationException {
 		Stocktake stocktake = StocktakeMapper.makeStocktake(stocktakeDTO);
 		return StocktakeMapper.makeStocktakeDTO(create(stocktake));
 	}
