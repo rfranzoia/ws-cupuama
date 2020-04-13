@@ -6,11 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.DefaultAuditEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "user")
-public class User extends DefaultAuditEntity {
+public class User extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,6 @@ public class User extends DefaultAuditEntity {
 		this.login = login;
 		this.name = name;
 		this.password = password;
-		this.audit.setDeleted(false);
 	}
 
 	public String getName() {

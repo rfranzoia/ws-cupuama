@@ -3,7 +3,6 @@ package br.com.cupuama.domain.users.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,12 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "user_access_level")
-public class UserAccessLevel implements AuditableEntity {
+public class UserAccessLevel extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,9 +44,6 @@ public class UserAccessLevel implements AuditableEntity {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date toDate;
 	
-	@Embedded
-	private Audit audit = new Audit();
-	
 	public UserAccessLevel() {
 	}
 
@@ -58,7 +53,6 @@ public class UserAccessLevel implements AuditableEntity {
 		this.accessLevel = accessLevel;
 		this.fromDate = fromDate;
 		this.toDate = toDate;
-		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -101,14 +95,4 @@ public class UserAccessLevel implements AuditableEntity {
 		this.toDate = toDate;
 	}
 
-	@Override
-	public Audit getAudit() {
-		return this.audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
-	}
-	
 }
