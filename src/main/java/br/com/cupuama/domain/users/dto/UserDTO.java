@@ -2,7 +2,6 @@ package br.com.cupuama.domain.users.dto;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,10 +13,8 @@ public class UserDTO {
 	@NotNull(message = "Name cannot be null!")
 	private String name;
 
-	@JsonIgnore
 	private String password;
 	
-	@JsonIgnore
 	private String newPassword;
 	
 	private UserDTO() {

@@ -1,8 +1,10 @@
 package br.com.cupuama.domain.users.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +59,37 @@ public class UserService extends DefaultService<User, String> {
 	public void updatePassword(final String userLogin, final UserDTO userDTO) throws EntityNotFoundException, InvalidRequestException {
 		User user = findByIdChecked(userLogin);
 		
-		if (!StringUtils.equals(user.getPassword(), userDTO.getPassword())) {
-			throw new InvalidRequestException(String.format("Old password doesn't match the one provided!"));
-		}
+		validatePassword(userDTO, user);
 		
 		user.setPassword(userDTO.getNewPassword());
+	}
+
+	/**
+	 * Validate given password
+	 * 
+	 * @param userDTO
+	 * @param user
+	 */
+	private void validatePassword(final UserDTO userDTO, User user) {
+		List<InvalidRequestException> errors = new ArrayList<>();
+		
+		// Password validation action
+		final Predicate<PasswordRule> passwordRule = rule -> rule.processRule(user, userDTO) == RuleResult.FAIL;
+		final Consumer<PasswordRule> resultChecker = rule -> {
+			if (rule.getResult() == RuleResult.FAIL)
+				errors.add(new InvalidRequestException(rule.getMessage()));
+		};
+		
+		// Acquire all existing password validations and test them
+		PasswordRuleFactory.instance()
+			.getPasswordRules().stream()
+				.filter(passwordRule)
+				.peek(resultChecker)
+				.anyMatch(rule -> true);
+		
+		if (!errors.isEmpty()) {
+			throw errors.get(0);
+		}
 	}
 
 	/**
