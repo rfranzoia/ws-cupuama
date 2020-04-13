@@ -1,7 +1,6 @@
 package br.com.cupuama.domain.processing.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,12 +16,11 @@ import br.com.cupuama.domain.products.entity.Fruit;
 import br.com.cupuama.domain.products.entity.Product;
 import br.com.cupuama.domain.stock.entity.Depot;
 import br.com.cupuama.domain.stock.entity.StocktakeInOut;
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
-@Table(name = "process_detail")
-public class ProcessingDetail implements AuditableEntity {
+@Table(name = "processing_detail")
+public class ProcessingDetail extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,9 +56,6 @@ public class ProcessingDetail implements AuditableEntity {
 
 	@Column
 	private Double discount;
-
-	@Embedded
-	private Audit audit = new Audit();
 
 	public ProcessingDetail() {
 	}
@@ -148,16 +143,6 @@ public class ProcessingDetail implements AuditableEntity {
 
 	public void setDiscount(Double discount) {
 		this.discount = discount;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

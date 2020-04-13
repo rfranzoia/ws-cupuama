@@ -1,6 +1,5 @@
 package br.com.cupuama.domain.processing.entity;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -9,12 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.cupuama.domain.stock.entity.Depot;
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "process_flow_type")
-public class ProcessFlowType implements AuditableEntity {
+public class ProcessFlowType extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,9 +27,6 @@ public class ProcessFlowType implements AuditableEntity {
 	@JoinColumn(name = "depot_out_id")
 	private Depot depotOut;
 
-	@Embedded
-	private Audit audit;
-
 	public ProcessFlowType() {
 	}
 
@@ -39,8 +34,6 @@ public class ProcessFlowType implements AuditableEntity {
 		this.id = id;
 		this.depotIn = depotIn;
 		this.depotOut = depotOut;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public ProcessFlowTypeId getId() {
@@ -65,16 +58,6 @@ public class ProcessFlowType implements AuditableEntity {
 
 	public void setDepotOut(Depot depotOut) {
 		this.depotOut = depotOut;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

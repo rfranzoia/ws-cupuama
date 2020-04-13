@@ -10,12 +10,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.Audit;
+import br.com.cupuama.util.audit.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "product", uniqueConstraints = @UniqueConstraint(name = "uc_product_name", columnNames = { "name" }))
-public class Product implements AuditableEntity {
+public class Product extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,9 +32,6 @@ public class Product implements AuditableEntity {
 	@NotNull(message = "Unit cannot be null!")
 	private String unit;
 
-	@Embedded
-	private Audit audit;
-
 	public Product() {
 	}
 
@@ -42,8 +40,6 @@ public class Product implements AuditableEntity {
 		this.id = id;
 		this.name = name;
 		this.unit = unit;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Product(Long id) {
@@ -71,16 +67,6 @@ public class Product implements AuditableEntity {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

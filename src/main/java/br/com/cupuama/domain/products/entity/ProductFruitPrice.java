@@ -12,12 +12,11 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "product_fruit_price")
-public class ProductFruitPrice implements AuditableEntity {
+public class ProductFruitPrice extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,17 +34,12 @@ public class ProductFruitPrice implements AuditableEntity {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private Date priceExpirationDate;
 
-	@Embedded
-	private Audit audit;
-	
 	
 	public ProductFruitPrice(Long id, ProductFruitId productFruitId, Double price, Date priceExpirationDate) {
 		this.id = id;
 		this.productFruitId = productFruitId;
 		this.price = price;
 		this.priceExpirationDate = priceExpirationDate;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public ProductFruitId getProductFruitId() {
@@ -78,16 +72,6 @@ public class ProductFruitPrice implements AuditableEntity {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

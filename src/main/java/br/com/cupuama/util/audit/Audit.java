@@ -1,4 +1,4 @@
-package br.com.cupuama.util;
+package br.com.cupuama.util.audit;
 
 import java.time.ZonedDateTime;
 

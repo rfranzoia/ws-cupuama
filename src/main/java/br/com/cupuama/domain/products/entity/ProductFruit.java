@@ -4,11 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.cupuama.util.DefaultEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name="product_fruit")
-public class ProductFruit implements DefaultEntity {
+public class ProductFruit extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 

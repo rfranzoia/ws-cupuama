@@ -8,12 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "supplier")
-public class Supplier implements AuditableEntity {
+public class Supplier extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,9 +31,6 @@ public class Supplier implements AuditableEntity {
 	
 	@Embedded
 	private Address address = new Address();
-	
-	@Embedded
-	private Audit audit = new Audit();
 	
 	public Supplier() {
 	}
@@ -85,16 +81,6 @@ public class Supplier implements AuditableEntity {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

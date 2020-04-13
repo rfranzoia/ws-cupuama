@@ -1,4 +1,6 @@
-package br.com.cupuama.util;
+package br.com.cupuama.util.audit;
+
+import br.com.cupuama.util.DefaultEntity;
 
 public interface AuditableEntity extends DefaultEntity {
 

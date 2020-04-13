@@ -1,7 +1,6 @@
 package br.com.cupuama.domain.cashflow.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +9,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "document_type", uniqueConstraints = @UniqueConstraint(name = "uc_doctype_name", columnNames = { "name" }))
-public class DocumentType implements AuditableEntity {
+public class DocumentType extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,9 +25,6 @@ public class DocumentType implements AuditableEntity {
 	@NotNull(message = "DocumentType Name cannot be null!")
 	private String name;
 
-	@Embedded
-	private Audit audit;
-
 	public DocumentType() {
 	}
 
@@ -39,8 +34,6 @@ public class DocumentType implements AuditableEntity {
 	
 	public DocumentType(String name) {
 		this.name = name;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -57,16 +50,6 @@ public class DocumentType implements AuditableEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

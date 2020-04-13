@@ -18,12 +18,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.cupuama.domain.products.entity.ProductFruitId;
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "stocktake")
-public class Stocktake implements AuditableEntity {
+public class Stocktake extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,9 +48,6 @@ public class Stocktake implements AuditableEntity {
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double amount;
 	
-	@Embedded
-	private Audit audit;
-
 	public Stocktake() {
 	}
 
@@ -63,8 +59,6 @@ public class Stocktake implements AuditableEntity {
 		this.stocktakeDate = stocktakeDate;
 		this.stocktakeInOut = stocktakeInOut;
 		this.amount = amount;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -113,16 +107,6 @@ public class Stocktake implements AuditableEntity {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return this.audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

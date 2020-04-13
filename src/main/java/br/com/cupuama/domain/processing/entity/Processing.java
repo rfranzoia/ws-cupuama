@@ -3,7 +3,6 @@ package br.com.cupuama.domain.processing.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,12 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "processing")
-public class Processing implements AuditableEntity {
+public class Processing extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,9 +53,6 @@ public class Processing implements AuditableEntity {
 	
 	@Column
 	private String remarks;
-	
-	@Embedded
-	private Audit audit = new Audit();
 	
 	public Processing() {
 	}
@@ -136,16 +131,6 @@ public class Processing implements AuditableEntity {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

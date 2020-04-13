@@ -24,7 +24,7 @@ public interface ProcessingDetailRepository extends CrudRepository<ProcessingDet
 	
 	@Query(nativeQuery = true, 
 			value = "select pd.* " + 
-					"from process_detail pd " +
+					"from processing_detail pd " +
 					"inner join product p on p.id = pd.product_id and p.deleted = false " +
 					"inner join fruit f on f.id = pd.fruit_id and f.deleted = false " +
 					"inner join depot d on d.id = pd.depot_id and d.deleted = false " +

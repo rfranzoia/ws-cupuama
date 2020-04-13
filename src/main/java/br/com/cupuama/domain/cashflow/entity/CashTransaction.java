@@ -3,7 +3,6 @@ package br.com.cupuama.domain.cashflow.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,12 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "cash_transaction")
-public class CashTransaction implements AuditableEntity {
+public class CashTransaction extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,9 +49,6 @@ public class CashTransaction implements AuditableEntity {
 	@Column(name = "value", precision = 12, scale = 2)
 	private Double value;
 	
-	@Embedded
-	private Audit audit;
-	
 	public CashTransaction() {
 	}
 	
@@ -67,8 +62,6 @@ public class CashTransaction implements AuditableEntity {
 		this.description = description;
 		this.type = type;
 		this.value = value;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -125,16 +118,6 @@ public class CashTransaction implements AuditableEntity {
 
 	public void setValue(Double value) {
 		this.value = value;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	public void setType(CashFlowType type) {

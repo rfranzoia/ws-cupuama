@@ -1,7 +1,6 @@
 package br.com.cupuama.domain.processing.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,12 +11,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "process_type", uniqueConstraints = @UniqueConstraint(name = "uc_process_type_name", columnNames = { "name" }))
-public class ProcessType implements AuditableEntity {
+public class ProcessType extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,9 +32,6 @@ public class ProcessType implements AuditableEntity {
 	@Enumerated(EnumType.STRING)
 	private FlowTypeModel flowTypeModel;
 
-	@Embedded
-	private Audit audit;
-
 	public ProcessType() {
 	}
 
@@ -47,8 +42,6 @@ public class ProcessType implements AuditableEntity {
 	public ProcessType(Long id, String name, FlowTypeModel flowTypeModel) {
 		this.name = name;
 		this.flowTypeModel = flowTypeModel;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -65,16 +58,6 @@ public class ProcessType implements AuditableEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	public FlowTypeModel getFlowTypeModel() {

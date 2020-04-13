@@ -1,17 +1,15 @@
 package br.com.cupuama.domain.cashflow.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "cashflow")
-public class CashFlow implements AuditableEntity {
+public class CashFlow extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,9 +25,6 @@ public class CashFlow implements AuditableEntity {
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double debits;
 
-	@Embedded
-	private Audit audit;
-
 	public CashFlow() {
 	}
 
@@ -38,8 +33,6 @@ public class CashFlow implements AuditableEntity {
 		this.previousBalance = previousBalance;
 		this.credits = credits;
 		this.debits = debits;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public String getPeriod() {
@@ -72,16 +65,6 @@ public class CashFlow implements AuditableEntity {
 
 	public void setDebits(Double debits) {
 		this.debits = debits;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

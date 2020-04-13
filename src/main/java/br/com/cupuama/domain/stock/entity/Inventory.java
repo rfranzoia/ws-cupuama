@@ -1,17 +1,15 @@
 package br.com.cupuama.domain.stock.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "inventory")
-public class Inventory implements AuditableEntity {
+public class Inventory extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,9 +25,6 @@ public class Inventory implements AuditableEntity {
 	@Column(nullable = false, precision = 9, scale = 3)
 	private Double stockOut;
 
-	@Embedded
-	private Audit audit;
-
 	public Inventory() {
 	}
 
@@ -38,8 +33,6 @@ public class Inventory implements AuditableEntity {
 		this.initialStock = initialStock;
 		this.stockIn = stockIn;
 		this.stockOut = stockOut;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public InventoryId getInventoryId() {
@@ -72,16 +65,6 @@ public class Inventory implements AuditableEntity {
 
 	public void setStockOut(Double stockOut) {
 		this.stockOut = stockOut;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

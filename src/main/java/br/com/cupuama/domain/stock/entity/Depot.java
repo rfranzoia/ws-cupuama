@@ -1,7 +1,6 @@
 package br.com.cupuama.domain.stock.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +9,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "depot", uniqueConstraints = @UniqueConstraint(name = "uc_depot_name", columnNames = { "name" }))
-public class Depot implements AuditableEntity {
+public class Depot extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,8 +35,6 @@ public class Depot implements AuditableEntity {
 		this.id = id;
 		this.name = name;
 		this.keepStock = keepStock;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Long getId() {
@@ -63,19 +59,6 @@ public class Depot implements AuditableEntity {
 
 	public void setKeepStock(boolean keepStock) {
 		this.keepStock = keepStock;
-	}
-
-	@Embedded
-	private Audit audit;
-
-	@Override
-	public Audit getAudit() {
-		return this.audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

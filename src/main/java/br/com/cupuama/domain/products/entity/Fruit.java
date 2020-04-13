@@ -1,7 +1,6 @@
 package br.com.cupuama.domain.products.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +9,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.Audit;
-import br.com.cupuama.util.AuditableEntity;
+import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "fruit", uniqueConstraints = @UniqueConstraint(name = "uc_fruit_name", columnNames = { "name" }))
-public class Fruit implements AuditableEntity {
+public class Fruit extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,9 +32,6 @@ public class Fruit implements AuditableEntity {
 	@Column(nullable = true)
 	private String harvest;
 
-	@Embedded
-	private Audit audit;
-
 	public Fruit() {
 	}
 
@@ -45,8 +40,6 @@ public class Fruit implements AuditableEntity {
 		this.name = name;
 		this.initials = initials;
 		this.harvest = harvest;
-		this.audit = new Audit();
-		this.audit.setDeleted(false);
 	}
 
 	public Fruit(Long id) {
@@ -83,16 +76,6 @@ public class Fruit implements AuditableEntity {
 
 	public void setHarvest(String harvest) {
 		this.harvest = harvest;
-	}
-
-	@Override
-	public Audit getAudit() {
-		return audit;
-	}
-
-	@Override
-	public void setAudit(Audit audit) {
-		this.audit = audit;
 	}
 
 	@Override

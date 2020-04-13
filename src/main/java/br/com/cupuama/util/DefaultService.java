@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.util.audit.AuditableEntity;
 
 public abstract class DefaultService<T extends DefaultEntity, ID> implements Service<T, ID> {
 
