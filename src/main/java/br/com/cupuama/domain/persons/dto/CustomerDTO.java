@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.processing.dto;
+package br.com.cupuama.domain.persons.dto;
 
 import javax.validation.constraints.NotNull;
 

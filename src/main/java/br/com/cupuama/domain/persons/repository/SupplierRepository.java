@@ -1,10 +1,10 @@
-package br.com.cupuama.domain.processing.repository;
+package br.com.cupuama.domain.persons.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.processing.entity.Supplier;
+import br.com.cupuama.domain.persons.entity.Supplier;
 
 /**
  * Database Access Object for driver table.

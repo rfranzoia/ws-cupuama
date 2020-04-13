@@ -1,13 +1,13 @@
-package br.com.cupuama.domain.processing.mapper;
+package br.com.cupuama.domain.persons.mapper;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.cupuama.domain.processing.dto.AddressDTO;
-import br.com.cupuama.domain.processing.dto.SupplierDTO;
-import br.com.cupuama.domain.processing.entity.Address;
-import br.com.cupuama.domain.processing.entity.Supplier;
+import br.com.cupuama.domain.persons.dto.AddressDTO;
+import br.com.cupuama.domain.persons.dto.SupplierDTO;
+import br.com.cupuama.domain.persons.entity.Address;
+import br.com.cupuama.domain.persons.entity.Supplier;
 
 
 public class SupplierMapper {

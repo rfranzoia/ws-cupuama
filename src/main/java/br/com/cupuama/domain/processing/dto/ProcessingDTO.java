@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.cupuama.domain.persons.dto.CustomerDTO;
+import br.com.cupuama.domain.persons.dto.SupplierDTO;
 import br.com.cupuama.domain.processing.entity.ProcessStatus;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

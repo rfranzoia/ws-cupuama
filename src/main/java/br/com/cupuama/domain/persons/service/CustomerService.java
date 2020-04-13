@@ -1,15 +1,15 @@
-package br.com.cupuama.domain.processing.service;
+package br.com.cupuama.domain.persons.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cupuama.domain.processing.dto.CustomerDTO;
-import br.com.cupuama.domain.processing.entity.Address;
-import br.com.cupuama.domain.processing.entity.Customer;
-import br.com.cupuama.domain.processing.mapper.CustomerMapper;
-import br.com.cupuama.domain.processing.repository.CustomerRepository;
+import br.com.cupuama.domain.persons.dto.CustomerDTO;
+import br.com.cupuama.domain.persons.entity.Address;
+import br.com.cupuama.domain.persons.entity.Customer;
+import br.com.cupuama.domain.persons.mapper.CustomerMapper;
+import br.com.cupuama.domain.persons.repository.CustomerRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;

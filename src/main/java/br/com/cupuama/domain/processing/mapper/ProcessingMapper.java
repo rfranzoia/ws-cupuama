@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.cupuama.domain.persons.mapper.CustomerMapper;
+import br.com.cupuama.domain.persons.mapper.SupplierMapper;
 import br.com.cupuama.domain.processing.dto.ProcessingDTO;
 import br.com.cupuama.domain.processing.entity.Processing;
 

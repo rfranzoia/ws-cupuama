@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.processing.entity;
+package br.com.cupuama.domain.persons.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;

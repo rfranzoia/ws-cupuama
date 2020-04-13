@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.processing.controller;
+package br.com.cupuama.domain.persons.controller;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.domain.processing.dto.SupplierDTO;
-import br.com.cupuama.domain.processing.mapper.SupplierMapper;
-import br.com.cupuama.domain.processing.service.SupplierService;
+import br.com.cupuama.domain.persons.dto.SupplierDTO;
+import br.com.cupuama.domain.persons.mapper.SupplierMapper;
+import br.com.cupuama.domain.persons.service.SupplierService;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 
