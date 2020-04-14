@@ -28,8 +28,8 @@ public class ProductService extends DefaultService<Product, Long> {
 	}
 
 	@Transactional
-	public ProductDTO create(ProductDTO productDTO) throws ConstraintsViolationException {
-		Product product = ProductMapper.makeProduct(productDTO);
+	public ProductDTO create(ProductDTO dto) throws ConstraintsViolationException {
+		Product product = ProductMapper.makeProduct(dto);
 		return ProductMapper.makeDTO(create(product));
 	}
 	
@@ -40,10 +40,10 @@ public class ProductService extends DefaultService<Product, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(final Long productId, final ProductDTO productDTO) throws EntityNotFoundException {
+	public void update(final Long productId, final ProductDTO dto) throws EntityNotFoundException {
 		Product product = findByIdChecked(productId);
-		product.setName(productDTO.getName());
-		product.setUnit(productDTO.getUnit());
+		product.setName(dto.getName());
+		product.setUnit(dto.getUnit());
 		product.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 

@@ -56,11 +56,11 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	}
 
 	@Transactional
-	public ProcessingDTO create(ProcessingDTO processingDTO) throws ConstraintsViolationException {
-		Processing processing = create(ProcessingMapper.makeProcessing(processingDTO));
+	public ProcessingDTO create(ProcessingDTO dto) throws ConstraintsViolationException {
+		Processing processing = create(ProcessingMapper.makeProcessing(dto));
 				
-		if (!processingDTO.getProcessingDetail().isEmpty()) {
-			processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeList(processingDTO.getProcessingDetail()));
+		if (!dto.getProcessingDetail().isEmpty()) {
+			processingDetailService.createAllForProcessing(processing, ProcessingDetailMapper.makeList(dto.getProcessingDetail()));
 		}
 		
 		return ProcessingMapper.makeDTO(processing);
@@ -142,9 +142,9 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		List<Processing> processings = ((ProcessingRepository) repository).findByProcessDateRange(start, end);
 		
 		// add details for each processing found
-		List<ProcessingDTO> processingDTOList = createProcessingDTOListWithDetails(processings);
+		List<ProcessingDTO> dtoList = createProcessingDTOListWithDetails(processings);
 		
-		return processingDTOList;
+		return dtoList;
 	}
 	
 	/**
@@ -159,9 +159,9 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		List<Processing> processings = ((ProcessingRepository) repository).findByCustomer(customerId);
 		
 		// add details for each processing found
-		List<ProcessingDTO> processingDTOList = createProcessingDTOListWithDetails(processings);
+		List<ProcessingDTO> dtoList = createProcessingDTOListWithDetails(processings);
 		
-		return processingDTOList;
+		return dtoList;
 	
 	}
 	
@@ -177,9 +177,9 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		List<Processing> processings = ((ProcessingRepository) repository).findBySupplier(supplierId);
 		
 		// add details for each processing found
-		List<ProcessingDTO> processingDTOList = createProcessingDTOListWithDetails(processings);
+		List<ProcessingDTO> dtoList = createProcessingDTOListWithDetails(processings);
 		
-		return processingDTOList;
+		return dtoList;
 	
 	
 	}
@@ -196,9 +196,9 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		List<Processing> processings = ((ProcessingRepository) repository).findByProcessType(processTypeId);
 		
 		// add details for each processing found
-		List<ProcessingDTO> processingDTOList = createProcessingDTOListWithDetails(processings);
+		List<ProcessingDTO> dtoList = createProcessingDTOListWithDetails(processings);
 		
-		return processingDTOList;
+		return dtoList;
 
 	}
 	
@@ -213,9 +213,9 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		List<Processing> processings = ((ProcessingRepository) repository).findByProcessStatus(processStatus);
 
 		// add details for each processing found
-		List<ProcessingDTO> processingDTOList = createProcessingDTOListWithDetails(processings);
+		List<ProcessingDTO> dtoList = createProcessingDTOListWithDetails(processings);
 
-		return processingDTOList;
+		return dtoList;
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	 * @return
 	 */
 	private List<ProcessingDTO> createProcessingDTOListWithDetails(List<Processing> processings) {
-		final List<ProcessingDTO> processingDTOList = processings.stream()
+		final List<ProcessingDTO> dtoList = processings.stream()
 				.map(p -> {
 					List<ProcessingDetail> details = new ArrayList<>(); // TODO: use processingDetail Service here
 					ProcessingDTO dto = ProcessingDTO.newBuilder()
@@ -320,6 +320,6 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 					return dto;
 				})
 				.collect(Collectors.toList());
-		return processingDTOList;
+		return dtoList;
 	}
 }

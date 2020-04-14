@@ -31,9 +31,9 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 		super(inventoryRepository);
 	}
 
-	public InventoryDTO addInventory(final InventoryDTO inventoryDTO) throws EntityNotFoundException {
-		InventoryId id = InventoryKeyMapper.makeId(inventoryDTO.getKey());
-		addStockInOrStockOut(id, StocktakeInOut.IN_AND_OUT, inventoryDTO.getStockIn(), inventoryDTO.getStockOut());
+	public InventoryDTO addInventory(final InventoryDTO dto) throws EntityNotFoundException {
+		InventoryId id = InventoryKeyMapper.makeId(dto.getKey());
+		addStockInOrStockOut(id, StocktakeInOut.IN_AND_OUT, dto.getStockIn(), dto.getStockOut());
 		return InventoryMapper.makeDTO(find(id));
 	}
 	/**

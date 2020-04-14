@@ -29,8 +29,8 @@ public class SupplierService extends DefaultService<Supplier, Long> {
 	}
 
 	@Transactional
-	public SupplierDTO create(SupplierDTO supplierDTO) throws ConstraintsViolationException {
-		Supplier supplier = SupplierMapper.makeSupplier(supplierDTO);
+	public SupplierDTO create(SupplierDTO dto) throws ConstraintsViolationException {
+		Supplier supplier = SupplierMapper.makeSupplier(dto);
 		return SupplierMapper.makeDTO(create(supplier));
 	}
 	

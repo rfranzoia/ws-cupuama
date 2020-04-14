@@ -44,9 +44,9 @@ public class UserService extends DefaultService<User, String> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(final String userLogin, final UserDTO userDTO) throws EntityNotFoundException {
+	public void update(final String userLogin, final UserDTO dto) throws EntityNotFoundException {
 		User user = findByIdChecked(userLogin);
-		user.setName(userDTO.getName());
+		user.setName(dto.getName());
 		user.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 	
@@ -54,30 +54,30 @@ public class UserService extends DefaultService<User, String> {
 	 * Update a users password.
 	 *
 	 * @param userLogin
-	 * @param userDTO 
+	 * @param dto 
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void updatePassword(final String userLogin, final UserDTO userDTO) throws EntityNotFoundException, InvalidRequestException {
+	public void updatePassword(final String userLogin, final UserDTO dto) throws EntityNotFoundException, InvalidRequestException {
 		User user = findByIdChecked(userLogin);
 		
-		validatePassword(userDTO, user);
+		validatePassword(dto, user);
 		
-		user.setPassword(userDTO.getNewPassword());
+		user.setPassword(dto.getNewPassword());
 		user.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**
 	 * Validate given password
 	 * 
-	 * @param userDTO
+	 * @param dto
 	 * @param user
 	 */
-	private void validatePassword(final UserDTO userDTO, User user) {
+	private void validatePassword(final UserDTO dto, User user) {
 		List<InvalidRequestException> errors = new ArrayList<>();
 		
 		// Password validation action
-		final Predicate<PasswordRule> passwordRule = rule -> rule.processRule(user, userDTO) == RuleResult.FAIL;
+		final Predicate<PasswordRule> passwordRule = rule -> rule.processRule(user, dto) == RuleResult.FAIL;
 		final Consumer<PasswordRule> resultChecker = rule -> {
 			if (rule.getResult() == RuleResult.FAIL)
 				errors.add(new InvalidRequestException(rule.getMessage()));

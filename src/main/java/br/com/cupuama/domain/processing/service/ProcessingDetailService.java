@@ -44,13 +44,13 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 	/**
 	 * create a ProcessingDetail
 	 * 
-	 * @param processingDetailDTO
+	 * @param dto
 	 * @return
 	 * @throws ConstraintsViolationException
 	 */
 	@Transactional
-	public ProcessingDetailDTO create(ProcessingDetailDTO processingDetailDTO) throws ConstraintsViolationException {
-		ProcessingDetail processingDetail = ProcessingDetailMapper.makeProcessingDetail(processingDetailDTO);
+	public ProcessingDetailDTO create(ProcessingDetailDTO dto) throws ConstraintsViolationException {
+		ProcessingDetail processingDetail = ProcessingDetailMapper.makeProcessingDetail(dto);
 		return ProcessingDetailMapper.makeDTO(create(processingDetail));
 	}
 	

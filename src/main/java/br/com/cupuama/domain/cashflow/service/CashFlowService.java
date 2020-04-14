@@ -30,8 +30,8 @@ public class CashFlowService extends DefaultService<CashFlow, String> {
 	}
 
 	@Transactional
-	public CashFlowDTO create(CashFlowDTO cashFlowDTO) throws ConstraintsViolationException {
-		CashFlow cashFlow = CashFlowMapper.makeCashFlow(cashFlowDTO);
+	public CashFlowDTO create(CashFlowDTO dto) throws ConstraintsViolationException {
+		CashFlow cashFlow = CashFlowMapper.makeCashFlow(dto);
 		return CashFlowMapper.makeDTO(create(cashFlow));
 	}
 	

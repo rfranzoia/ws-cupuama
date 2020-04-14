@@ -34,8 +34,8 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
 	}
 
     @Transactional
-    public ProductFruitDTO create(ProductFruitDTO productFruitDTO) throws ConstraintsViolationException {
-    	ProductFruit productFruit = ProductFruitMapper.makeProductFruit(productFruitDTO);
+    public ProductFruitDTO create(ProductFruitDTO dto) throws ConstraintsViolationException {
+    	ProductFruit productFruit = ProductFruitMapper.makeProductFruit(dto);
 		return ProductFruitMapper.makeDTO(create(productFruit));
     }
     

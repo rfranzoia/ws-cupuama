@@ -28,8 +28,8 @@ public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 	}
 
 	@Transactional
-	public DocumentTypeDTO create(DocumentTypeDTO documentTypeDTO) throws ConstraintsViolationException {
-		DocumentType documentType = DocumentTypeMapper.makeDocumentType(documentTypeDTO);
+	public DocumentTypeDTO create(DocumentTypeDTO dto) throws ConstraintsViolationException {
+		DocumentType documentType = DocumentTypeMapper.makeDocumentType(dto);
 		return DocumentTypeMapper.makeDTO(create(documentType));
 	}
 	

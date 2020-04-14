@@ -40,11 +40,11 @@ public class FruitService extends DefaultService<Fruit, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(final Long fruitId, final FruitDTO fruitDTO) throws EntityNotFoundException {
+	public void update(final Long fruitId, final FruitDTO dto) throws EntityNotFoundException {
 		Fruit fruit = findByIdChecked(fruitId);
-		fruit.setName(fruitDTO.getName());
-		fruit.setInitials(fruitDTO.getInitials());
-		fruit.setHarvest(fruitDTO.getHarvest());
+		fruit.setName(dto.getName());
+		fruit.setInitials(dto.getInitials());
+		fruit.setHarvest(dto.getHarvest());
 		fruit.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 

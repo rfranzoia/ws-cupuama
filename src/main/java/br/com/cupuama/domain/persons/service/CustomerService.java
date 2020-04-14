@@ -29,8 +29,8 @@ public class CustomerService extends DefaultService<Customer, Long> {
 	}
 
 	@Transactional
-	public CustomerDTO create(CustomerDTO customerDTO) throws ConstraintsViolationException {
-		Customer customer = CustomerMapper.makeCustomer(customerDTO);
+	public CustomerDTO create(CustomerDTO dto) throws ConstraintsViolationException {
+		Customer customer = CustomerMapper.makeCustomer(dto);
 		return CustomerMapper.makeDTO(create(customer));
 	}
 	

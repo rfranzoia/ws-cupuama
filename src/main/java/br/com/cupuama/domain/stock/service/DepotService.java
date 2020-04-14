@@ -40,10 +40,10 @@ public class DepotService extends DefaultService<Depot, Long> {
 	 * @throws EntityNotFoundException
 	 */
 	@Transactional
-	public void update(final Long depotId, final DepotDTO depotDTO) throws EntityNotFoundException {
+	public void update(final Long depotId, final DepotDTO dto) throws EntityNotFoundException {
 		Depot depot = findByIdChecked(depotId);
-		depot.setName(depotDTO.getName());
-		depot.setKeepStock(depotDTO.isKeepStock());
+		depot.setName(dto.getName());
+		depot.setKeepStock(dto.isKeepStock());
 		depot.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
