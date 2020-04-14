@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.cupuama.domain.persons.Customer;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Customer table
  * <p/>
  */
 public interface CustomerRepository extends CrudRepository<Customer, Long> {

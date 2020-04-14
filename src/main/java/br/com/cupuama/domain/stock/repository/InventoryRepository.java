@@ -10,7 +10,7 @@ import br.com.cupuama.domain.stock.Inventory;
 import br.com.cupuama.domain.stock.InventoryId;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Inventory table
  * <p/>
  */
 public interface InventoryRepository extends CrudRepository<Inventory, InventoryId> {

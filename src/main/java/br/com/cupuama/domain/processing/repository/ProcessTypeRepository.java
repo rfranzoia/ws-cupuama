@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.cupuama.domain.processing.ProcessType;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for ProcessType table
  * <p/>
  */
 public interface ProcessTypeRepository extends CrudRepository<ProcessType, Long> {

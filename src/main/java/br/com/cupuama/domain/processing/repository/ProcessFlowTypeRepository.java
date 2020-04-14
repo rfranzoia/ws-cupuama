@@ -10,7 +10,7 @@ import br.com.cupuama.domain.processing.ProcessFlowType;
 import br.com.cupuama.domain.processing.ProcessFlowTypeId;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for ProcessFlowType table
  * <p/>
  */
 public interface ProcessFlowTypeRepository extends CrudRepository<ProcessFlowType, ProcessFlowTypeId> {

@@ -11,7 +11,7 @@ import br.com.cupuama.domain.processing.Processing;
 import br.com.cupuama.enums.ProcessStatus;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Processing table
  * <p/>
  */
 public interface ProcessingRepository extends CrudRepository<Processing, Long> {

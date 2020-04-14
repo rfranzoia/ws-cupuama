@@ -13,7 +13,7 @@ import br.com.cupuama.domain.products.Fruit;
 import br.com.cupuama.domain.products.Product;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for ProcessingDetail table
  * <p/>
  */
 public interface ProcessingDetailRepository extends CrudRepository<ProcessingDetail, Long> {

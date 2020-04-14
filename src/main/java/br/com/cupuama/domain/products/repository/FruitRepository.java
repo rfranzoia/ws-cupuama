@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.cupuama.domain.products.Fruit;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Fruit table
  * <p/>
  */
 public interface FruitRepository extends CrudRepository<Fruit, Long> {

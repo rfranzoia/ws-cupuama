@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class Person {
 
 	@Column(name = "first_name", nullable = false)
-	@NotNull(message = "Name cannot be null!")
+	@NotNull(message = "FirstName cannot be null!")
 	private String firstName;
 	
 	@Column(name = "last_name", nullable = false)

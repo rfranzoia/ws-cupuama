@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.cupuama.domain.stock.Depot;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Depot table
  * <p/>
  */
 public interface DepotRepository extends CrudRepository<Depot, Long> {

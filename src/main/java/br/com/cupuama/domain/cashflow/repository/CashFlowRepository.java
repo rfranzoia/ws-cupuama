@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.cupuama.domain.cashflow.CashFlow;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for CashFlow table
  * <p/>
  */
 public interface CashFlowRepository extends CrudRepository<CashFlow, String> {

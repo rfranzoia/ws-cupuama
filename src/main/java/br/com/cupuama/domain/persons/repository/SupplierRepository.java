@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.cupuama.domain.persons.Supplier;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Supplier table
  * <p/>
  */
 public interface SupplierRepository extends CrudRepository<Supplier, Long> {

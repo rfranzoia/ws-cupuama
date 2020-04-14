@@ -11,7 +11,7 @@ import br.com.cupuama.domain.stock.Stocktake;
 import br.com.cupuama.exception.InvalidRequestException;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Stocktake table
  * <p/>
  */
 public interface StocktakeRepository extends CrudRepository<Stocktake, Long> {
