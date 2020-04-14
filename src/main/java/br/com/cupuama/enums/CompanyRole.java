@@ -1,6 +1,6 @@
 package br.com.cupuama.enums;
 
-public enum Role {
+public enum CompanyRole {
 	
 	Employee, 
 	AssistantManager, 

@@ -12,6 +12,6 @@ import br.com.cupuama.domain.users.User;
  */
 public interface UserRepository extends CrudRepository<User, String> {
 
-    List<User> findByNameLike(String name);
+    List<User> findByPersonFirstNameLike(String name);
 
 }

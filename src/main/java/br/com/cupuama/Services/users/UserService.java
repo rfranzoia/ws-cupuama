@@ -105,7 +105,7 @@ public class UserService extends DefaultService<User, String> {
 	 * @param name
 	 */
 	public List<User> findByName(final String name) {
-		return ((UserRepository) repository).findByNameLike(name + "%");
+		return ((UserRepository) repository).findByPersonFirstNameLike(name + "%");
 	}
 
 }
