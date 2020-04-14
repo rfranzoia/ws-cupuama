@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.persons.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -49,6 +50,7 @@ public class CustomerService extends DefaultService<Customer, Long> {
 		customer.setCompanyName(dto.getCompanyName());
 		customer.setPhone(dto.getPhone());
 		customer.setAddress(address);
+		customer.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**

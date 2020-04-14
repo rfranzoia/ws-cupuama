@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.processing.service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +81,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		processing.setSupplier(SupplierMapper.makeSupplier(dto.getSupplier()));
 		processing.setDocumentReference(dto.getDocumentReference());
 		processing.setRemarks(dto.getRemarks());
+		processing.getAudit().setDateUpdated(ZonedDateTime.now());
 		
 		// update processing details (remove all, add current ones)
 		processingDetailService.removeAllFromProcessing(processing);

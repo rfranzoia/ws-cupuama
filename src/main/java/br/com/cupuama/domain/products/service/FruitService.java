@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.products.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class FruitService extends DefaultService<Fruit, Long> {
 		fruit.setName(fruitDTO.getName());
 		fruit.setInitials(fruitDTO.getInitials());
 		fruit.setHarvest(fruitDTO.getHarvest());
+		fruit.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**

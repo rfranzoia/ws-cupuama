@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.products.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class ProductService extends DefaultService<Product, Long> {
 		Product product = findByIdChecked(productId);
 		product.setName(productDTO.getName());
 		product.setUnit(productDTO.getUnit());
+		product.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**

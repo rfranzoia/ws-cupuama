@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.stock.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class DepotService extends DefaultService<Depot, Long> {
 		Depot depot = findByIdChecked(depotId);
 		depot.setName(depotDTO.getName());
 		depot.setKeepStock(depotDTO.isKeepStock());
+		depot.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**

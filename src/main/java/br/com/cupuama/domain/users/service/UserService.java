@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.users.service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -46,6 +47,7 @@ public class UserService extends DefaultService<User, String> {
 	public void update(final String userLogin, final UserDTO userDTO) throws EntityNotFoundException {
 		User user = findByIdChecked(userLogin);
 		user.setName(userDTO.getName());
+		user.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 	
 	/**
@@ -62,6 +64,7 @@ public class UserService extends DefaultService<User, String> {
 		validatePassword(userDTO, user);
 		
 		user.setPassword(userDTO.getNewPassword());
+		user.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**

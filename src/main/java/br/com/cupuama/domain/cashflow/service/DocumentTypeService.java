@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.cashflow.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class DocumentTypeService extends DefaultService<DocumentType, Long> {
 	public void update(final Long documentTypeId, final String name) throws EntityNotFoundException {
 		DocumentType documentType = findByIdChecked(documentTypeId);
 		documentType.setName(name);
+		documentType.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**

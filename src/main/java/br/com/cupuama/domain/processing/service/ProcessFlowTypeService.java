@@ -1,5 +1,7 @@
 package br.com.cupuama.domain.processing.service;
 
+import java.time.ZonedDateTime;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,7 @@ public class ProcessFlowTypeService extends DefaultService<ProcessFlowType, Proc
 		ProcessFlowType processFlowType = findByIdChecked(ProcessFlowTypeKeyMapper.makeId(dto.getKey()));
 		processFlowType.setDepotIn(DepotMapper.makeDepot(dto.getDepotIn()));
 		processFlowType.setDepotOut(DepotMapper.makeDepot(dto.getDepotOut()));
+		processFlowType.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 }

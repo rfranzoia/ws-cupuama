@@ -1,5 +1,6 @@
 package br.com.cupuama.domain.processing.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class ProcessTypeService extends DefaultService<ProcessType, Long> {
 		ProcessType processType = findByIdChecked(processTypeId);
 		processType.setName(name);
 		processType.setFlowTypeModel(flowTypeModel);
+		processType.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 
 	/**
