@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.products.FruitService;
 import br.com.cupuama.controller.products.dto.FruitDTO;
 import br.com.cupuama.controller.products.mapper.FruitMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.products.FruitService;
 
 /**
  * All operations with a fruit will be routed by this controller.

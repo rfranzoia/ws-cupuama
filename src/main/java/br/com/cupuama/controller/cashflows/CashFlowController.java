@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.cashflow.CashFlowService;
 import br.com.cupuama.controller.cashflows.dto.CashFlowDTO;
 import br.com.cupuama.controller.cashflows.mapper.CashFlowMapper;
 import br.com.cupuama.domain.cashflow.CashFlowType;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.cashflow.CashFlowService;
 
 /**
  * All operations with a cashFlow will be routed by this controller.

@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.processing.ProcessingDetailService;
-import br.com.cupuama.Services.processing.ProcessingService;
 import br.com.cupuama.controller.processing.dto.ProcessingDTO;
 import br.com.cupuama.controller.processing.dto.ProcessingDetailDTO;
 import br.com.cupuama.controller.processing.mapper.ProcessingMapper;
@@ -28,6 +26,8 @@ import br.com.cupuama.enums.ProcessStatus;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;
+import br.com.cupuama.services.processing.ProcessingDetailService;
+import br.com.cupuama.services.processing.ProcessingService;
 import br.com.cupuama.util.Utils;
 
 /**

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.users.UserService;
 import br.com.cupuama.controller.users.dto.UserDTO;
 import br.com.cupuama.controller.users.mapper.UserMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;
+import br.com.cupuama.services.users.UserService;
 
 /**
  * All operations with a user will be routed by this controller.

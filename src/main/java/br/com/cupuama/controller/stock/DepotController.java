@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.stock.DepotService;
 import br.com.cupuama.controller.stock.dto.DepotDTO;
 import br.com.cupuama.controller.stock.mapper.DepotMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.stock.DepotService;
 
 /**
  * All operations with a depot will be routed by this controller.

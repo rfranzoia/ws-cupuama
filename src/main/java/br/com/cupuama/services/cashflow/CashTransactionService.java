@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.cashflow;
+package br.com.cupuama.services.cashflow;
 
 import java.util.Date;
 import java.util.List;

@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.cashflow.DocumentTypeService;
 import br.com.cupuama.controller.cashflows.dto.DocumentTypeDTO;
 import br.com.cupuama.controller.cashflows.mapper.DocumentTypeMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.cashflow.DocumentTypeService;
 
 /**
  * All operations with a documentType will be routed by this controller.

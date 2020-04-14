@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.products;
+package br.com.cupuama.services.products;
 
 import java.util.List;
 

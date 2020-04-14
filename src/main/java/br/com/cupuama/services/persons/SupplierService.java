@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.persons;
+package br.com.cupuama.services.persons;
 
 import java.time.ZonedDateTime;
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.processing;
+package br.com.cupuama.services.processing;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cupuama.Services.cashflow.CashTransactionService;
-import br.com.cupuama.Services.stock.StocktakeService;
 import br.com.cupuama.controller.cashflows.dto.CashTransactionDTO;
 import br.com.cupuama.controller.persons.mapper.CustomerMapper;
 import br.com.cupuama.controller.persons.mapper.SupplierMapper;
@@ -31,6 +29,8 @@ import br.com.cupuama.enums.ProcessStatus;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;
+import br.com.cupuama.services.cashflow.CashTransactionService;
+import br.com.cupuama.services.stock.StocktakeService;
 import br.com.cupuama.util.DefaultService;
 
 

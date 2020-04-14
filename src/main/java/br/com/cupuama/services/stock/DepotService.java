@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.stock;
+package br.com.cupuama.services.stock;
 
 import java.time.ZonedDateTime;
 import java.util.List;

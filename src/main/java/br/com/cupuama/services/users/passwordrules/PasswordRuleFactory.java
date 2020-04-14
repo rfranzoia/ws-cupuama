@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.users.passwordrules;
+package br.com.cupuama.services.users.passwordrules;
 
 import java.util.ArrayList;
 import java.util.Arrays;

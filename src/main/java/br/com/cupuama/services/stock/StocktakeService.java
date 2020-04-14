@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.stock;
+package br.com.cupuama.services.stock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

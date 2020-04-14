@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.processing;
+package br.com.cupuama.services.processing;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cupuama.Services.products.FruitService;
-import br.com.cupuama.Services.products.ProductService;
 import br.com.cupuama.controller.processing.dto.ProcessingDetailDTO;
 import br.com.cupuama.controller.processing.mapper.ProcessingDetailMapper;
 import br.com.cupuama.domain.processing.Processing;
@@ -20,6 +18,8 @@ import br.com.cupuama.domain.products.Fruit;
 import br.com.cupuama.domain.products.Product;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.products.FruitService;
+import br.com.cupuama.services.products.ProductService;
 import br.com.cupuama.util.DefaultService;
 
 

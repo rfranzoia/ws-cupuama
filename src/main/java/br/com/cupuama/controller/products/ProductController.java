@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.products.ProductService;
 import br.com.cupuama.controller.products.dto.ProductDTO;
 import br.com.cupuama.controller.products.mapper.ProductMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.products.ProductService;
 
 /**
  * All operations with a product will be routed by this controller.

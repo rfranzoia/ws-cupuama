@@ -1,4 +1,4 @@
-package br.com.cupuama.Services.users;
+package br.com.cupuama.services.users;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -9,8 +9,6 @@ import java.util.function.Predicate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cupuama.Services.users.passwordrules.PasswordRule;
-import br.com.cupuama.Services.users.passwordrules.PasswordRuleFactory;
 import br.com.cupuama.controller.persons.mapper.PersonMapper;
 import br.com.cupuama.controller.users.dto.UserDTO;
 import br.com.cupuama.controller.users.mapper.UserMapper;
@@ -20,6 +18,8 @@ import br.com.cupuama.enums.RuleResult;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;
+import br.com.cupuama.services.users.passwordrules.PasswordRule;
+import br.com.cupuama.services.users.passwordrules.PasswordRuleFactory;
 import br.com.cupuama.util.DefaultService;
 
 

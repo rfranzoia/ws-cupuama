@@ -16,14 +16,15 @@ public class TokenAuthenticationService {
 
 	// EXPIRATION_TIME = 10 dias
 	static final long EXPIRATION_TIME = 860_000_000;
-	static final String SECRET = "Inv1lli4cm3";
+	static final String SECRET = "S3cr3tCupu4m4";
 	static final String TOKEN_PREFIX = "Bearer";
 	static final String HEADER_STRING = "Authorization";
 
 	static void addAuthentication(HttpServletResponse response, String username) {
-		String JWT = Jwts.builder().setSubject(username)
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
+		String JWT = Jwts.builder()
+						.setSubject(username)
+						.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+						.signWith(SignatureAlgorithm.HS512, SECRET).compact();
 
 		response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
 	}
@@ -32,12 +33,18 @@ public class TokenAuthenticationService {
 		String token = request.getHeader(HEADER_STRING);
 
 		if (token != null) {
-			// only from the token
-			String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody()
-					.getSubject();
-
-			if (user != null) {
-				return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+			try {
+				// only from the token
+				String user = Jwts.parser()
+								.setSigningKey(SECRET)
+								.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+								.getBody()
+								.getSubject();
+				
+				if (user != null) {
+					return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+				}
+			} catch (Exception e) {
 			}
 		}
 		return null;

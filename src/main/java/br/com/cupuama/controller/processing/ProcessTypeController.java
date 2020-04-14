@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.Services.processing.ProcessTypeService;
 import br.com.cupuama.controller.processing.dto.ProcessTypeDTO;
 import br.com.cupuama.controller.processing.mapper.ProcessTypeMapper;
 import br.com.cupuama.enums.FlowTypeModel;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
+import br.com.cupuama.services.processing.ProcessTypeService;
 
 /**
  * All operations with a processType will be routed by this controller.
