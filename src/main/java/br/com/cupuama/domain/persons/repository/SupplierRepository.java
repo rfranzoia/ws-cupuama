@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.persons.entity.Supplier;
+import br.com.cupuama.domain.persons.Supplier;
 
 /**
  * Database Access Object for driver table.

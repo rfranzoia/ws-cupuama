@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.processing.entity.ProcessType;
+import br.com.cupuama.domain.processing.ProcessType;
 
 /**
  * Database Access Object for driver table.

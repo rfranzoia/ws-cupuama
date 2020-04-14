@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.stock.entity.Inventory;
-import br.com.cupuama.domain.stock.entity.InventoryId;
+import br.com.cupuama.domain.stock.Inventory;
+import br.com.cupuama.domain.stock.InventoryId;
 
 /**
  * Database Access Object for driver table.

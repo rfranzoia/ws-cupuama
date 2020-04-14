@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.products.entity.ProductFruit;
-import br.com.cupuama.domain.products.entity.ProductFruitId;
+import br.com.cupuama.domain.products.ProductFruit;
+import br.com.cupuama.domain.products.ProductFruitId;
 import br.com.cupuama.exception.EntityNotFoundException;
 
 /**

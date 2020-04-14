@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.products.entity.ProductFruitPrice;
+import br.com.cupuama.domain.products.ProductFruitPrice;
 
 /**
  *

@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.processing.entity.Processing;
-import br.com.cupuama.domain.processing.entity.ProcessingDetail;
-import br.com.cupuama.domain.products.entity.Fruit;
-import br.com.cupuama.domain.products.entity.Product;
+import br.com.cupuama.domain.processing.Processing;
+import br.com.cupuama.domain.processing.ProcessingDetail;
+import br.com.cupuama.domain.products.Fruit;
+import br.com.cupuama.domain.products.Product;
 
 /**
  * Database Access Object for driver table.

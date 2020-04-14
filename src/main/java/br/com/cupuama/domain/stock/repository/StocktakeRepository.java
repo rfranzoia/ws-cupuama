@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.stock.entity.Stocktake;
+import br.com.cupuama.domain.stock.Stocktake;
 import br.com.cupuama.exception.InvalidRequestException;
 
 /**

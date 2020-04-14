@@ -2,7 +2,7 @@ package br.com.cupuama.domain.company;
 
 import java.util.Date;
 
-import br.com.cupuama.domain.persons.entity.Person;
+import br.com.cupuama.domain.persons.Person;
 
 public class Employee {
 	

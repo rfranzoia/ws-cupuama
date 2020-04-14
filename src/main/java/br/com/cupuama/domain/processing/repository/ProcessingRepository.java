@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.processing.entity.Processing;
+import br.com.cupuama.domain.processing.Processing;
 import br.com.cupuama.enums.ProcessStatus;
 
 /**
