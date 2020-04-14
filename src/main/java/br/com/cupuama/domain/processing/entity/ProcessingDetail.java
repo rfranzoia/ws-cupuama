@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import br.com.cupuama.domain.products.entity.Fruit;
 import br.com.cupuama.domain.products.entity.Product;
 import br.com.cupuama.domain.stock.entity.Depot;
-import br.com.cupuama.domain.stock.entity.StocktakeInOut;
+import br.com.cupuama.enums.StocktakeInOut;
 import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity

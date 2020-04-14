@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.cupuama.domain.persons.dto.CustomerDTO;
 import br.com.cupuama.domain.persons.dto.SupplierDTO;
-import br.com.cupuama.domain.processing.entity.ProcessStatus;
+import br.com.cupuama.enums.ProcessStatus;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcessingDTO {

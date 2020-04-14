@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 
 import br.com.cupuama.domain.persons.entity.Customer;
 import br.com.cupuama.domain.persons.entity.Supplier;
+import br.com.cupuama.enums.ProcessStatus;
 import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity

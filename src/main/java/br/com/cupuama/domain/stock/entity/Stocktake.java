@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.cupuama.domain.products.entity.ProductFruitId;
+import br.com.cupuama.enums.StocktakeInOut;
 import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.cupuama.domain.products.dto.FruitDTO;
 import br.com.cupuama.domain.products.dto.ProductDTO;
 import br.com.cupuama.domain.stock.dto.DepotDTO;
-import br.com.cupuama.domain.stock.entity.StocktakeInOut;
+import br.com.cupuama.enums.StocktakeInOut;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcessingDetailDTO {

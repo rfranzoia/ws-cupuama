@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.domain.processing.dto.ProcessTypeDTO;
-import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.entity.ProcessType;
 import br.com.cupuama.domain.processing.mapper.ProcessTypeMapper;
 import br.com.cupuama.domain.processing.repository.ProcessTypeRepository;
+import br.com.cupuama.enums.FlowTypeModel;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.util.DefaultService;

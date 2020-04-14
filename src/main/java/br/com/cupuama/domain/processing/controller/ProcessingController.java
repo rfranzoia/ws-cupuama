@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.processing.dto.ProcessingDTO;
 import br.com.cupuama.domain.processing.dto.ProcessingDetailDTO;
-import br.com.cupuama.domain.processing.entity.ProcessStatus;
 import br.com.cupuama.domain.processing.mapper.ProcessingMapper;
 import br.com.cupuama.domain.processing.service.ProcessingDetailService;
 import br.com.cupuama.domain.processing.service.ProcessingService;
+import br.com.cupuama.enums.ProcessStatus;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;

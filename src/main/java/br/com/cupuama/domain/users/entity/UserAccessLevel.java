@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.cupuama.enums.AccessLevel;
 import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity

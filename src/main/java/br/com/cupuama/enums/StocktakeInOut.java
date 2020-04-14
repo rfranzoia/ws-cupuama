@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.stock.entity;
+package br.com.cupuama.enums;
 
 public enum StocktakeInOut {
 	IN, OUT, IN_AND_OUT;

@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import br.com.cupuama.domain.products.entity.Product;
-import br.com.cupuama.domain.stock.entity.StocktakeInOut;
+import br.com.cupuama.enums.StocktakeInOut;
 
 @Embeddable
 public class ProcessFlowTypeId implements Serializable {

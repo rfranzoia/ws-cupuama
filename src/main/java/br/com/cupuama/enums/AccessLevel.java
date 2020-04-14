@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.users.entity;
+package br.com.cupuama.enums;
 
 public enum AccessLevel {
 

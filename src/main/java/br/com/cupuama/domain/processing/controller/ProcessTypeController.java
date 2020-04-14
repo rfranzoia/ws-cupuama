@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.domain.processing.dto.ProcessTypeDTO;
-import br.com.cupuama.domain.processing.entity.FlowTypeModel;
 import br.com.cupuama.domain.processing.mapper.ProcessTypeMapper;
 import br.com.cupuama.domain.processing.service.ProcessTypeService;
+import br.com.cupuama.enums.FlowTypeModel;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 

@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.cashflow.entity;
+package br.com.cupuama.enums;
 
 public enum CashFlowOperation {
 	ADD, REMOVE;

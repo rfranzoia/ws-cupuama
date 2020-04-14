@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.company;
+package br.com.cupuama.enums;
 
 public enum Role {
 	

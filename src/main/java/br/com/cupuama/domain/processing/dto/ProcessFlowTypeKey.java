@@ -3,7 +3,7 @@ package br.com.cupuama.domain.processing.dto;
 import java.io.Serializable;
 
 import br.com.cupuama.domain.products.dto.ProductDTO;
-import br.com.cupuama.domain.stock.entity.StocktakeInOut;
+import br.com.cupuama.enums.StocktakeInOut;
 
 public class ProcessFlowTypeKey implements Serializable {
 
