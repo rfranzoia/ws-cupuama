@@ -10,8 +10,7 @@ public class SupplierDTO {
 	
 	private Long id;
 
-	@NotNull(message = "Name cannot be null!")
-	private String name;
+	private PersonDTO person;
 	
 	private String companyName;
 	
@@ -23,9 +22,9 @@ public class SupplierDTO {
 	private SupplierDTO() {
 	}
 
-	private SupplierDTO(Long id, String name, String companyName, String phone, AddressDTO address) {
+	private SupplierDTO(Long id, PersonDTO person, String companyName, String phone, AddressDTO address) {
 		this.id = id;
-		this.name = name;
+		this.person = person;
 		this.companyName = companyName;
 		this.phone = phone;
 		this.address = address;
@@ -41,8 +40,8 @@ public class SupplierDTO {
 	}
 
 	@JsonProperty
-	public String getName() {
-		return name;
+	public PersonDTO getPerson() {
+		return person;
 	}
 	
 	@JsonProperty
@@ -62,7 +61,7 @@ public class SupplierDTO {
 
 	public static class SupplierDTOBuilder {
 		private Long id;
-		private String name;
+		private PersonDTO person;
 		private String companyName;
 		private String phone;
 		private AddressDTO address;
@@ -72,8 +71,8 @@ public class SupplierDTO {
 			return this;
 		}
 
-		public SupplierDTOBuilder setName(String name) {
-			this.name = name;
+		public SupplierDTOBuilder setPerson(PersonDTO person) {
+			this.person = person;
 			return this;
 		}
 
@@ -93,7 +92,7 @@ public class SupplierDTO {
 		}
 
 		public SupplierDTO createSupplierDTO() {
-			return new SupplierDTO(id, name, companyName, phone, address);
+			return new SupplierDTO(id, person, companyName, phone, address);
 		}
 	}
 }

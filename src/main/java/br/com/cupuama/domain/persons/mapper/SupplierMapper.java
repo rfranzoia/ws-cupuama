@@ -19,7 +19,7 @@ public class SupplierMapper {
 		final Address address = new Address(dto.getAddress().getStreet(),
 				dto.getAddress().getCity(), dto.getAddress().getRegion(), 
 				dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
-		return new Supplier(dto.getId(), dto.getName(), dto.getCompanyName(), dto.getPhone(), address);
+		return new Supplier(dto.getId(), PersonMapper.makePerson(dto.getPerson()), dto.getCompanyName(), dto.getPhone(), address);
 	}
 
 	public static SupplierDTO makeDTO(final Supplier supplier) {
@@ -31,7 +31,7 @@ public class SupplierMapper {
 					supplier.getAddress().getPostalCode(), supplier.getAddress().getCountry());
 			
 			builder.setId(supplier.getId())
-					.setName(supplier.getName())
+					.setPerson(PersonMapper.makeDTO(supplier.getPerson()))
 					.setCompanyName(supplier.getCompanyName())
 					.setPhone(supplier.getPhone())
 					.setAddress(address);

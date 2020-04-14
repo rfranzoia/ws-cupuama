@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.cupuama.domain.persons.dto.SupplierDTO;
 import br.com.cupuama.domain.persons.entity.Address;
 import br.com.cupuama.domain.persons.entity.Supplier;
+import br.com.cupuama.domain.persons.mapper.PersonMapper;
 import br.com.cupuama.domain.persons.mapper.SupplierMapper;
 import br.com.cupuama.domain.persons.repository.SupplierRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -46,7 +47,7 @@ public class SupplierService extends DefaultService<Supplier, Long> {
 				dto.getAddress().getCity(), dto.getAddress().getRegion(), dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
 		
 		Supplier supplier = findByIdChecked(supplierId);
-		supplier.setName(dto.getName());
+		supplier.setPerson(PersonMapper.makePerson(dto.getPerson()));
 		supplier.setCompanyName(dto.getCompanyName());
 		supplier.setPhone(dto.getPhone());
 		supplier.setAddress(address);

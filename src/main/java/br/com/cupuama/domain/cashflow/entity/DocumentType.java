@@ -22,7 +22,7 @@ public class DocumentType extends DefaultAuditableEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	@NotNull(message = "DocumentType Name cannot be null!")
+	@NotNull(message = "Name cannot be null!")
 	private String name;
 
 	public DocumentType() {

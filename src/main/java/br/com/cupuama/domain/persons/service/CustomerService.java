@@ -10,6 +10,7 @@ import br.com.cupuama.domain.persons.dto.CustomerDTO;
 import br.com.cupuama.domain.persons.entity.Address;
 import br.com.cupuama.domain.persons.entity.Customer;
 import br.com.cupuama.domain.persons.mapper.CustomerMapper;
+import br.com.cupuama.domain.persons.mapper.PersonMapper;
 import br.com.cupuama.domain.persons.repository.CustomerRepository;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
@@ -46,7 +47,7 @@ public class CustomerService extends DefaultService<Customer, Long> {
 				dto.getAddress().getCity(), dto.getAddress().getRegion(), dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
 		
 		Customer customer = findByIdChecked(customerId);
-		customer.setName(dto.getName());
+		customer.setPerson(PersonMapper.makePerson(dto.getPerson()));
 		customer.setCompanyName(dto.getCompanyName());
 		customer.setPhone(dto.getPhone());
 		customer.setAddress(address);

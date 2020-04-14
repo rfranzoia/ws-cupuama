@@ -9,7 +9,6 @@ import br.com.cupuama.domain.persons.dto.CustomerDTO;
 import br.com.cupuama.domain.persons.entity.Address;
 import br.com.cupuama.domain.persons.entity.Customer;
 
-
 public class CustomerMapper {
 	public static Customer makeCustomer(final CustomerDTO dto) {
 		if (dto == null) {
@@ -20,7 +19,7 @@ public class CustomerMapper {
 				dto.getAddress().getCity(), dto.getAddress().getRegion(), 
 				dto.getAddress().getPostalCode(), dto.getAddress().getCountry());
 		
-		return new Customer(dto.getId(), dto.getName(), dto.getCompanyName(), dto.getPhone(), address);
+		return new Customer(dto.getId(), PersonMapper.makePerson(dto.getPerson()), dto.getCompanyName(), dto.getPhone(), address);
 	}
 
 	public static CustomerDTO makeDTO(final Customer customer) {
@@ -34,7 +33,7 @@ public class CustomerMapper {
 					customer.getAddress().getCountry());
 			
 			builder.setId(customer.getId())
-					.setName(customer.getName())
+					.setPerson(PersonMapper.makeDTO(customer.getPerson()))
 					.setCompanyName(customer.getCompanyName())
 					.setPhone(customer.getPhone())
 					.setAddress(address);
