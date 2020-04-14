@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.users.service;
+package br.com.cupuama.domain.users.service.passwordrules;
 
 import br.com.cupuama.domain.users.dto.UserDTO;
 import br.com.cupuama.domain.users.entity.User;

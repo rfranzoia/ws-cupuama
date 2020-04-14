@@ -1,4 +1,4 @@
-package br.com.cupuama.domain.users.service;
+package br.com.cupuama.domain.users.service.passwordrules;
 
 import org.apache.commons.lang3.StringUtils;
 
