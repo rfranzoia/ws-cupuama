@@ -60,7 +60,7 @@ public class CustomerService extends DefaultService<Customer, Long> {
 	 * @param name
 	 */
 	public List<Customer> findByName(final String name) {
-		return ((CustomerRepository) repository).findByNameLike(name + "%");
+		return ((CustomerRepository) repository).findByPersonFirstName(name + "%");
 	}
 
 }

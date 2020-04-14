@@ -60,7 +60,7 @@ public class SupplierService extends DefaultService<Supplier, Long> {
 	 * @param name
 	 */
 	public List<Supplier> findByName(final String name) {
-		return ((SupplierRepository) repository).findByNameLike(name + "%");
+		return ((SupplierRepository) repository).findByPersonFirstName(name + "%");
 	}
 
 }

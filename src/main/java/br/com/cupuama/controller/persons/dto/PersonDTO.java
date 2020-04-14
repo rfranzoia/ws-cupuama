@@ -2,10 +2,15 @@ package br.com.cupuama.controller.persons.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class PersonDTO {
 
 	private String firstName;
+	
 	private String lastName;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
 
 	private PersonDTO() {

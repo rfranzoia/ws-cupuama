@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.Services.users.passwordrules.PasswordRule;
 import br.com.cupuama.Services.users.passwordrules.PasswordRuleFactory;
+import br.com.cupuama.controller.persons.mapper.PersonMapper;
 import br.com.cupuama.controller.users.dto.UserDTO;
 import br.com.cupuama.controller.users.mapper.UserMapper;
 import br.com.cupuama.domain.users.User;
@@ -49,7 +50,7 @@ public class UserService extends DefaultService<User, String> {
 	@Transactional
 	public void update(final String userLogin, final UserDTO dto) throws EntityNotFoundException {
 		User user = findByIdChecked(userLogin);
-		user.setName(dto.getName());
+		user.setPerson(PersonMapper.makePerson(dto.getPerson()));
 		user.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
 	

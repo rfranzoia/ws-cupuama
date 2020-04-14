@@ -6,20 +6,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.com.cupuama.util.audit.DefaultAuditableEntity;
+import br.com.cupuama.domain.persons.DefaultPersonEntity;
+import br.com.cupuama.domain.persons.Person;
 
 @Entity
 @Table(name = "user")
-public class User extends DefaultAuditableEntity {
+public class User extends DefaultPersonEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String login;
-	
-	@Column(nullable = false)
-	@NotNull(message = "Name cannot be null!")
-	private String name;
 	
 	@Column(nullable = false)
 	@NotNull(message = "Password cannot be null!")
@@ -28,18 +25,18 @@ public class User extends DefaultAuditableEntity {
 	public User() {
 	}
 
-	public User(String login, String name, String password) {
+	public User(String login, Person person, String password) {
 		this.login = login;
-		this.name = name;
+		this.person = person;
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public Person getName() {
+		return person;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(Person person) {
+		this.person = person;
 	}
 
 	public String getLogin() {
@@ -85,7 +82,7 @@ public class User extends DefaultAuditableEntity {
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", login=" + login + "]";
+		return "User [person=" + person + ", login=" + login + "]";
 	}
 	
 }

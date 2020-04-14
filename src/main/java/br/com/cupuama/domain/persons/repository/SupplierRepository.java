@@ -12,6 +12,6 @@ import br.com.cupuama.domain.persons.Supplier;
  */
 public interface SupplierRepository extends CrudRepository<Supplier, Long> {
 
-    List<Supplier> findByNameLike(String name);
+    List<Supplier> findByPersonFirstName(String name);
 
 }

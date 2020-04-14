@@ -4,20 +4,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.cupuama.controller.persons.mapper.PersonMapper;
 import br.com.cupuama.controller.users.dto.UserDTO;
 import br.com.cupuama.domain.users.User;
 
 
 public class UserMapper {
 	public static User makeUser(UserDTO dto) {
-		return new User(dto.getLogin(), dto.getName(), dto.getPassword());
+		return new User(dto.getLogin(), PersonMapper.makePerson(dto.getPerson()), dto.getPassword());
 	}
 
-	public static UserDTO makeDTO(User depot) {
+	public static UserDTO makeDTO(User user) {
 		UserDTO.UserDTOBuilder depotDTOBuilder = UserDTO.newBuilder()
-				.setLogin(depot.getLogin())
-				.setName(depot.getName())
-				.setPassword(depot.getPassword());
+				.setLogin(user.getLogin())
+				.setPerson(PersonMapper.makeDTO(user.getPerson()))
+				.setPassword(user.getPassword());
 
 		return depotDTOBuilder.createUserDTO();
 	}

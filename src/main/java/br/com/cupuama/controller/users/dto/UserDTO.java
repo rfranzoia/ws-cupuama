@@ -5,13 +5,15 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.cupuama.controller.persons.dto.PersonDTO;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
 	
 	private String login;
 
 	@NotNull(message = "Name cannot be null!")
-	private String name;
+	private PersonDTO person;
 
 	private String password;
 	
@@ -20,9 +22,9 @@ public class UserDTO {
 	private UserDTO() {
 	}
 
-	private UserDTO(String login, String name, String password, String newPassword) {
+	private UserDTO(String login, PersonDTO person, String password, String newPassword) {
 		this.login = login;
-		this.name = name;
+		this.person = person;
 		this.password = password;
 		this.newPassword = newPassword;
 	}
@@ -37,8 +39,8 @@ public class UserDTO {
 	}
 
 	@JsonProperty
-	public String getName() {
-		return name;
+	public PersonDTO getPerson() {
+		return person;
 	}
 	
 	@JsonProperty
@@ -53,7 +55,7 @@ public class UserDTO {
 	
 	public static class UserDTOBuilder {
 		private String login;
-		private String name;
+		private PersonDTO person;
 		private String password;
 		private String newPassword;
 
@@ -62,8 +64,8 @@ public class UserDTO {
 			return this;
 		}
 		
-		public UserDTOBuilder setName(String name) {
-			this.name = name;
+		public UserDTOBuilder setPerson(PersonDTO person) {
+			this.person = person;
 			return this;
 		}
 		
@@ -78,7 +80,7 @@ public class UserDTO {
 		}
 		
 		public UserDTO createUserDTO() {
-			return new UserDTO(login, name, password, newPassword);
+			return new UserDTO(login, person, password, newPassword);
 		}
 	}
 }

@@ -12,6 +12,6 @@ import br.com.cupuama.domain.persons.Customer;
  */
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    List<Customer> findByNameLike(String name);
+    List<Customer> findByPersonFirstName(String firstName);
 
 }
