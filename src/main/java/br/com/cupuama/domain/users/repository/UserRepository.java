@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.users.User;
+import br.com.cupuama.domain.users.Users;
 
 /**
  * Repository interface for User table
  * <p/>
  */
-public interface UserRepository extends CrudRepository<User, String> {
+public interface UserRepository extends CrudRepository<Users, String> {
 
-    List<User> findByPersonFirstNameLike(String name);
+    List<Users> findByPersonFirstNameLike(String name);
 
 }

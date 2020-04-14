@@ -6,15 +6,15 @@ import java.util.stream.Collectors;
 
 import br.com.cupuama.controller.persons.mapper.PersonMapper;
 import br.com.cupuama.controller.users.dto.UserDTO;
-import br.com.cupuama.domain.users.User;
+import br.com.cupuama.domain.users.Users;
 
 
-public class UserMapper {
-	public static User makeUser(UserDTO dto) {
-		return new User(dto.getLogin(), PersonMapper.makePerson(dto.getPerson()), dto.getPassword());
+public class UsersMapper {
+	public static Users makeUser(UserDTO dto) {
+		return new Users(dto.getLogin(), PersonMapper.makePerson(dto.getPerson()), dto.getPassword());
 	}
 
-	public static UserDTO makeDTO(User user) {
+	public static UserDTO makeDTO(Users user) {
 		UserDTO.UserDTOBuilder depotDTOBuilder = UserDTO.newBuilder()
 				.setLogin(user.getLogin())
 				.setPerson(PersonMapper.makeDTO(user.getPerson()))
@@ -23,15 +23,15 @@ public class UserMapper {
 		return depotDTOBuilder.createUserDTO();
 	}
 
-	public static List<UserDTO> makeListDTO(Collection<User> depots) {
+	public static List<UserDTO> makeListDTO(Collection<Users> depots) {
 		return depots.stream()
-				.map(UserMapper::makeDTO)
+				.map(UsersMapper::makeDTO)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<User> makeList(Collection<UserDTO> dtos) {
+	public static List<Users> makeList(Collection<UserDTO> dtos) {
 		return dtos.stream()
-				.map(UserMapper::makeUser)
+				.map(UsersMapper::makeUser)
 				.collect(Collectors.toList());
 	}
 

@@ -3,7 +3,7 @@ package br.com.cupuama.services.users.passwordrules;
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.cupuama.controller.users.dto.UserDTO;
-import br.com.cupuama.domain.users.User;
+import br.com.cupuama.domain.users.Users;
 import br.com.cupuama.enums.RuleResult;
 
 public class MatchPasswordRule implements PasswordRule {
@@ -14,7 +14,7 @@ public class MatchPasswordRule implements PasswordRule {
 	}
 	
 	@Override
-	public RuleResult processRule(final User user, final UserDTO dto) {
+	public RuleResult processRule(final Users user, final UserDTO dto) {
 		return result = (!StringUtils.equals(user.getPassword(), dto.getPassword()))? RuleResult.FAIL: RuleResult.SUCCESS;
 	}
 	

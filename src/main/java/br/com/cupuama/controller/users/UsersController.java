@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cupuama.controller.users.dto.UserDTO;
-import br.com.cupuama.controller.users.mapper.UserMapper;
+import br.com.cupuama.controller.users.mapper.UsersMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.exception.InvalidRequestException;
@@ -29,18 +29,18 @@ import br.com.cupuama.services.users.UserService;
  */
 @RestController
 @RequestMapping("/v1/users")
-public class UserController {
+public class UsersController {
 
 	private final UserService userService;
 
 	@Autowired
-	public UserController(final UserService userService) {
+	public UsersController(final UserService userService) {
 		this.userService = userService;
 	}
 
 	@GetMapping("/{userLogin}")
 	public UserDTO getUser(@PathVariable final String userLogin) throws EntityNotFoundException {
-		return UserMapper.makeDTO(userService.find(userLogin));
+		return UsersMapper.makeDTO(userService.find(userLogin));
 	}
 
 	@PostMapping
@@ -68,11 +68,11 @@ public class UserController {
 
 	@GetMapping("/name/{name}")
 	public List<UserDTO> findUsersByName(@PathVariable final String name) {
-		return UserMapper.makeListDTO(userService.findByName(name));
+		return UsersMapper.makeListDTO(userService.findByName(name));
 	}
 
 	@GetMapping
 	public List<UserDTO> findAllUsers() {
-		return UserMapper.makeListDTO(userService.findAll());
+		return UsersMapper.makeListDTO(userService.findAll());
 	}
 }

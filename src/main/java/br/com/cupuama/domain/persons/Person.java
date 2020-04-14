@@ -24,6 +24,9 @@ public class Person {
 	@Temporal(value = TemporalType.DATE)
 	private Date dateOfBirth;
 	
+	public Person() {
+	}
+	
 	public Person(String firstName, String lastName, Date dateOfBirth) {
 		this.firstName = firstName;
 		this.lastName = lastName;

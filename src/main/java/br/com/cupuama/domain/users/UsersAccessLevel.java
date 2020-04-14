@@ -21,7 +21,7 @@ import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "user_access_level")
-public class UserAccessLevel extends DefaultAuditableEntity {
+public class UsersAccessLevel extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class UserAccessLevel extends DefaultAuditableEntity {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
+	private Users user;
 	
 	@Column(name =  "access_level")
 	@Enumerated(value = EnumType.STRING)
@@ -45,10 +45,10 @@ public class UserAccessLevel extends DefaultAuditableEntity {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date toDate;
 	
-	public UserAccessLevel() {
+	public UsersAccessLevel() {
 	}
 
-	public UserAccessLevel(Long id, User user, AccessLevel accessLevel, Date fromDate, Date toDate) {
+	public UsersAccessLevel(Long id, Users user, AccessLevel accessLevel, Date fromDate, Date toDate) {
 		this.id = id;
 		this.user = user;
 		this.accessLevel = accessLevel;
@@ -64,11 +64,11 @@ public class UserAccessLevel extends DefaultAuditableEntity {
 		this.id = id;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

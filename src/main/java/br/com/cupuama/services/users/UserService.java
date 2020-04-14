@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.controller.persons.mapper.PersonMapper;
 import br.com.cupuama.controller.users.dto.UserDTO;
-import br.com.cupuama.controller.users.mapper.UserMapper;
-import br.com.cupuama.domain.users.User;
+import br.com.cupuama.controller.users.mapper.UsersMapper;
+import br.com.cupuama.domain.users.Users;
 import br.com.cupuama.domain.users.repository.UserRepository;
 import br.com.cupuama.enums.RuleResult;
 import br.com.cupuama.exception.ConstraintsViolationException;
@@ -29,7 +29,7 @@ import br.com.cupuama.util.DefaultService;
  * <p/>
  */
 @Service
-public class UserService extends DefaultService<User, String> {
+public class UserService extends DefaultService<Users, String> {
 
 	public UserService(final UserRepository userRepository) {
 		super(userRepository);
@@ -37,8 +37,8 @@ public class UserService extends DefaultService<User, String> {
 
 	@Transactional
 	public UserDTO create(UserDTO dto) throws ConstraintsViolationException {
-		User user = UserMapper.makeUser(dto);
-		return UserMapper.makeDTO(create(user));
+		Users user = UsersMapper.makeUser(dto);
+		return UsersMapper.makeDTO(create(user));
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class UserService extends DefaultService<User, String> {
 	 */
 	@Transactional
 	public void update(final String userLogin, final UserDTO dto) throws EntityNotFoundException {
-		User user = findByIdChecked(userLogin);
+		Users user = findByIdChecked(userLogin);
 		user.setPerson(PersonMapper.makePerson(dto.getPerson()));
 		user.getAudit().setDateUpdated(ZonedDateTime.now());
 	}
@@ -63,7 +63,7 @@ public class UserService extends DefaultService<User, String> {
 	 */
 	@Transactional
 	public void updatePassword(final String userLogin, final UserDTO dto) throws EntityNotFoundException, InvalidRequestException {
-		User user = findByIdChecked(userLogin);
+		Users user = findByIdChecked(userLogin);
 		
 		validatePassword(dto, user);
 		
@@ -77,7 +77,7 @@ public class UserService extends DefaultService<User, String> {
 	 * @param dto
 	 * @param user
 	 */
-	private void validatePassword(final UserDTO dto, User user) {
+	private void validatePassword(final UserDTO dto, Users user) {
 		List<InvalidRequestException> errors = new ArrayList<>();
 		
 		// Password validation action
@@ -104,7 +104,7 @@ public class UserService extends DefaultService<User, String> {
 	 *
 	 * @param name
 	 */
-	public List<User> findByName(final String name) {
+	public List<Users> findByName(final String name) {
 		return ((UserRepository) repository).findByPersonFirstNameLike(name + "%");
 	}
 

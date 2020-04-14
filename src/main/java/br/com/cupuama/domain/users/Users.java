@@ -10,8 +10,8 @@ import br.com.cupuama.domain.persons.DefaultPersonEntity;
 import br.com.cupuama.domain.persons.Person;
 
 @Entity
-@Table(name = "user")
-public class User extends DefaultPersonEntity {
+@Table(name = "users")
+public class Users extends DefaultPersonEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,10 +22,10 @@ public class User extends DefaultPersonEntity {
 	@NotNull(message = "Password cannot be null!")
 	private String password;
 	
-	public User() {
+	public Users() {
 	}
 
-	public User(String login, Person person, String password) {
+	public Users(String login, Person person, String password) {
 		this.login = login;
 		this.person = person;
 		this.password = password;
@@ -71,7 +71,7 @@ public class User extends DefaultPersonEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		if (login == null) {
 			if (other.getLogin() != null)
 				return false;
