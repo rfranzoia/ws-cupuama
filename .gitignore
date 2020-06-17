@@ -2,3 +2,34 @@ target/
 .settings/
 *.log
 *.*~
+<<<<<<< HEAD
+=======
+.classpath
+.settings/
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+bin/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+>>>>>>> a13e5eee45fd7ba471cd910b06201cdd166ddecb
