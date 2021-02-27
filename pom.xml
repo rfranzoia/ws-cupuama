@@ -6,11 +6,11 @@
 
 	<groupId>br.com.cupuama</groupId>
 	<artifactId>cupuama</artifactId>
-	<version>0.0.2</version>
+	<version>1.0.3</version>
 	<packaging>jar</packaging>
 
-	<name>cupuama</name>
-	<description>Cupuama Spring Boot services</description>
+	<name>cupuama-app</name>
+	<description>Cupuama web services using spring boot, postgres, docker and other technologies</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
