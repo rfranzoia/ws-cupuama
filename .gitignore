@@ -6,6 +6,7 @@ target/
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 bin/
+.DS_Store
 
 ### STS ###
 .apt_generated
