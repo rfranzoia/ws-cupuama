@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
-@Table(name = "product", uniqueConstraints = @UniqueConstraint(name = "uc_product_name", columnNames = { "name" }))
+@Table(name = "products", uniqueConstraints = @UniqueConstraint(name = "uc_product_name", columnNames = { "name" }))
 public class Products extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;

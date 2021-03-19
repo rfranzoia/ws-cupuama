@@ -130,7 +130,7 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 		try {
 			Products products = productsService.find(productId);
 			Fruits fruits = fruitsService.find(fruitId);
-			return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProductAndFruit(products, fruits));
+			return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProductsAndFruits(products, fruits));
 		} catch (EntityNotFoundException ex) {
 			LOG.error(String.format("Either a Product(ID:%d) or Fruit(ID:%d) was not found!", productId, fruitId), ex);
 			return new ArrayList<ProcessingDetailDTO>();
