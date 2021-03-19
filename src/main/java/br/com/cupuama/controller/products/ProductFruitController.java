@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.controller.products.dto.FruitDTO;
-import br.com.cupuama.controller.products.dto.ProductDTO;
+import br.com.cupuama.controller.products.dto.FruitsDTO;
+import br.com.cupuama.controller.products.dto.ProductsDTO;
 import br.com.cupuama.controller.products.dto.ProductFruitDTO;
-import br.com.cupuama.controller.products.mapper.FruitMapper;
+import br.com.cupuama.controller.products.mapper.FruitsMapper;
 import br.com.cupuama.controller.products.mapper.ProductFruitMapper;
-import br.com.cupuama.controller.products.mapper.ProductMapper;
+import br.com.cupuama.controller.products.mapper.ProductsMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
 import br.com.cupuama.services.products.ProductFruitService;
@@ -84,13 +84,13 @@ public class ProductFruitController {
 	
 	@PutMapping("/product/{productId}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public List<ProductFruitDTO> syncronizeFruitsForProductId(@PathVariable final long productId, @RequestBody final List<FruitDTO> fruits) throws EntityNotFoundException {
-		return productFruitService.syncronizeFruitsForProductId(productId, FruitMapper.makeList(fruits));
+	public List<ProductFruitDTO> syncronizeFruitsForProductId(@PathVariable final long productId, @RequestBody final List<FruitsDTO> fruits) throws EntityNotFoundException {
+		return productFruitService.syncronizeFruitsForProductId(productId, FruitsMapper.makeList(fruits));
 	}
 	
 	@PutMapping("/fruit/{fruitId}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public List<ProductFruitDTO> synchronizeProductsForFruitId(@PathVariable final long fruitId, @RequestBody final List<ProductDTO> products) throws EntityNotFoundException {
-		return productFruitService.synchronizeProductsForFruitId(fruitId, ProductMapper.makeList(products));
+	public List<ProductFruitDTO> synchronizeProductsForFruitId(@PathVariable final long fruitId, @RequestBody final List<ProductsDTO> products) throws EntityNotFoundException {
+		return productFruitService.synchronizeProductsForFruitId(fruitId, ProductsMapper.makeList(products));
 	}
 }

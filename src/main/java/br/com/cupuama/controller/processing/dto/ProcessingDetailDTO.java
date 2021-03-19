@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.cupuama.controller.products.dto.FruitDTO;
-import br.com.cupuama.controller.products.dto.ProductDTO;
+import br.com.cupuama.controller.products.dto.FruitsDTO;
+import br.com.cupuama.controller.products.dto.ProductsDTO;
 import br.com.cupuama.controller.stock.dto.DepotDTO;
 import br.com.cupuama.enums.StocktakeInOut;
 
@@ -19,10 +19,10 @@ public class ProcessingDetailDTO {
 	private ProcessingDTO processing;
 	
 	@NotNull(message = "Product cannot be null!")
-	private ProductDTO product;
+	private ProductsDTO product;
 	
 	@NotNull(message = "Fruit cannot be null!")
-	private FruitDTO fruit;
+	private FruitsDTO fruit;
 	
 	@NotNull(message = "Depot cannot be null!")
 	private DepotDTO depot;
@@ -38,8 +38,8 @@ public class ProcessingDetailDTO {
 	
 	private Double discount;
 	
-	public ProcessingDetailDTO(Long id, ProcessingDTO processing, ProductDTO product, FruitDTO fruit, DepotDTO depot, 
-								StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
+	public ProcessingDetailDTO(Long id, ProcessingDTO processing, ProductsDTO product, FruitsDTO fruit, DepotDTO depot,
+							   StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
 		this.id = id;
 		this.processing = processing;
 		this.product = product;
@@ -62,12 +62,12 @@ public class ProcessingDetailDTO {
 	}
 
 	@JsonProperty
-	public ProductDTO getProduct() {
+	public ProductsDTO getProduct() {
 		return product;
 	}
 
 	@JsonProperty
-	public FruitDTO getFruit() {
+	public FruitsDTO getFruit() {
 		return fruit;
 	}
 	
@@ -103,8 +103,8 @@ public class ProcessingDetailDTO {
 	public static class ProcessingDetailDTOBuilder {
 		private Long id;
 		private ProcessingDTO processing;
-		private ProductDTO product;
-		private FruitDTO fruit;
+		private ProductsDTO product;
+		private FruitsDTO fruit;
 		private DepotDTO depot;
 		private StocktakeInOut stocktakeInOut;
 		private Double amount;
@@ -121,12 +121,12 @@ public class ProcessingDetailDTO {
 			return this;
 		}
 
-		public ProcessingDetailDTOBuilder setProduct(ProductDTO product) {
+		public ProcessingDetailDTOBuilder setProduct(ProductsDTO product) {
 			this.product = product;
 			return this;
 		}
 
-		public ProcessingDetailDTOBuilder setFruit(FruitDTO fruit) {
+		public ProcessingDetailDTOBuilder setFruit(FruitsDTO fruit) {
 			this.fruit = fruit;
 			return this;
 		}

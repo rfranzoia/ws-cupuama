@@ -9,15 +9,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ProductFruitDTO {
 	
 	@NotNull(message = "Product cannot be null!")
-	private ProductDTO product;
+	private ProductsDTO product;
 
 	@NotNull(message = "Fruit cannot be null!")
-	private FruitDTO fruit;
+	private FruitsDTO fruit;
 	
 	private ProductFruitDTO() {
 	}
 
-	private ProductFruitDTO(ProductDTO product, FruitDTO fruit) {
+	private ProductFruitDTO(ProductsDTO product, FruitsDTO fruit) {
 		this.product = product;
 		this.fruit = fruit;
 	}
@@ -27,26 +27,26 @@ public class ProductFruitDTO {
 	}
 
 	@JsonProperty
-	public ProductDTO getProduct() {
+	public ProductsDTO getProduct() {
 		return product;
 	}
 
 
 	@JsonProperty
-	public FruitDTO getFruit() {
+	public FruitsDTO getFruit() {
 		return fruit;
 	}
 	
 	public static class ProductFruitDTOBuilder {
-		private ProductDTO product;
-		private FruitDTO fruit;
+		private ProductsDTO product;
+		private FruitsDTO fruit;
 
-		public ProductFruitDTOBuilder setProduct(ProductDTO product) {
+		public ProductFruitDTOBuilder setProduct(ProductsDTO product) {
 			this.product = product;
 			return this;
 		}
 
-		public ProductFruitDTOBuilder setFruit(FruitDTO fruit) {
+		public ProductFruitDTOBuilder setFruit(FruitsDTO fruit) {
 			this.fruit = fruit;
 			return this;
 		}

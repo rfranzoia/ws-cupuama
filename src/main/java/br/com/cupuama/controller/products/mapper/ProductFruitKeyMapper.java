@@ -6,13 +6,13 @@ import br.com.cupuama.domain.products.ProductFruitId;
 
 public class ProductFruitKeyMapper {
 	public static ProductFruitId makeId(ProductFruitKey key) {
-		return new ProductFruitId(ProductMapper.makeProduct(key.getProduct()), 
-										FruitMapper.makeFruit(key.getFruit()));
+		return new ProductFruitId(ProductsMapper.makeProduct(key.getProduct()),
+										FruitsMapper.makeFruit(key.getFruit()));
 	}
 
 	public static ProductFruitKey makeKey(ProductFruitId id) {
-		return new ProductFruitKey(ProductMapper.makeDTO(id.getProduct()), 
-										FruitMapper.makeDTO(id.getFruit()));
+		return new ProductFruitKey(ProductsMapper.makeDTO(id.getProduct()),
+										FruitsMapper.makeDTO(id.getFruit()));
 	}
 
 }

@@ -7,8 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import br.com.cupuama.domain.products.Fruit;
-import br.com.cupuama.domain.products.Product;
+import br.com.cupuama.domain.products.Fruits;
+import br.com.cupuama.domain.products.Products;
 
 @Embeddable
 public class InventoryId implements Serializable {
@@ -19,11 +19,11 @@ public class InventoryId implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
+	private Products products;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fruit_id", nullable = false)
-	private Fruit fruit;
+	private Fruits fruits;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "depot_id", nullable = false)
@@ -32,10 +32,10 @@ public class InventoryId implements Serializable {
 	public InventoryId() {
 	}
 	
-	public InventoryId(String period, Product product, Fruit fruit, Depot depot) {
+	public InventoryId(String period, Products products, Fruits fruits, Depot depot) {
 		this.period = period;
-		this.product = product;
-		this.fruit = fruit;
+		this.products = products;
+		this.fruits = fruits;
 		this.depot = depot;
 	}
 
@@ -47,20 +47,20 @@ public class InventoryId implements Serializable {
 		this.period = period;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Products getProduct() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProduct(Products products) {
+		this.products = products;
 	}
 
-	public Fruit getFruit() {
-		return fruit;
+	public Fruits getFruit() {
+		return fruits;
 	}
 
-	public void setFruit(Fruit fruit) {
-		this.fruit = fruit;
+	public void setFruit(Fruits fruits) {
+		this.fruits = fruits;
 	}
 
 	public Depot getDepot() {
@@ -76,9 +76,9 @@ public class InventoryId implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((depot == null) ? 0 : depot.hashCode());
-		result = prime * result + ((fruit == null) ? 0 : fruit.hashCode());
+		result = prime * result + ((fruits == null) ? 0 : fruits.hashCode());
 		result = prime * result + ((period == null) ? 0 : period.hashCode());
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + ((products == null) ? 0 : products.hashCode());
 		return result;
 	}
 
@@ -96,20 +96,20 @@ public class InventoryId implements Serializable {
 				return false;
 		} else if (!depot.equals(other.getDepot()))
 			return false;
-		if (fruit == null) {
+		if (fruits == null) {
 			if (other.getFruit() != null)
 				return false;
-		} else if (!fruit.equals(other.getFruit()))
+		} else if (!fruits.equals(other.getFruit()))
 			return false;
 		if (period == null) {
 			if (other.getPeriod() != null)
 				return false;
 		} else if (!period.equals(other.getPeriod()))
 			return false;
-		if (product == null) {
+		if (products == null) {
 			if (other.getProduct() != null)
 				return false;
-		} else if (!product.equals(other.getProduct()))
+		} else if (!products.equals(other.getProduct()))
 			return false;
 		return true;
 	}
@@ -117,15 +117,15 @@ public class InventoryId implements Serializable {
 	@Override
 	public String toString() {
 		return "InventoryKey [period=" + period 
-				+ ", product=" + product.toString() 
-				+ ", fruit=" + fruit.toString() 
+				+ ", product=" + products.toString()
+				+ ", fruit=" + fruits.toString()
 				+ ", depot=" + depot.toString()
 				+ "]";
 	}
 	
 	@Override
 	public InventoryId clone() {
-		return new InventoryId(period, product.clone(), fruit.clone(), depot.clone());
+		return new InventoryId(period, products.clone(), fruits.clone(), depot.clone());
 	}
 	
 }

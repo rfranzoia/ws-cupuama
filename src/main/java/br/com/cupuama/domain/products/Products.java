@@ -13,7 +13,7 @@ import br.com.cupuama.util.audit.DefaultAuditableEntity;
 
 @Entity
 @Table(name = "product", uniqueConstraints = @UniqueConstraint(name = "uc_product_name", columnNames = { "name" }))
-public class Product extends DefaultAuditableEntity {
+public class Products extends DefaultAuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,17 +29,17 @@ public class Product extends DefaultAuditableEntity {
 	@NotNull(message = "Unit cannot be null!")
 	private String unit;
 
-	public Product() {
+	public Products() {
 	}
 
 
-	public Product(Long id, String name, String unit) {
+	public Products(Long id, String name, String unit) {
 		this.id = id;
 		this.name = name;
 		this.unit = unit;
 	}
 
-	public Product(Long id) {
+	public Products(Long id) {
 		this.id = id;
 	}
 	public Long getId() {
@@ -82,7 +82,7 @@ public class Product extends DefaultAuditableEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Product other = (Product) obj;
+		Products other = (Products) obj;
 		if (id == null) {
 			if (other.getId() != null)
 				return false;
@@ -92,8 +92,8 @@ public class Product extends DefaultAuditableEntity {
 	}
 	
 	@Override
-	public Product clone() {
-		return new Product(this.id, this.name, this.unit);
+	public Products clone() {
+		return new Products(this.id, this.name, this.unit);
 	}
 
 }

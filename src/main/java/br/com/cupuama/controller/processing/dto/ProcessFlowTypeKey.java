@@ -2,7 +2,7 @@ package br.com.cupuama.controller.processing.dto;
 
 import java.io.Serializable;
 
-import br.com.cupuama.controller.products.dto.ProductDTO;
+import br.com.cupuama.controller.products.dto.ProductsDTO;
 import br.com.cupuama.enums.StocktakeInOut;
 
 public class ProcessFlowTypeKey implements Serializable {
@@ -10,13 +10,13 @@ public class ProcessFlowTypeKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private ProcessTypeDTO processType;
-	private ProductDTO product;
+	private ProductsDTO product;
 	private StocktakeInOut stocktakeInOut;
 
 	public ProcessFlowTypeKey() {
 	}
 
-	public ProcessFlowTypeKey(ProcessTypeDTO processType, ProductDTO product, StocktakeInOut stocktakeInOut) {
+	public ProcessFlowTypeKey(ProcessTypeDTO processType, ProductsDTO product, StocktakeInOut stocktakeInOut) {
 		this.processType = processType;
 		this.product = product;
 		this.stocktakeInOut = stocktakeInOut;
@@ -30,11 +30,11 @@ public class ProcessFlowTypeKey implements Serializable {
 		this.processType = processType;
 	}
 
-	public ProductDTO getProduct() {
+	public ProductsDTO getProduct() {
 		return product;
 	}
 
-	public void setProduct(ProductDTO product) {
+	public void setProduct(ProductsDTO product) {
 		this.product = product;
 	}
 

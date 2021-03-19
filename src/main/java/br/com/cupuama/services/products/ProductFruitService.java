@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cupuama.controller.products.dto.ProductFruitDTO;
 import br.com.cupuama.controller.products.mapper.ProductFruitMapper;
-import br.com.cupuama.domain.products.Fruit;
-import br.com.cupuama.domain.products.Product;
+import br.com.cupuama.domain.products.Fruits;
+import br.com.cupuama.domain.products.Products;
 import br.com.cupuama.domain.products.ProductFruit;
 import br.com.cupuama.domain.products.ProductFruitId;
 import br.com.cupuama.domain.products.repository.ProductFruitRepository;
@@ -24,10 +24,10 @@ import br.com.cupuama.util.DefaultService;
 public class ProductFruitService extends DefaultService<ProductFruit, ProductFruitId> {
 
 	@Autowired
-	private ProductService productService;
+	private ProductsService productsService;
 	
 	@Autowired
-	private FruitService fruitService;
+	private FruitsService fruitsService;
 	
     public ProductFruitService(final CrudRepository<ProductFruit, ProductFruitId> repository) {
 		super(repository);
@@ -50,9 +50,9 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     }
 
 	private ProductFruitId getProductFruitId(Long productId, Long fruitId) throws EntityNotFoundException {
-		final Product product = productService.find(productId);
-		final Fruit fruit = fruitService.find(fruitId);
-		return new ProductFruitId(product, fruit);
+		final Products products = productsService.find(productId);
+		final Fruits fruits = fruitsService.find(fruitId);
+		return new ProductFruitId(products, fruits);
 	}
     /**
      * deletes all association of fruits with the productId 
@@ -116,8 +116,8 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public List<ProductFruitDTO> syncronizeFruitsForProductId(final Long productId, final List<Fruit> fruits) throws EntityNotFoundException {
-    	Product product = productService.find(productId);
+    public List<ProductFruitDTO> syncronizeFruitsForProductId(final Long productId, final List<Fruits> fruits) throws EntityNotFoundException {
+    	Products products = productsService.find(productId);
     	
     	// attempts to delete all previous association with the current productId
     	try {
@@ -128,10 +128,10 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	
     	List<ProductFruitDTO> associations = new ArrayList<>();
     	
-    	final Predicate<Fruit> createProductFruit = fruit -> {
+    	final Predicate<Fruits> createProductFruit = fruit -> {
     		try {
-    			fruit = fruitService.find(fruit.getId());
-    			final ProductFruitId key = new ProductFruitId(product, fruit);
+    			fruit = fruitsService.find(fruit.getId());
+    			final ProductFruitId key = new ProductFruitId(products, fruit);
 
     			ProductFruit productFruit = new ProductFruit();
         		productFruit.setId(key);
@@ -160,8 +160,8 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
      * @throws EntityNotFoundException
      */
     @Transactional
-    public List<ProductFruitDTO> synchronizeProductsForFruitId(final Long fruitId, final List<Product> products) throws EntityNotFoundException {
-    	Fruit fruit = fruitService.find(fruitId);
+    public List<ProductFruitDTO> synchronizeProductsForFruitId(final Long fruitId, final List<Products> products) throws EntityNotFoundException {
+    	Fruits fruits = fruitsService.find(fruitId);
     	
     	// attempts to delete all previous association with the current fruitId
     	try {
@@ -172,10 +172,10 @@ public class ProductFruitService extends DefaultService<ProductFruit, ProductFru
     	
     	List<ProductFruitDTO> associations = new ArrayList<>();
     	
-    	final Predicate<Product> createProductFruit = product -> {
+    	final Predicate<Products> createProductFruit = product -> {
     		try {
-    			product = productService.find(product.getId());
-    			final ProductFruitId key = new ProductFruitId(product, fruit);
+    			product = productsService.find(product.getId());
+    			final ProductFruitId key = new ProductFruitId(product, fruits);
     			
         		ProductFruit productFruit = new ProductFruit();
         		productFruit.setId(key);

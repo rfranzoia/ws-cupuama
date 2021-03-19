@@ -12,8 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import br.com.cupuama.domain.products.Fruit;
-import br.com.cupuama.domain.products.Product;
+import br.com.cupuama.domain.products.Fruits;
+import br.com.cupuama.domain.products.Products;
 import br.com.cupuama.domain.stock.Depot;
 import br.com.cupuama.enums.StocktakeInOut;
 import br.com.cupuama.util.audit.DefaultAuditableEntity;
@@ -34,11 +34,11 @@ public class ProcessingDetail extends DefaultAuditableEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
+	private Products products;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fruit_id", nullable = false)
-	private Fruit fruit;
+	private Fruits fruits;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "depot_id", nullable = false)
@@ -60,12 +60,12 @@ public class ProcessingDetail extends DefaultAuditableEntity {
 	public ProcessingDetail() {
 	}
 	
-	public ProcessingDetail(Long id, Processing process, Product product, Fruit fruit, Depot depot,
-			StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
+	public ProcessingDetail(Long id, Processing process, Products products, Fruits fruits, Depot depot,
+							StocktakeInOut stocktakeInOut, Double amount, Double price, Double discount) {
 		this.id = id;
 		this.processing = process;
-		this.product = product;
-		this.fruit = fruit;
+		this.products = products;
+		this.fruits = fruits;
 		this.depot = depot;
 		this.stocktakeInOut = stocktakeInOut;
 		this.amount = amount;
@@ -89,20 +89,20 @@ public class ProcessingDetail extends DefaultAuditableEntity {
 		this.processing = processing;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Products getProduct() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProduct(Products products) {
+		this.products = products;
 	}
 
-	public Fruit getFruit() {
-		return fruit;
+	public Fruits getFruit() {
+		return fruits;
 	}
 
-	public void setFruit(Fruit fruit) {
-		this.fruit = fruit;
+	public void setFruit(Fruits fruits) {
+		this.fruits = fruits;
 	}
 
 	public Depot getDepot() {
@@ -172,7 +172,7 @@ public class ProcessingDetail extends DefaultAuditableEntity {
 
 	@Override
 	public String toString() {
-		return "ProcessDetail [id=" + id + ", process=" + processing + ", product=" + product + ", fruit=" + fruit
+		return "ProcessDetail [id=" + id + ", process=" + processing + ", product=" + products + ", fruit=" + fruits
 				+ ", depot=" + depot + ", stocktakeInOut=" + stocktakeInOut + ", amount=" + amount + ", price=" + price
 				+ ", discount=" + discount + "]";
 	}

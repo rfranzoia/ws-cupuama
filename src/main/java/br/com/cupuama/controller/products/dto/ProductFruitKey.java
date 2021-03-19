@@ -2,30 +2,30 @@ package br.com.cupuama.controller.products.dto;
 
 public class ProductFruitKey {
 
-	private ProductDTO product;
-	private FruitDTO fruit;
+	private ProductsDTO product;
+	private FruitsDTO fruit;
 
 	public ProductFruitKey() {
 	}
 	
-	public ProductFruitKey(ProductDTO product, FruitDTO fruit) {
+	public ProductFruitKey(ProductsDTO product, FruitsDTO fruit) {
 		this.product = product;
 		this.fruit = fruit;
 	}
 
-	public ProductDTO getProduct() {
+	public ProductsDTO getProduct() {
 		return product;
 	}
 
-	public void setProduct(ProductDTO product) {
+	public void setProduct(ProductsDTO product) {
 		this.product = product;
 	}
 
-	public FruitDTO getFruit() {
+	public FruitsDTO getFruit() {
 		return fruit;
 	}
 
-	public void setFruit(FruitDTO fruit) {
+	public void setFruit(FruitsDTO fruit) {
 		this.fruit = fruit;
 	}
 

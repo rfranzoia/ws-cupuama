@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FruitDTO {
+public class FruitsDTO {
 	
 	private Long id;
 
@@ -18,10 +18,10 @@ public class FruitDTO {
 	
 	private String harvest;
 
-	private FruitDTO() {
+	private FruitsDTO() {
 	}
 
-	private FruitDTO(Long id, String name, String initials, String harvest) {
+	private FruitsDTO(Long id, String name, String initials, String harvest) {
 		this.id = id;
 		this.name = name;
 		this.initials = initials;
@@ -78,8 +78,8 @@ public class FruitDTO {
 			return this;
 		}
 
-		public FruitDTO createFruitDTO() {
-			return new FruitDTO(id, name, initials, harvest);
+		public FruitsDTO createFruitDTO() {
+			return new FruitsDTO(id, name, initials, harvest);
 		}
 	}
 }

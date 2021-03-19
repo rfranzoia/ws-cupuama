@@ -14,42 +14,42 @@ public class ProductFruitId implements Serializable{
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
+	private Products products;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fruit_id", nullable = false)
-	private Fruit fruit;
+	private Fruits fruits;
 
 	public ProductFruitId() {
 	}
 	
-	public ProductFruitId(Product product, Fruit fruit) {
-		this.product = product;
-		this.fruit = fruit;
+	public ProductFruitId(Products products, Fruits fruits) {
+		this.products = products;
+		this.fruits = fruits;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Products getProduct() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProduct(Products products) {
+		this.products = products;
 	}
 
-	public Fruit getFruit() {
-		return fruit;
+	public Fruits getFruit() {
+		return fruits;
 	}
 
-	public void setFruit(Fruit fruit) {
-		this.fruit = fruit;
+	public void setFruit(Fruits fruits) {
+		this.fruits = fruits;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((fruit == null) ? 0 : fruit.hashCode());
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + ((fruits == null) ? 0 : fruits.hashCode());
+		result = prime * result + ((products == null) ? 0 : products.hashCode());
 		return result;
 	}
 
@@ -62,22 +62,22 @@ public class ProductFruitId implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ProductFruitId other = (ProductFruitId) obj;
-		if (fruit == null) {
+		if (fruits == null) {
 			if (other.getFruit() != null)
 				return false;
-		} else if (!fruit.equals(other.getFruit()))
+		} else if (!fruits.equals(other.getFruit()))
 			return false;
-		if (product == null) {
+		if (products == null) {
 			if (other.getProduct() != null)
 				return false;
-		} else if (!product.equals(other.getProduct()))
+		} else if (!products.equals(other.getProduct()))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ProdutoFrutaKey [produto=" + product + ", fruta=" + fruit + "]";
+		return "ProdutoFrutaKey [produto=" + products + ", fruta=" + fruits + "]";
 	}
 	
 	

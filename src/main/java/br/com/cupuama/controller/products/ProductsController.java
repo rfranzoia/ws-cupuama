@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cupuama.controller.products.dto.ProductDTO;
-import br.com.cupuama.controller.products.mapper.ProductMapper;
+import br.com.cupuama.controller.products.dto.ProductsDTO;
+import br.com.cupuama.controller.products.mapper.ProductsMapper;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
-import br.com.cupuama.services.products.ProductService;
+import br.com.cupuama.services.products.ProductsService;
 
 /**
  * All operations with a product will be routed by this controller.
@@ -28,44 +28,44 @@ import br.com.cupuama.services.products.ProductService;
  */
 @RestController
 @RequestMapping("/v1/products")
-public class ProductController {
+public class ProductsController {
 
-	private final ProductService productService;
+	private final ProductsService productsService;
 
 	@Autowired
-	public ProductController(final ProductService productService) {
-		this.productService = productService;
+	public ProductsController(final ProductsService productsService) {
+		this.productsService = productsService;
 	}
 
 	@GetMapping("/{productId}")
-	public ProductDTO getProduct(@PathVariable final long productId) throws EntityNotFoundException {
-		return ProductMapper.makeDTO(productService.find(productId));
+	public ProductsDTO getProduct(@PathVariable final long productId) throws EntityNotFoundException {
+		return ProductsMapper.makeDTO(productsService.find(productId));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ProductDTO createProduct(@Valid @RequestBody final ProductDTO productDTO) throws ConstraintsViolationException {
-		return productService.create(productDTO);
+	public ProductsDTO createProduct(@Valid @RequestBody final ProductsDTO productsDTO) throws ConstraintsViolationException {
+		return productsService.create(productsDTO);
 	}
 
 	@DeleteMapping("/{productId}")
 	public void deleteProduct(@PathVariable final long productId) throws EntityNotFoundException {
-		productService.delete(productId);
+		productsService.delete(productId);
 	}
 
 	@PutMapping("/{productId}")
-	public void update(@PathVariable final long productId, @RequestBody final ProductDTO productDTO)
+	public void update(@PathVariable final long productId, @RequestBody final ProductsDTO productsDTO)
 			throws EntityNotFoundException {
-		productService.update(productId, productDTO);
+		productsService.update(productId, productsDTO);
 	}
 
 	@GetMapping("/name/{name}")
-	public List<ProductDTO> findProductsByName(@PathVariable final String name) {
-		return ProductMapper.makeListDTO(productService.findByName(name));
+	public List<ProductsDTO> findProductsByName(@PathVariable final String name) {
+		return ProductsMapper.makeListDTO(productsService.findByName(name));
 	}
 
 	@GetMapping
-	public List<ProductDTO> findAllProducts() {
-		return ProductMapper.makeListDTO(productService.findAll());
+	public List<ProductsDTO> findAllProducts() {
+		return ProductsMapper.makeListDTO(productsService.findAll());
 	}
 }

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductDTO {
+public class ProductsDTO {
 	
 	private Long id;
 
@@ -16,10 +16,10 @@ public class ProductDTO {
 	@NotNull(message = "Unit cannot be null!")
 	private String unit;
 
-	private ProductDTO() {
+	private ProductsDTO() {
 	}
 
-	private ProductDTO(Long id, String name, String unit) {
+	private ProductsDTO(Long id, String name, String unit) {
 		this.id = id;
 		this.name = name;
 		this.unit = unit;
@@ -64,8 +64,8 @@ public class ProductDTO {
 			return this;
 		}
 
-		public ProductDTO createProductDTO() {
-			return new ProductDTO(id, name, unit);
+		public ProductsDTO createProductDTO() {
+			return new ProductsDTO(id, name, unit);
 		}
 	}
 }

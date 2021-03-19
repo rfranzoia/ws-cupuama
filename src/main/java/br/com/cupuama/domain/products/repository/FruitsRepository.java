@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.products.Fruit;
+import br.com.cupuama.domain.products.Fruits;
 
 /**
  * Repository interface for Fruit table
  * <p/>
  */
-public interface FruitRepository extends CrudRepository<Fruit, Long> {
+public interface FruitsRepository extends CrudRepository<Fruits, Long> {
 
-    List<Fruit> findByNameLike(String name);
+    List<Fruits> findByNameLike(String name);
 
 }

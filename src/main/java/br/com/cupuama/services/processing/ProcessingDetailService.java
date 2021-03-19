@@ -14,12 +14,12 @@ import br.com.cupuama.controller.processing.mapper.ProcessingDetailMapper;
 import br.com.cupuama.domain.processing.Processing;
 import br.com.cupuama.domain.processing.ProcessingDetail;
 import br.com.cupuama.domain.processing.repository.ProcessingDetailRepository;
-import br.com.cupuama.domain.products.Fruit;
-import br.com.cupuama.domain.products.Product;
+import br.com.cupuama.domain.products.Fruits;
+import br.com.cupuama.domain.products.Products;
 import br.com.cupuama.exception.ConstraintsViolationException;
 import br.com.cupuama.exception.EntityNotFoundException;
-import br.com.cupuama.services.products.FruitService;
-import br.com.cupuama.services.products.ProductService;
+import br.com.cupuama.services.products.FruitsService;
+import br.com.cupuama.services.products.ProductsService;
 import br.com.cupuama.util.DefaultService;
 
 
@@ -32,10 +32,10 @@ import br.com.cupuama.util.DefaultService;
 public class ProcessingDetailService extends DefaultService<ProcessingDetail, Long> {
 
 	@Autowired
-	private ProductService productService;
+	private ProductsService productsService;
 	
 	@Autowired
-	private FruitService fruitService;
+	private FruitsService fruitsService;
 	
 	public ProcessingDetailService(final ProcessingDetailRepository processingDetailRepository) {
 		super(processingDetailRepository);
@@ -128,9 +128,9 @@ public class ProcessingDetailService extends DefaultService<ProcessingDetail, Lo
 	 */
 	public List<ProcessingDetailDTO> findByProductAndFruit(final Long productId, final Long fruitId) {
 		try {
-			Product product = productService.find(productId);
-			Fruit fruit = fruitService.find(fruitId);
-			return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProductAndFruit(product, fruit));
+			Products products = productsService.find(productId);
+			Fruits fruits = fruitsService.find(fruitId);
+			return ProcessingDetailMapper.makeListDTO(((ProcessingDetailRepository) repository).findByProductAndFruit(products, fruits));
 		} catch (EntityNotFoundException ex) {
 			LOG.error(String.format("Either a Product(ID:%d) or Fruit(ID:%d) was not found!", productId, fruitId), ex);
 			return new ArrayList<ProcessingDetailDTO>();

@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.cupuama.domain.processing.Processing;
 import br.com.cupuama.domain.processing.ProcessingDetail;
-import br.com.cupuama.domain.products.Fruit;
-import br.com.cupuama.domain.products.Product;
+import br.com.cupuama.domain.products.Fruits;
+import br.com.cupuama.domain.products.Products;
 
 /**
  * Repository interface for ProcessingDetail table
@@ -20,7 +20,7 @@ public interface ProcessingDetailRepository extends CrudRepository<ProcessingDet
 
 	List<ProcessingDetail> findByProcessing(final Processing processing);
 	
-	List<ProcessingDetail> findByProductAndFruit(final Product product, final Fruit fruit);
+	List<ProcessingDetail> findByProductAndFruit(final Products products, final Fruits fruits);
 	
 	@Query(nativeQuery = true, 
 			value = "select pd.* " + 

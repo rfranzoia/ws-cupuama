@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
-import br.com.cupuama.controller.products.dto.FruitDTO;
-import br.com.cupuama.controller.products.dto.ProductDTO;
+import br.com.cupuama.controller.products.dto.FruitsDTO;
+import br.com.cupuama.controller.products.dto.ProductsDTO;
 
 @Embeddable
 public class InventoryKey implements Serializable {
@@ -13,14 +13,14 @@ public class InventoryKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String period;
-	private ProductDTO product;
-	private FruitDTO fruit;
+	private ProductsDTO product;
+	private FruitsDTO fruit;
 	private DepotDTO depot;
 
 	public InventoryKey() {
 	}
 	
-	public InventoryKey(String period, ProductDTO product, FruitDTO fruit, DepotDTO depot) {
+	public InventoryKey(String period, ProductsDTO product, FruitsDTO fruit, DepotDTO depot) {
 		this.period = period;
 		this.product = product;
 		this.fruit = fruit;
@@ -35,19 +35,19 @@ public class InventoryKey implements Serializable {
 		this.period = period;
 	}
 
-	public ProductDTO getProduct() {
+	public ProductsDTO getProduct() {
 		return product;
 	}
 
-	public void setProduct(ProductDTO product) {
+	public void setProduct(ProductsDTO product) {
 		this.product = product;
 	}
 
-	public FruitDTO getFruit() {
+	public FruitsDTO getFruit() {
 		return fruit;
 	}
 
-	public void setFruit(FruitDTO fruit) {
+	public void setFruit(FruitsDTO fruit) {
 		this.fruit = fruit;
 	}
 

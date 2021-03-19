@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.cupuama.controller.processing.dto.ProcessingDetailDTO;
-import br.com.cupuama.controller.products.mapper.FruitMapper;
-import br.com.cupuama.controller.products.mapper.ProductMapper;
+import br.com.cupuama.controller.products.mapper.FruitsMapper;
+import br.com.cupuama.controller.products.mapper.ProductsMapper;
 import br.com.cupuama.controller.stock.mapper.DepotMapper;
 import br.com.cupuama.domain.processing.ProcessingDetail;
 
@@ -14,7 +14,7 @@ import br.com.cupuama.domain.processing.ProcessingDetail;
 public class ProcessingDetailMapper {
 	public static ProcessingDetail makeProcessingDetail(final ProcessingDetailDTO dto) {
 		return new ProcessingDetail(dto.getId(), ProcessingMapper.makeProcessing(dto.getProcessing()), 
-				ProductMapper.makeProduct(dto.getProduct()), FruitMapper.makeFruit(dto.getFruit()), DepotMapper.makeDepot(dto.getDepot()),
+				ProductsMapper.makeProduct(dto.getProduct()), FruitsMapper.makeFruit(dto.getFruit()), DepotMapper.makeDepot(dto.getDepot()),
 				dto.getStocktakeInOut(), dto.getAmount(), dto.getPrice(), dto.getDiscount());
 	}
 
@@ -22,8 +22,8 @@ public class ProcessingDetailMapper {
 		ProcessingDetailDTO.ProcessingDetailDTOBuilder builder = ProcessingDetailDTO.newBuilder()
 				.setId(processingDetail.getId())
 				.setProcessing(ProcessingMapper.makeDTO(processingDetail.getProcessing()))
-				.setProduct(ProductMapper.makeDTO(processingDetail.getProduct()))
-				.setFruit(FruitMapper.makeDTO(processingDetail.getFruit()))
+				.setProduct(ProductsMapper.makeDTO(processingDetail.getProduct()))
+				.setFruit(FruitsMapper.makeDTO(processingDetail.getFruit()))
 				.setDepot(DepotMapper.makeDTO(processingDetail.getDepot()))
 				.setStocktakeInOut(processingDetail.getStocktakeInOut())
 				.setAmount(processingDetail.getAmount())
