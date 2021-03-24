@@ -7,7 +7,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @ApiIgnore
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class HomeController
 {
 
