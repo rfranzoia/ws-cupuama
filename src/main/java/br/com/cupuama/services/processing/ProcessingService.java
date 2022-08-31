@@ -75,7 +75,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	@Transactional
 	public void update(final Long processingId, final ProcessingDTO dto) throws EntityNotFoundException {
 		
-		// update some of the processing information
+		// update some processing information
 		Processing processing = findByIdChecked(processingId);
 		processing.setCustomer(CustomerMapper.makeCustomer(dto.getCustomer()));
 		processing.setSupplier(SupplierMapper.makeSupplier(dto.getSupplier()));
@@ -91,33 +91,18 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	
 	@Transactional
 	public void updateProcessStatus(final Long processingId, ProcessStatus processStatus) throws EntityNotFoundException, InvalidRequestException {
+		// retrieves the current processing
 		Processing processing = findByIdChecked(processingId);
-		
-		// Processing cancellation is only allowed during Created, Approved and Rejected statuses
-		switch (processStatus) {
-			case Canceled:
-				switch (processing.getProcessStatus()) {
-					case Canceled:
-					case Paid:
-					case Completed:
-						throw new InvalidRequestException(String.format("Process cancelation is not permitted anymore!"));
-					default:
-						processing.setProcessStatus(processStatus);
-						break;
-				}
-				break;
-			case Completed:
-				processing.setProcessStatus(processStatus);
-				updateInventory(processing);
-				break;
-			case Paid:
-				processing.setProcessStatus(processStatus);
-				updateCashFlow(processing);
-				break;
-			default:
-				processing.setProcessStatus(processStatus);
-				break;
-		}
+
+		processStatus.changeStatus(processing, p -> {
+			if (processStatus == ProcessStatus.Completed) {
+				updateInventory(p);
+
+			} else if (processStatus == ProcessStatus.Paid) {
+				updateCashFlow(p);
+			}
+		});
+
 	}
 	
 	@Transactional
@@ -250,7 +235,7 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 	 * @param processing
 	 */
 	@Transactional
-	private void updateCashFlow(final Processing processing) {
+	protected void updateCashFlow(final Processing processing) {
 		final FlowTypeModel flowTypeModel = processing.getProcessType().getFlowTypeModel();
 		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
 		

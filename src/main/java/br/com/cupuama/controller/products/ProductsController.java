@@ -49,6 +49,7 @@ public class ProductsController {
 	}
 
 	@DeleteMapping("/{productId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteProduct(@PathVariable final long productId) throws EntityNotFoundException {
 		productsService.delete(productId);
 	}
