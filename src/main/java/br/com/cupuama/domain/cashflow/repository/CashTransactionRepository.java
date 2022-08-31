@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.cupuama.domain.cashflow.entity.CashTransaction;
+import br.com.cupuama.domain.cashflow.CashTransaction;
 import br.com.cupuama.exception.InvalidRequestException;
 
 public interface CashTransactionRepository extends CrudRepository<CashTransaction, Long> {

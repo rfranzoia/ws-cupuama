@@ -29,9 +29,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	
         
         httpSecurity
-            .csrf().disable().authorizeRequests()
-            .antMatchers(AUTH_WHITELIST).permitAll()
-            .antMatchers(HttpMethod.POST, "/login").permitAll()
+            .csrf().disable()
+            .authorizeRequests()
+            	.antMatchers(AUTH_WHITELIST).permitAll()
+            	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            	.antMatchers(HttpMethod.POST, "/login").permitAll()
+            	
             .anyRequest().authenticated()
             .and()
 
@@ -45,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new JWTAuthenticationFilter(),
                 UsernamePasswordAuthenticationFilter.class);
     }
-
+    
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

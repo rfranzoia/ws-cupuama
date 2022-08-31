@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.cashflow.entity.CashFlow;
+import br.com.cupuama.domain.cashflow.CashFlow;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for CashFlow table
  * <p/>
  */
 public interface CashFlowRepository extends CrudRepository<CashFlow, String> {

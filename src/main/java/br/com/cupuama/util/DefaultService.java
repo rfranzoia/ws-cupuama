@@ -36,7 +36,7 @@ public abstract class DefaultService<T extends DefaultEntity, ID> implements Ser
 			T savedT = repository.save(t);
 			return savedT;
 		} catch (DataIntegrityViolationException e) {
-			LOG.error("ConstraintsViolationException while creating a fruit: {}", t.toString(), e);
+			LOG.error("ConstraintsViolationException while creating an Entity: {}", t.toString(), e);
 			throw new ConstraintsViolationException(e);
 		}
 		

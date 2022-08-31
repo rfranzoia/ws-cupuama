@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.products.entity.Product;
+import br.com.cupuama.domain.products.Products;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for Product table
  * <p/>
  */
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends CrudRepository<Products, Long> {
 
-    List<Product> findByNameLike(String name);
+    List<Products> findByNameLike(String name);
 
 }

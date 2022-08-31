@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.cupuama.domain.cashflow.entity.DocumentType;
+import br.com.cupuama.domain.cashflow.DocumentType;
 
 /**
- * Database Access Object for driver table.
+ * Repository interface for DocumentType table
  * <p/>
  */
 public interface DocumentTypeRepository extends CrudRepository<DocumentType, Long> {

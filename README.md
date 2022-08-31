@@ -5,7 +5,7 @@ The project is based on a small web service which uses the following technologie
    + Java 8
    + Spring Boot 2.1
    + Spring Data (JPA/Hibernate)
-   + H2 Database
+   + PostgreSQL Database
    + Docker / Docker Compose
    + Swagger
    + Spring Security
