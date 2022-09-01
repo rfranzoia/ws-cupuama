@@ -72,7 +72,7 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 	 * @throws EntityNotFoundException 
 	 */
 	@Transactional
-	private void updateForwardInitialStock(final Inventory inventory) throws EntityNotFoundException {
+	protected void updateForwardInitialStock(final Inventory inventory) throws EntityNotFoundException {
 		String currentPeriod = Utils.getFormattedPeriod(new Date());
 		InventoryId inventoryId = inventory.getInventoryId();
 		
@@ -89,38 +89,39 @@ public class InventoryService extends DefaultService<Inventory, InventoryId> {
 		String[] start = inventory.getInventoryId().getPeriod()
 							.replaceAll(Utils.PERIOD_REGEX, "$1/$2")
 							.split("[/]");
-		
-		int year = Integer.valueOf(start[0]);
-		int month = Integer.valueOf(start[1]);
-		
+
+		forwardUpdate(currentPeriod, inventoryId, initialStock, Integer.valueOf(start[0]), Integer.valueOf(start[1]));
+
+		LOG.info(String.format("Stock update ended!"));
+	}
+
+	private void forwardUpdate(String currentPeriod, InventoryId inventoryId, Double initialStock, int year, int month) throws EntityNotFoundException {
 		InventoryId nextPeriodId = null;
-		
+
 		do {
 			month++;
 			if (month > 12) {
 				year++;
 				month = 1;
 			}
-			
+
 			//make a copy of the key for safety purposes
 			nextPeriodId = inventoryId.clone();
-			
+
 			//set the new period
 			nextPeriodId.setPeriod(String.format("%04d", year) + String.format("%02d", month));
-			
+
 			Inventory nextInventory = findOrCreateInventory(nextPeriodId);
-			
+
 			LOG.info(String.format("Updating previous stock for %s", nextPeriodId));
-			
+
 			nextInventory.setInitialStock(initialStock);
 			nextInventory.getAudit().setDateUpdated(ZonedDateTime.now());
 			initialStock = nextInventory.getInitialStock() + nextInventory.getStockIn() - nextInventory.getStockOut();
-			
+
 		} while (Integer.valueOf(nextPeriodId.getPeriod()) < Integer.valueOf(currentPeriod));
-	
-		LOG.info(String.format("Stock update ended!"));
 	}
-	
+
 	/**
 	 * Try to locate Inventory or create a new if not found
 	 * 

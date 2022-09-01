@@ -2,13 +2,12 @@ target/
 .settings/
 *.log
 *.*~
-<<<<<<< HEAD
-=======
 .classpath
 .settings/
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 bin/
+.DS_Store
 
 ### STS ###
 .apt_generated
@@ -32,4 +31,3 @@ bin/
 /dist/
 /nbdist/
 /.nb-gradle/
->>>>>>> a13e5eee45fd7ba471cd910b06201cdd166ddecb

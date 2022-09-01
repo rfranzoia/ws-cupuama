@@ -240,47 +240,45 @@ public class ProcessingService extends DefaultService<Processing, Long> {
 		final List<ProcessingDetailDTO> details = processingDetailService.findByProcessing(processing);
 		
 		if (flowTypeModel == FlowTypeModel.Sales) {
-			Double credits = 0.0;
-			for (ProcessingDetailDTO processDetail : details) {
-				credits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
-			}
-			
-			try {
-				final CashTransactionDTO creditDTO = CashTransactionDTO.newBuilder()
-						.setItemDate(processing.getProcessDate())
-						.setCashFlowType(CashFlowType.CREDIT)
-						.setValue(credits)
-						.setDocumentNumber(processing.getDocumentReference())
-						.setDescription(flowTypeModel.toString())
-						.createDTO();
-				cashTransationService.addCashTransaction(creditDTO);
-				
-			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
-				LOG.error(String.format("There was an error to perform a addCashTransaction(credit)"), ex);
-			}
+			updateFlow(details, processing, flowTypeModel, CashFlowType.CREDIT);
+
 		} else if (flowTypeModel == FlowTypeModel.Acqisitions) {
-			Double debits = 0.0;
-			for (ProcessingDetailDTO processDetail : details) {
-				debits += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
-			}
-			
-			try {
-				final CashTransactionDTO debitDTO = CashTransactionDTO.newBuilder()
-						.setItemDate(processing.getProcessDate())
-						.setCashFlowType(CashFlowType.DEBIT)
-						.setValue(debits)
-						.setDocumentNumber(processing.getDocumentReference())
-						.setDescription(flowTypeModel.toString())
-						.createDTO();
-				cashTransationService.addCashTransaction(debitDTO);
-				
-			} catch (ConstraintsViolationException | EntityNotFoundException ex) {
-				LOG.error(String.format("There was an error to perform a addCashTransaction(debit)"), ex);
-			}
+			updateFlow(details, processing, flowTypeModel, CashFlowType.DEBIT);
+
 		}
 		
 	}
-	
+
+	/**
+	 * upddate the CacheTransaction acccordingly to the FlowTypeModel
+	 * @param details
+	 * @param processing
+	 * @param flowTypeModel
+	 * @param cashFlowType
+	 */
+	@Transactional
+	protected void updateFlow(final List<ProcessingDetailDTO> details, final Processing processing, FlowTypeModel flowTypeModel, CashFlowType cashFlowType) {
+		Double value = 0.0;
+		for (ProcessingDetailDTO processDetail : details) {
+			value += (processDetail.getPrice() * processDetail.getAmount()) - (processDetail.getDiscount() == null?0.0: processDetail.getDiscount());
+		}
+
+		try {
+			final CashTransactionDTO creditDTO = CashTransactionDTO.newBuilder()
+					.setItemDate(processing.getProcessDate())
+					.setCashFlowType(cashFlowType)
+					.setValue(value)
+					.setDocumentNumber(processing.getDocumentReference())
+					.setDescription(flowTypeModel.toString())
+					.createDTO();
+			cashTransationService.addCashTransaction(creditDTO);
+
+		} catch (ConstraintsViolationException | EntityNotFoundException ex) {
+			LOG.error(String.format("There was an error to perform a addCashTransaction(%s)", cashFlowType.toString()), ex);
+		}
+	}
+
+
 	/**
 	 * add processing details for each memeber of a given processing list
 	 * 
